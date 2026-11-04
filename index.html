@@ -206,6 +206,9 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
 /* YOSHI NUTRITION */
 .nutrition-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0 28px}.nutrition-stat{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:8px}.nutrition-stat small{font-size:10px;font-weight:800;letter-spacing:1px;color:#66806f}.nutrition-stat strong{font-size:28px;color:#244b37}.nutrition-stat span{font-size:11px;color:#77847b}.nutrition-columns{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}.nutrition-list{display:grid;gap:10px}.nutrition-tip{padding:11px 13px;background:#f3f7f2;border-radius:12px;font-size:13px}.plate-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.plate-guide div{background:#f3f7f2;border-radius:13px;padding:14px 10px;display:flex;flex-direction:column;gap:5px}.plate-guide b{font-size:24px;color:#668d65}.plate-guide strong{font-size:13px}.plate-guide small{font-size:11px;color:#718076}.meal-plan,.recipe-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:15px 0 28px}.meal-card,.recipe-card{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:16px;padding:17px}.meal-card .meal-icon{font-size:25px}.meal-card h3,.recipe-card h3{margin:8px 0 5px}.meal-card p,.recipe-card p{font-size:13px;color:#6d796f;line-height:1.55}.meal-card small,.recipe-card small{font-size:10px;font-weight:800;letter-spacing:.8px;color:#6b8a6d}.recipe-card ul{padding-left:18px;font-size:12px;color:#536257;line-height:1.7}
 @media(max-width:700px){.nutrition-stats,.nutrition-columns,.meal-plan,.recipe-grid{grid-template-columns:1fr}.plate-guide{grid-template-columns:1fr 1fr 1fr}.nutrition-stat strong{font-size:25px}}
+
+/* YOSHI PERFORMANCE */
+.workout-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:15px 0 28px}.workout-card{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:16px;padding:18px}.workout-card small{font-size:10px;font-weight:800;letter-spacing:1px;color:#66806f}.workout-card h3{margin:8px 0}.workout-card p{font-size:13px;color:#6d796f;line-height:1.55}.workout-card strong{display:block;font-size:12px;color:#315a40;margin-top:10px}@media(max-width:700px){.workout-grid{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -320,11 +323,14 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
   </section>
 
   <section class="page" id="performance">
-    <div class="inner-hero" style="background:#e0ede5"><div class="eyebrow">YOSHI PERFORMANCE</div><h1>Entrena con propósito. ⚽</h1><p>Mejora tu condición física, desarrolla tus capacidades y prepara tu cuerpo para rendir mejor. Empezaremos por el fútbol amateur.</p></div>
-    <div class="module-grid">
-      <article class="module"><div class="module-image sport">⚽</div><div class="module-body"><small>FÚTBOL</small><h3>Preparación futbolística</h3><p>Velocidad, resistencia, agilidad y técnica.</p><span class="coming">En desarrollo</span></div></article>
-      <article class="module"><div class="module-image nutrition">🏋️</div><div class="module-body"><small>ENTRENAMIENTO</small><h3>Rutinas físicas</h3><p>Entrenamiento progresivo para distintos niveles.</p><span class="coming">En desarrollo</span></div></article>
-      <article class="module"><div class="module-image health">🧘</div><div class="module-body"><small>RECUPERACIÓN</small><h3>Movilidad y descanso</h3><p>Recuperación, calentamiento y hábitos de descanso.</p><span class="coming">En desarrollo</span></div></article>
+    <div class="inner-hero" style="background:#e0ede5"><div class="eyebrow">YOSHI PERFORMANCE · PLAN PERSONAL</div><h1>Entrena con propósito. ⚽</h1><p>Una propuesta inicial ajustada a tu actividad diaria, objetivo y deporte. Empieza de forma progresiva y adapta la carga a cómo te sientes.</p></div>
+    <div id="performanceIncomplete" class="panel" hidden><h3>Configura tu perfil primero</h3><p class="panel-sub">Completa tu objetivo y actividad diaria para recibir una propuesta inicial.</p><button class="hero-button" onclick="navigate('profile')">Completar perfil →</button></div>
+    <div id="performanceDashboard" hidden>
+      <div class="section-head"><h2 id="performanceGreeting">Tu punto de partida</h2><span id="performanceSport"></span></div>
+      <div class="panel"><h3 id="performanceFocusTitle">Tu enfoque de entrenamiento</h3><p id="performanceFocus" class="panel-sub"></p><div id="performanceCautions" class="nutrition-list"></div></div>
+      <div class="section-head"><h2>Semana de inicio</h2><span>Propuesta adaptable</span></div>
+      <div class="workout-grid" id="performanceWeek"></div>
+      <div class="notice">Antes de entrenar, realiza 5 a 10 minutos de calentamiento. Detente si aparece dolor agudo, mareo, falta de aire inusual o dolor en el pecho. Si tienes una lesión, enfermedad o llevas mucho tiempo sin actividad, consulta con un profesional antes de iniciar.</div>
     </div>
   </section>
 
@@ -484,6 +490,7 @@ function navigate(page){
 
   document.getElementById('crumb').textContent=labels[page]||'Inicio';
   if(page==='nutrition') renderNutrition();
+  if(page==='performance') renderPerformance();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -548,6 +555,55 @@ function renderNutrition(){
 }
 function escapeNutritionText(value){
   return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* RENDIMIENTO PERSONALIZADO */
+function renderPerformance(){
+  const p=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return null}})()||{};
+  const complete=!!(p.profileGoal&&p.profileActivity);
+  document.getElementById('performanceIncomplete').hidden=complete;
+  document.getElementById('performanceDashboard').hidden=!complete;
+  if(!complete)return;
+  const sport=p.profileSport||'Actividad general';
+  const active=p.profileActivity;
+  const goal=p.profileGoal;
+  const beginner=active==='Sedentaria'||active==='Ligera';
+  let focus='Desarrolla una base equilibrada de fuerza, resistencia y movilidad.';
+  if(goal==='Perder grasa')focus='Combina movimiento constante con fuerza básica. La alimentación y el descanso también cuentan.';
+  if(goal==='Ganar masa muscular')focus='Prioriza ejercicios de fuerza con técnica controlada y recuperación suficiente.';
+  if(goal==='Mejorar mi rendimiento deportivo'||sport==='Fútbol')focus='Trabaja resistencia, aceleración, cambios de dirección y fuerza de piernas sin descuidar la recuperación.';
+  if(goal==='Mejorar mi condición física')focus='Construye constancia con sesiones moderadas de cuerpo completo y caminatas.';
+  document.getElementById('performanceGreeting').textContent='Plan inicial para '+(p.profileName||'ti');
+  document.getElementById('performanceSport').textContent=sport;
+  document.getElementById('performanceFocusTitle').textContent=goal;
+  document.getElementById('performanceFocus').textContent=focus;
+  const cautions=[
+    'Empieza con esfuerzo cómodo: deberías poder hablar mientras haces actividad moderada.',
+    beginner?'Durante las primeras semanas, realiza 2 o 3 sesiones y deja días de recuperación.':'Evita aumentar duración e intensidad al mismo tiempo.',
+    'Ajusta o suspende la sesión si aparece dolor o agotamiento fuera de lo habitual.'
+  ];
+  document.getElementById('performanceCautions').innerHTML=cautions.map(x=>'<div class="nutrition-tip">✓ '+escapeNutritionText(x)+'</div>').join('');
+  const days=beginner?[
+    ['LUNES · FUERZA','20 min','Sentarse y levantarse de una silla, flexiones contra pared, puente de glúteos y elevación de talones. Haz 1 o 2 rondas cómodas.'],
+    ['MARTES · MOVIMIENTO','20 min','Caminata a ritmo cómodo. Mantén un paso que te permita conversar.'],
+    ['MIÉRCOLES · RECUPERACIÓN','10 min','Movilidad suave de tobillos, cadera, espalda y hombros. Sin rebotes ni dolor.'],
+    ['JUEVES · FUERZA','20 min','Repite la sesión del lunes con buena técnica. Descansa entre ejercicios.'],
+    ['VIERNES · CARDIO','20 min','Caminata continua o bicicleta suave, según disponibilidad.'],
+    ['SÁBADO · OPCIONAL','15 min','Paseo, movilidad o técnica deportiva suave si te sientes recuperado.'],
+    ['DOMINGO · DESCANSO','Libre','Descanso y recuperación.']
+  ]:[
+    ['LUNES · FUERZA','25 min','Sentadillas controladas, flexiones adaptadas, puente de glúteos y plancha corta. 2 rondas.'],
+    ['MARTES · RESISTENCIA','25 min','Caminata rápida, bicicleta o trote suave, manteniendo un ritmo conversable.'],
+    ['MIÉRCOLES · MOVILIDAD','15 min','Movilidad de cadera, tobillos, columna torácica y hombros.'],
+    ['JUEVES · FUERZA','25 min','Repite fuerza de cuerpo completo. Prioriza técnica antes que repeticiones.'],
+    ['VIERNES · DEPORTE','20 min','Práctica técnica suave de tu deporte, sin esfuerzos máximos.'],
+    ['SÁBADO · OPCIONAL','20 min','Actividad recreativa moderada o caminata.'],
+    ['DOMINGO · DESCANSO','Libre','Recuperación y sueño suficiente.']
+  ];
+  if(sport==='Fútbol'){
+    days[4][0]='VIERNES · FÚTBOL';days[4][2]='Conducción de balón, pases contra una pared y desplazamientos suaves. Evita sprints máximos al inicio.';
+  }
+  document.getElementById('performanceWeek').innerHTML=days.map(d=>'<article class="workout-card"><small>'+d[0]+'</small><h3>'+d[1]+'</h3><p>'+d[2]+'</p></article>').join('');
 }
 
 /* PERFIL */
