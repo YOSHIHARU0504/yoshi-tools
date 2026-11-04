@@ -202,6 +202,10 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
   .module-grid{grid-template-columns:1fr}
   .summary-grid{grid-template-columns:1fr}
 }
+
+/* YOSHI NUTRITION */
+.nutrition-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0 28px}.nutrition-stat{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:8px}.nutrition-stat small{font-size:10px;font-weight:800;letter-spacing:1px;color:#66806f}.nutrition-stat strong{font-size:28px;color:#244b37}.nutrition-stat span{font-size:11px;color:#77847b}.nutrition-columns{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}.nutrition-list{display:grid;gap:10px}.nutrition-tip{padding:11px 13px;background:#f3f7f2;border-radius:12px;font-size:13px}.plate-guide{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.plate-guide div{background:#f3f7f2;border-radius:13px;padding:14px 10px;display:flex;flex-direction:column;gap:5px}.plate-guide b{font-size:24px;color:#668d65}.plate-guide strong{font-size:13px}.plate-guide small{font-size:11px;color:#718076}.meal-plan,.recipe-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:15px 0 28px}.meal-card,.recipe-card{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:16px;padding:17px}.meal-card .meal-icon{font-size:25px}.meal-card h3,.recipe-card h3{margin:8px 0 5px}.meal-card p,.recipe-card p{font-size:13px;color:#6d796f;line-height:1.55}.meal-card small,.recipe-card small{font-size:10px;font-weight:800;letter-spacing:.8px;color:#6b8a6d}.recipe-card ul{padding-left:18px;font-size:12px;color:#536257;line-height:1.7}
+@media(max-width:700px){.nutrition-stats,.nutrition-columns,.meal-plan,.recipe-grid{grid-template-columns:1fr}.plate-guide{grid-template-columns:1fr 1fr 1fr}.nutrition-stat strong{font-size:25px}}
 </style>
 </head>
 
@@ -293,13 +297,26 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
   </section>
 
   <section class="page" id="nutrition">
-    <div class="inner-hero"><div class="eyebrow">YOSHI NUTRITION</div><h1>Come mejor.<br>Vive mejor. 🥑</h1><p>Una alimentación equilibrada comienza con alimentos accesibles, recetas prácticas y decisiones informadas. Nuestra prioridad: aprovechar la riqueza de los alimentos peruanos.</p></div>
-    <div class="module-grid">
-      <article class="module"><div class="module-image nutrition">🍽️</div><div class="module-body"><small>PLANIFICACIÓN</small><h3>Mi plan alimenticio</h3><p>Organiza tus comidas de acuerdo con tus objetivos y necesidades.</p><span class="coming">En desarrollo</span></div></article>
-      <article class="module"><div class="module-image food">🥘</div><div class="module-body"><small>RECETAS</small><h3>Recetario peruano</h3><p>Ideas de desayunos, almuerzos, cenas y meriendas.</p><span class="coming">En desarrollo</span></div></article>
-      <article class="module"><div class="module-image budget">🌾</div><div class="module-body"><small>ALIMENTOS</small><h3>Explorar alimentos</h3><p>Conoce la composición nutricional de nuestros alimentos.</p><span class="coming">En desarrollo</span></div></article>
+    <div class="inner-hero"><div class="eyebrow">YOSHI NUTRITION · PLAN PERSONAL</div><h1>Come según tus objetivos. 🥑</h1><p>Una guía práctica que toma en cuenta tu edad, peso, estatura, actividad, objetivo, ubicación y presupuesto. No hay un menú único para todos.</p></div>
+    <div id="nutritionProfileNotice" class="notice">Cargando tu perfil...</div>
+    <div id="nutritionDashboard" hidden>
+      <div class="section-head"><h2 id="nutritionGreeting">Tu orientación nutricional</h2><span id="nutritionGoalLabel"></span></div>
+      <div class="nutrition-stats">
+        <article class="nutrition-stat"><small>ENERGÍA DIARIA ESTIMADA</small><strong id="nutritionCalories">Por calcular</strong><span>kcal/día · orientación, no prescripción</span></article>
+        <article class="nutrition-stat"><small>PROTEÍNA ORIENTATIVA</small><strong id="nutritionProtein">Por calcular</strong><span>gramos al día, según objetivo</span></article>
+        <article class="nutrition-stat"><small>IMC ORIENTATIVO</small><strong id="nutritionBmi">Por calcular</strong><span>No diagnostica ni describe por sí solo la salud</span></article>
+      </div>
+      <div class="nutrition-columns">
+        <div class="panel"><h3>Tu enfoque</h3><p id="nutritionFocus" class="panel-sub"></p><div id="nutritionTips" class="nutrition-list"></div></div>
+        <div class="panel"><h3>Tu plato equilibrado</h3><p class="panel-sub">Una guía visual flexible para almuerzo y cena.</p><div class="plate-guide"><div><b>½</b><strong>Verduras</strong><small>Variadas y de temporada</small></div><div><b>¼</b><strong>Proteína</strong><small>Huevo, pollo, pescado o menestras</small></div><div><b>¼</b><strong>Energía</strong><small>Arroz, papa, camote o choclo</small></div></div></div>
+      </div>
+      <div class="section-head"><h2>Menú de ejemplo para tu día</h2><span id="nutritionLocation"></span></div>
+      <div class="meal-plan" id="nutritionMeals"></div>
+      <div class="section-head"><h2>Recetas económicas</h2><span>Ingredientes cotidianos</span></div>
+      <div class="recipe-grid" id="nutritionRecipes"></div>
+      <div class="notice">Las calorías y porciones son aproximaciones educativas. No son indicaciones clínicas. Si eres menor de 18 años, estás embarazada o lactando, tienes una enfermedad, tomas medicación o antecedentes de trastornos alimentarios, consulta con un profesional antes de seguir objetivos de peso o calorías.</div>
     </div>
-    <div class="notice">La información nutricional tendrá fuentes identificadas. Los planes para condiciones médicas especiales requerirán evaluación profesional.</div>
+    <div id="nutritionIncomplete" class="panel" hidden><h3>Completa tu perfil para personalizar tu guía</h3><p class="panel-sub">Necesitamos edad, peso, estatura, objetivo y actividad para adaptar esta sección. El sexo es opcional, pero sin ese dato no calcularemos el gasto energético estimado.</p><button class="hero-button" onclick="navigate('profile')">Completar mi perfil →</button></div>
   </section>
 
   <section class="page" id="performance">
@@ -466,12 +483,72 @@ function navigate(page){
   });
 
   document.getElementById('crumb').textContent=labels[page]||'Inicio';
+  if(page==='nutrition') renderNutrition();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 document.querySelectorAll('[data-page]').forEach(button=>{
   button.addEventListener('click',()=>navigate(button.dataset.page));
 });
+
+/* NUTRICIÓN PERSONALIZADA */
+function renderNutrition(){
+  const local=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return null}})();
+  const p=local||{};
+  const required=['profileAge','profileWeight','profileHeight','profileGoal','profileActivity'];
+  const complete=required.every(k=>String(p[k]||'').trim()!=='');
+  document.getElementById('nutritionProfileNotice').hidden=complete;
+  document.getElementById('nutritionIncomplete').hidden=complete;
+  document.getElementById('nutritionDashboard').hidden=!complete;
+  if(!complete)return;
+  const age=Number(p.profileAge), weight=Number(p.profileWeight), height=Number(p.profileHeight), h=height/100;
+  const bmi=weight/(h*h);
+  const activity={Sedentaria:1.2,Ligera:1.375,Moderada:1.55,Alta:1.725}[p.profileActivity]||1.2;
+  const goal=p.profileGoal;
+  let focus='Construir hábitos sostenibles y mantener una alimentación variada.';
+  if(goal==='Perder grasa')focus='Prioriza comidas saciantes, proteína en cada comida y un cambio gradual. Evita dietas extremas.';
+  if(goal==='Ganar masa muscular')focus='Combina entrenamiento de fuerza progresivo, suficiente energía y proteína repartida durante el día.';
+  if(goal==='Mejorar mi condición física'||goal==='Mejorar mi rendimiento deportivo')focus='Distribuye comidas y colaciones alrededor de tu actividad; hidrátate y prioriza recuperación.';
+  let calories=null,protein=null;
+  if(p.profileSex==='Hombre'||p.profileSex==='Mujer'){
+    const bmr=10*weight+6.25*height-5*age+(p.profileSex==='Hombre'?5:-161);
+    const maintenance=bmr*activity;
+    calories=Math.round(maintenance*(goal==='Perder grasa'?0.9:goal==='Ganar masa muscular'?1.08:1));
+    protein=Math.round(weight*(goal==='Ganar masa muscular'?1.6:goal==='Perder grasa'?1.5:1.2));
+  }
+  document.getElementById('nutritionGreeting').textContent='Tu guía, '+(p.profileName||'').split(' ')[0];
+  document.getElementById('nutritionGoalLabel').textContent=goal;
+  document.getElementById('nutritionCalories').textContent=calories?calories.toLocaleString('es-PE')+' kcal':'No disponible';
+  document.getElementById('nutritionProtein').textContent=protein?protein+' g':'No disponible';
+  document.getElementById('nutritionBmi').textContent=Number.isFinite(bmi)?bmi.toFixed(1):'No disponible';
+  document.getElementById('nutritionFocus').textContent=focus;
+  document.getElementById('nutritionLocation').textContent=[p.profileCity,p.profileRegion].filter(Boolean).join(' · ')||'Perú';
+  const tips=[
+    'Incluye una fuente de proteína en tus comidas principales.',
+    'Agrega verduras o frutas de distintos colores cada día.',
+    'Elige agua como bebida habitual y limita las gaseosas.',
+    p.profileBudget?('Organiza tus compras dentro de S/ '+Number(p.profileBudget).toLocaleString('es-PE')+' por semana.'): 'Define un presupuesto semanal para organizar tus compras.',
+    p.profilePreferences?('Ten en cuenta tus preferencias: '+p.profilePreferences+'.'):'Varía entre alimentos accesibles: huevo, menestras, pollo, pescado, avena y tubérculos.'
+  ];
+  document.getElementById('nutritionTips').innerHTML=tips.map(t=>'<div class="nutrition-tip">✓ '+escapeNutritionText(t)+'</div>').join('');
+  const meals=[
+    ['🌅','Desayuno','Avena con leche o yogur, plátano y huevo.','Combina cereal, fruta y proteína.'],
+    ['🍛','Almuerzo','Arroz o papa, pollo guisado o lentejas y ensalada de temporada.','Ajusta la porción de acuerdo con hambre y actividad.'],
+    ['🍌','Media tarde','Fruta de estación y yogur natural o un huevo sancochado.','Úsalo si tienes hambre o entrenas más tarde.'],
+    ['🌙','Cena','Tortilla de verduras con camote o pan integral y una fruta.','Una comida completa, sin necesidad de saltártela.']
+  ];
+  document.getElementById('nutritionMeals').innerHTML=meals.map(m=>'<article class="meal-card"><div class="meal-icon">'+m[0]+'</div><small>'+m[1]+'</small><h3>'+m[2]+'</h3><p>'+m[3]+'</p></article>').join('');
+  const recipes=[
+    ['Tortilla de verduras','2 huevos, tomate, cebolla y verduras disponibles.','Saltea las verduras, añade huevo batido y cocina a fuego bajo.'],
+    ['Lentejas caseras','Lentejas, cebolla, ajo, zanahoria y arroz o papa.','Cocina las lentejas hasta ablandar y acompaña con verduras.'],
+    ['Avena con plátano','Avena, leche o agua, plátano y canela.','Hierve la avena, sirve con plátano y canela.'],
+    ['Pollo con ensalada','Pollo, limón, tomate, pepino y papa.','Cocina bien el pollo y acompaña con ensalada lavada y papa sancochada.']
+  ];
+  document.getElementById('nutritionRecipes').innerHTML=recipes.map(r=>'<article class="recipe-card"><small>RECETA PRÁCTICA</small><h3>'+r[0]+'</h3><p><b>Ingredientes:</b> '+r[1]+'</p><p>'+r[2]+'</p></article>').join('');
+}
+function escapeNutritionText(value){
+  return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 
 /* PERFIL */
 
