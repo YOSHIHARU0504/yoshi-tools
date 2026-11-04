@@ -1,304 +1,714 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101827">
-<meta name="description" content="Yoshi Tools: herramientas gratuitas para emprendedores y pequeños negocios. Calcula ganancias, precios, IGV y gastos.">
-<title>Yoshi Tools | Herramientas inteligentes</title>
+<meta name="theme-color" content="#f5f6ef">
+<meta name="description" content="Yoshi Fit: nutrición, entrenamiento y bienestar con alimentos de nuestra tierra.">
+<title>Yoshi Fit | Nutrición y rendimiento</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 :root {
-  --bg:#0b1120;
-  --panel:#151f32;
-  --panel2:#1b2940;
-  --text:#f4f7ff;
-  --muted:#9baac0;
-  --primary:#6c8cff;
-  --green:#30d6a0;
-  --border:#293851;
+  --bg:#f5f6ef;
+  --white:#ffffff;
+  --dark:#183b2c;
+  --green:#285b40;
+  --lime:#c8e6a0;
+  --soft:#e9f0e4;
+  --text:#24352b;
+  --muted:#829087;
+  --border:#e7ebe3;
+  --orange:#e9a45b;
+  --shadow:0 12px 35px rgba(28,58,39,.06);
 }
-* {box-sizing:border-box}
-body {
+*{box-sizing:border-box}
+body{
   margin:0;
-  font-family:Inter,system-ui,Arial,sans-serif;
   background:var(--bg);
   color:var(--text);
+  font-family:'DM Sans',sans-serif;
 }
-header {
-  padding:19px 6%;
+button{font:inherit;cursor:pointer}
+.app{min-height:100vh;display:flex}
+.sidebar{
+  width:250px;
+  background:var(--dark);
+  color:white;
+  padding:30px 19px;
+  position:fixed;
+  inset:0 auto 0 0;
+  display:flex;
+  flex-direction:column;
+  z-index:20;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:0 10px;
+  margin-bottom:45px;
+}
+.brand-icon{
+  width:39px;height:39px;
+  border-radius:13px;
+  background:var(--lime);
+  color:var(--dark);
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  font-weight:800;
+}
+.brand-name{font-family:Manrope;font-size:19px;font-weight:800;letter-spacing:-.8px}
+.brand-name span{color:var(--lime)}
+.menu-label{
+  color:#91aa98;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  padding:0 12px;
+  margin-bottom:12px;
+}
+.nav{display:grid;gap:7px}
+.nav button{
+  border:0;
+  background:transparent;
+  color:#c4d2c8;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:13px 14px;
+  border-radius:12px;
+  text-align:left;
+  font-size:13px;
+  font-weight:600;
+  transition:.2s;
+}
+.nav button:hover,.nav button.active{
+  background:#315c43;
+  color:white;
+}
+.nav .ico{font-size:18px;width:22px;text-align:center}
+.sidebar-bottom{margin-top:auto}
+.mini-profile{
+  border-top:1px solid #ffffff20;
+  padding:20px 8px 0;
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:#d4e6c9;color:var(--dark);
+  display:grid;place-items:center;font-weight:800;
+}
+.mini-profile strong{font-size:12px;display:block}
+.mini-profile small{font-size:10px;color:#a9c0ae}
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+  max-width:1600px;
+  padding:27px 4.2% 60px;
+}
+.topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  border-bottom:1px solid var(--border);
-  position:sticky;
-  top:0;
-  background:#0b1120ed;
-  backdrop-filter:blur(12px);
-  z-index:5;
+  margin-bottom:34px;
 }
-.logo {font-size:22px;font-weight:850;letter-spacing:-1px}
-.logo span {color:var(--primary)}
-.status {font-size:11px;color:var(--green)}
-.hero {
-  text-align:center;
-  padding:55px 20px 35px;
-  max-width:800px;
-  margin:auto;
+.breadcrumb{font-size:12px;color:var(--muted)}
+.breadcrumb strong{color:var(--dark)}
+.top-right{display:flex;align-items:center;gap:15px}
+.today{font-size:12px;color:var(--muted)}
+.mobile-brand{display:none}
+.page{display:none;animation:fade .3s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.welcome{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:25px;
+  margin-bottom:27px;
 }
-.hero h1 {font-size:clamp(32px,7vw,52px);margin:0 0 14px;letter-spacing:-2px}
-.hero h1 span {color:var(--primary)}
-.hero p {color:var(--muted);line-height:1.7}
-.search {
-  width:min(100%,500px);
-  padding:15px 18px;
-  background:var(--panel);
-  border:1px solid var(--border);
+.eyebrow{
+  font-size:10px;
+  font-weight:800;
+  color:#72916f;
+  letter-spacing:1.8px;
+  text-transform:uppercase;
+}
+h1{
+  font-family:Manrope,sans-serif;
+  font-size:clamp(28px,3.5vw,42px);
+  letter-spacing:-2px;
+  line-height:1.13;
+  color:var(--dark);
+  margin:10px 0;
+}
+.welcome p{font-size:14px;color:var(--muted);line-height:1.7;margin:0}
+.welcome-art{
+  width:190px;height:145px;
+  border-radius:25px;
+  background:#dcebd2;
+  display:grid;place-items:center;
+  font-size:75px;
+  flex-shrink:0;
+  overflow:hidden;
+}
+.hero-card{
+  position:relative;
+  min-height:225px;
+  border-radius:23px;
+  overflow:hidden;
+  background:#234d35;
   color:white;
-  border-radius:12px;
-  margin-top:18px;
-  font-size:15px;
+  display:flex;
+  align-items:center;
+  padding:35px 38px;
+  margin-bottom:27px;
 }
-.container {max-width:1050px;margin:auto;padding:15px 20px 70px}
-.section-title {font-size:19px;margin:25px 0 16px}
-.grid {
+.hero-card:after{
+  content:"";
+  position:absolute;
+  width:300px;height:300px;
+  border-radius:50%;
+  border:1px solid #ffffff20;
+  right:8%;top:-100px;
+  box-shadow:0 0 0 35px #ffffff08,0 0 0 75px #ffffff05;
+}
+.hero-content{position:relative;z-index:1;max-width:480px}
+.hero-card .eyebrow{color:var(--lime)}
+.hero-card h2{
+  font:800 clamp(23px,3vw,32px) Manrope;
+  letter-spacing:-1.3px;
+  margin:12px 0;
+}
+.hero-card p{color:#d2e1d4;font-size:13px;line-height:1.7}
+.hero-button{
+  background:var(--lime);
+  color:var(--dark);
+  border:0;border-radius:10px;
+  padding:12px 17px;
+  font-size:12px;font-weight:800;
+  margin-top:10px;
+}
+.hero-plant{
+  position:absolute;
+  right:10%;bottom:-12px;
+  font-size:125px;
+  opacity:.95;
+  z-index:1;
+}
+.section-head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin:32px 0 16px;
+}
+.section-head h2{
+  font:800 18px Manrope;
+  color:var(--dark);
+  margin:0;
+  letter-spacing:-.5px;
+}
+.section-head span{font-size:11px;color:var(--muted)}
+.stats{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+}
+.stat{
+  background:white;
+  border:1px solid var(--border);
+  padding:19px;
+  border-radius:17px;
+}
+.stat-top{display:flex;justify-content:space-between;align-items:center}
+.stat-icon{
+  width:34px;height:34px;
+  background:var(--soft);
+  border-radius:11px;
+  display:grid;place-items:center;font-size:17px;
+}
+.stat small{font-size:10px;color:var(--muted)}
+.stat strong{
+  display:block;
+  font:800 23px Manrope;
+  color:var(--dark);
+  margin:13px 0 4px;
+}
+.stat p{font-size:10px;color:var(--muted);margin:0}
+.module-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
   gap:15px;
 }
-.card {
-  background:var(--panel);
+.module{
+  background:white;
   border:1px solid var(--border);
-  padding:22px;
-  border-radius:17px;
-  cursor:pointer;
-  transition:.2s;
-}
-.card:hover {transform:translateY(-3px);border-color:var(--primary)}
-.icon {font-size:28px}
-.card h3 {margin:12px 0 7px}
-.card p {color:var(--muted);font-size:13px;line-height:1.5}
-.tag {color:var(--green);font-size:11px}
-.tool {
-  display:none;
-  max-width:580px;
-  margin:25px auto;
-  background:var(--panel);
-  border:1px solid var(--border);
-  padding:24px;
   border-radius:18px;
-}
-.tool.active {display:block}
-.tool h2 {margin-top:0}
-label {display:block;font-size:13px;color:var(--muted);margin:15px 0 7px}
-input,select {
-  width:100%;
-  padding:13px;
-  background:var(--bg);
-  border:1px solid var(--border);
-  color:white;
-  border-radius:9px;
-  font-size:15px;
-}
-button {
-  border:0;
-  border-radius:10px;
-  padding:13px 17px;
+  overflow:hidden;
+  transition:.2s;
   cursor:pointer;
-  font-weight:700;
-  font-size:14px;
 }
-.primary {background:var(--primary);color:white;width:100%;margin-top:18px}
-.back {background:var(--panel2);color:white;margin-bottom:18px}
-.result {
-  background:var(--panel2);
-  border-radius:12px;
-  padding:18px;
-  margin-top:18px;
-  display:none;
+.module:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.module-image{
+  height:130px;
+  display:grid;place-items:center;
+  font-size:55px;
+  position:relative;
+  overflow:hidden;
 }
-.result small {color:var(--muted)}
-.result strong {display:block;font-size:26px;color:var(--green);margin-top:6px}
-.result p {color:var(--muted);font-size:13px}
-footer {
+.module-image.nutrition{background:#e9efdc}
+.module-image.sport{background:#dcebe3}
+.module-image.health{background:#f5e8d9}
+.module-image.budget{background:#f0eadb}
+.module-image.progress{background:#e6e5f1}
+.module-image.food{background:#e8eddf}
+.module-body{padding:17px}
+.module-body small{
+  color:#79906f;font-size:9px;
+  font-weight:800;letter-spacing:1px;
+}
+.module-body h3{
+  font:800 15px Manrope;color:var(--dark);
+  margin:7px 0;
+}
+.module-body p{
+  font-size:11px;line-height:1.6;color:var(--muted);
+  margin:0 0 13px;
+}
+.module-link{font-size:11px;font-weight:800;color:var(--green)}
+.bottom-grid{
+  display:grid;grid-template-columns:1.2fr .8fr;
+  gap:15px;margin-top:27px;
+}
+.panel{
+  background:white;border:1px solid var(--border);
+  border-radius:18px;padding:22px;
+}
+.panel h3{font:800 15px Manrope;color:var(--dark);margin:0 0 6px}
+.panel-sub{font-size:11px;color:var(--muted);margin:0 0 18px}
+.meal-row{
+  display:flex;align-items:center;gap:13px;
+  padding:12px 0;border-bottom:1px solid var(--border);
+}
+.meal-row:last-child{border:0}
+.meal-emoji{
+  width:43px;height:43px;border-radius:13px;
+  background:#f1f3e9;display:grid;place-items:center;font-size:22px;
+}
+.meal-row strong{display:block;font-size:12px;color:var(--dark)}
+.meal-row small{font-size:10px;color:var(--muted)}
+.meal-time{margin-left:auto;font-size:10px;color:var(--muted)}
+.goal-circle{
+  width:120px;height:120px;border-radius:50%;
+  margin:18px auto;
+  background:conic-gradient(#477c52 0 68%,#e9eee5 68% 100%);
+  display:grid;place-items:center;
+}
+.goal-inner{
+  width:94px;height:94px;background:white;
+  border-radius:50%;display:grid;place-items:center;
   text-align:center;
-  border-top:1px solid var(--border);
-  padding:28px 15px;
-  color:var(--muted);
-  font-size:12px;
 }
-footer a {color:var(--primary);text-decoration:none}
-.hidden {display:none!important}
+.goal-inner strong{font:800 23px Manrope;color:var(--dark)}
+.goal-inner small{font-size:9px;color:var(--muted)}
+.goal-note{text-align:center;font-size:11px;color:var(--muted);line-height:1.6}
+.inner-hero{
+  padding:32px;
+  border-radius:22px;
+  background:#e4eddd;
+  margin-bottom:22px;
+}
+.inner-hero h1{font-size:34px}
+.inner-hero p{font-size:13px;color:#718174;line-height:1.7;max-width:600px}
+.info-box{
+  background:#fff;border:1px solid var(--border);
+  border-radius:17px;padding:22px;margin-top:16px;
+}
+.info-box h3{font:800 16px Manrope;color:var(--dark);margin:0 0 10px}
+.info-box p{font-size:12px;line-height:1.7;color:var(--muted)}
+.notice{
+  background:#fff8e9;border:1px solid #f1e5c9;
+  color:#866d45;border-radius:12px;
+  padding:13px 15px;font-size:11px;line-height:1.6;
+  margin-top:18px;
+}
+.coming{
+  display:inline-block;
+  background:#edf2e9;color:#54764f;
+  padding:6px 10px;border-radius:20px;
+  font-size:10px;font-weight:800;
+}
+footer{
+  border-top:1px solid var(--border);
+  margin-top:45px;padding-top:20px;
+  font-size:10px;color:var(--muted);
+  display:flex;justify-content:space-between;gap:10px;
+}
+.mobile-nav{display:none}
+@media(max-width:1050px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .module-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:720px){
+  .sidebar{display:none}
+  .main{margin:0;width:100%;padding:20px 17px 100px}
+  .topbar{margin-bottom:25px}
+  .mobile-brand{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--dark)}
+  .mobile-brand span{color:#6c9361}
+  .today{display:none}
+  .welcome-art{display:none}
+  .welcome{margin-bottom:22px}
+  .hero-card{padding:25px 23px;min-height:220px}
+  .hero-plant{right:2%;font-size:90px;opacity:.45}
+  .hero-content{max-width:90%}
+  .stats{gap:9px}
+  .stat{padding:14px}
+  .stat strong{font-size:20px}
+  .module-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .module-image{height:100px}
+  .module-body{padding:13px}
+  .module-body h3{font-size:13px}
+  .module-body p{font-size:10px}
+  .bottom-grid{grid-template-columns:1fr}
+  .section-head{margin-top:26px}
+  .inner-hero{padding:23px}
+  .inner-hero h1{font-size:29px}
+  .mobile-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;
+    background:#fff;border-top:1px solid var(--border);
+    padding:9px 4px calc(9px + env(safe-area-inset-bottom));
+    justify-content:space-around;z-index:30;
+  }
+  .mobile-nav button{
+    border:0;background:none;color:#87938a;
+    display:flex;flex-direction:column;align-items:center;
+    gap:4px;font-size:9px;font-weight:700;padding:4px;
+  }
+  .mobile-nav button span{font-size:19px}
+  .mobile-nav button.active{color:var(--green)}
+  footer{flex-direction:column}
+}
+@media(max-width:380px){
+  .module-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
+
 <body>
+<div class="app">
 
-<header>
-  <div class="logo">YOSHI <span>TOOLS.</span></div>
-  <div class="status">● Herramientas gratuitas</div>
-</header>
-
-<section class="hero">
-  <h1>Tu negocio, <span>más inteligente.</span></h1>
-  <p>Herramientas gratuitas para calcular, organizar y hacer crecer tu negocio. Sin registros y sin complicaciones.</p>
-  <input class="search" id="search" placeholder="🔎 Buscar una herramienta..." oninput="filterTools()">
-</section>
-
-<main class="container">
-  <div id="catalog">
-    <h2 class="section-title">Herramientas disponibles</h2>
-    <div class="grid" id="grid">
-      <div class="card" data-name="ganancias utilidad beneficio" onclick="openTool('profit')">
-        <div class="icon">💰</div><h3>Calculadora de ganancias</h3>
-        <p>Descubre cuánto ganas realmente por tus ventas.</p><span class="tag">POPULAR</span>
-      </div>
-      <div class="card" data-name="precio venta producto" onclick="openTool('price')">
-        <div class="icon">🏷️</div><h3>Calculadora de precios</h3>
-        <p>Calcula cuánto cobrar según tu costo y margen deseado.</p><span class="tag">NEGOCIOS</span>
-      </div>
-      <div class="card" data-name="igv impuesto peru" onclick="openTool('igv')">
-        <div class="icon">🧾</div><h3>Calculadora de IGV</h3>
-        <p>Separa el valor de venta y el impuesto.</p><span class="tag">PERÚ</span>
-      </div>
-      <div class="card" data-name="gastos presupuesto dinero" onclick="openTool('expenses')">
-        <div class="icon">📊</div><h3>Control de gastos</h3>
-        <p>Calcula la diferencia entre tus ingresos y gastos.</p><span class="tag">FINANZAS</span>
-      </div>
-      <div class="card" data-name="cotizacion presupuesto cliente" onclick="openTool('quote')">
-        <div class="icon">📋</div><h3>Generador de cotizaciones</h3>
-        <p>Prepara una cotización para compartir con clientes.</p><span class="tag">PRODUCTIVIDAD</span>
-      </div>
-    </div>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">Y</div>
+    <div class="brand-name">YOSHI <span>FIT.</span></div>
   </div>
 
-  <section class="tool" id="profit">
-    <button class="back" onclick="home()">← Volver</button>
-    <h2>💰 Calculadora de ganancias</h2>
-    <label>Costo total (S/)</label><input id="pCost" type="number" min="0" step="0.01" placeholder="Ej. 50">
-    <label>Precio de venta unitario (S/)</label><input id="pSale" type="number" min="0" step="0.01" placeholder="Ej. 80">
-    <label>Cantidad vendida</label><input id="pQty" type="number" min="0" step="1" placeholder="Ej. 10">
-    <button class="primary" onclick="profit()">Calcular ganancias</button>
-    <div class="result" id="rProfit"></div>
+  <div class="menu-label">MENÚ PRINCIPAL</div>
+  <nav class="nav">
+    <button class="active" data-page="home"><span class="ico">⌂</span> Inicio</button>
+    <button data-page="nutrition"><span class="ico">🥗</span> Nutrición</button>
+    <button data-page="performance"><span class="ico">⚡</span> Rendimiento</button>
+    <button data-page="health"><span class="ico">♡</span> Salud y bienestar</button>
+    <button data-page="budget"><span class="ico">🛒</span> Mi presupuesto</button>
+    <button data-page="progress"><span class="ico">↗</span> Mi evolución</button>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="menu-label">TU ESPACIO</div>
+    <nav class="nav">
+      <button data-page="about"><span class="ico">✳</span> Sobre Yoshi Fit</button>
+    </nav>
+    <div class="mini-profile">
+      <div class="avatar">Y</div>
+      <div><strong>Mi espacio</strong><small>Bienvenido a Yoshi Fit</small></div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="mobile-brand"><span>Y</span> YOSHI FIT.</div>
+    <div class="breadcrumb">Yoshi Fit / <strong id="crumb">Inicio</strong></div>
+    <div class="top-right"><span class="today">Nutrición y rendimiento para tu día a día 🇵🇪</span></div>
+  </div>
+
+  <!-- INICIO -->
+  <section class="page active" id="home">
+    <div class="welcome">
+      <div>
+        <div class="eyebrow">TU CAMINO COMIENZA AQUÍ</div>
+        <h1>Cuida tu cuerpo.<br>Potencia tu vida.</h1>
+        <p>Alimentación inteligente, entrenamiento y bienestar.<br>Todo en un solo lugar, con el sabor de nuestra tierra.</p>
+      </div>
+      <div class="welcome-art">🌿</div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-content">
+        <div class="eyebrow">BIENVENIDO A YOSHI FIT</div>
+        <h2>Tu mejor versión<br>se construye cada día.</h2>
+        <p>Descubre herramientas prácticas para alimentarte mejor y desarrollar tu rendimiento físico.</p>
+        <button class="hero-button" onclick="navigate('nutrition')">Explorar nutrición →</button>
+      </div>
+      <div class="hero-plant">🥑</div>
+    </div>
+
+    <div class="section-head">
+      <h2>Tu espacio de bienestar</h2>
+      <span>Explora nuestros módulos</span>
+    </div>
+
+    <div class="module-grid">
+      <article class="module" onclick="navigate('nutrition')">
+        <div class="module-image nutrition">🥑</div>
+        <div class="module-body">
+          <small>ALIMENTACIÓN</small>
+          <h3>Yoshi Nutrition</h3>
+          <p>Planes de comida, recetas y alimentos peruanos.</p>
+          <span class="module-link">Descubrir módulo →</span>
+        </div>
+      </article>
+
+      <article class="module" onclick="navigate('performance')">
+        <div class="module-image sport">⚽</div>
+        <div class="module-body">
+          <small>ACTIVIDAD FÍSICA</small>
+          <h3>Yoshi Performance</h3>
+          <p>Entrenamientos, fútbol y preparación física.</p>
+          <span class="module-link">Descubrir módulo →</span>
+        </div>
+      </article>
+
+      <article class="module" onclick="navigate('health')">
+        <div class="module-image health">🌱</div>
+        <div class="module-body">
+          <small>BIENESTAR</small>
+          <h3>Yoshi Health</h3>
+          <p>Hábitos saludables y orientación responsable.</p>
+          <span class="module-link">Descubrir módulo →</span>
+        </div>
+      </article>
+
+      <article class="module" onclick="navigate('budget')">
+        <div class="module-image budget">🛍️</div>
+        <div class="module-body">
+          <small>ECONOMÍA</small>
+          <h3>Yoshi Budget</h3>
+          <p>Organiza tus compras y alimentación según tu bolsillo.</p>
+          <span class="module-link">Descubrir módulo →</span>
+        </div>
+      </article>
+
+      <article class="module" onclick="navigate('progress')">
+        <div class="module-image progress">📈</div>
+        <div class="module-body">
+          <small>SEGUIMIENTO</small>
+          <h3>My Evolution</h3>
+          <p>Observa tus avances y sigue tus objetivos.</p>
+          <span class="module-link">Descubrir módulo →</span>
+        </div>
+      </article>
+
+      <article class="module" onclick="navigate('about')">
+        <div class="module-image food">🇵🇪</div>
+        <div class="module-body">
+          <small>NUESTRA IDENTIDAD</small>
+          <h3>Hecho para nuestra tierra</h3>
+          <p>Una plataforma pensada para la realidad peruana.</p>
+          <span class="module-link">Conócenos →</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="panel">
+        <h3>Una alimentación equilibrada</h3>
+        <p class="panel-sub">Ejemplo de cómo organizaremos tus comidas.</p>
+        <div class="meal-row">
+          <div class="meal-emoji">🍳</div>
+          <div><strong>Desayuno</strong><small>Huevos, avena y fruta</small></div>
+          <span class="meal-time">Mañana</span>
+        </div>
+        <div class="meal-row">
+          <div class="meal-emoji">🍛</div>
+          <div><strong>Almuerzo</strong><small>Arroz, pollo y verduras</small></div>
+          <span class="meal-time">Mediodía</span>
+        </div>
+        <div class="meal-row">
+          <div class="meal-emoji">🍌</div>
+          <div><strong>Media tarde</strong><small>Fruta o yogur natural</small></div>
+          <span class="meal-time">Tarde</span>
+        </div>
+        <div class="meal-row">
+          <div class="meal-emoji">🥗</div>
+          <div><strong>Cena</strong><small>Una comida completa y equilibrada</small></div>
+          <span class="meal-time">Noche</span>
+        </div>
+        <div class="notice">Ejemplo ilustrativo. No es un plan nutricional personalizado.</div>
+      </div>
+
+      <div class="panel">
+        <h3>Tu progreso empieza aquí</h3>
+        <p class="panel-sub">Un paso a la vez, sin comparaciones.</p>
+        <div class="goal-circle">
+          <div class="goal-inner">
+            <div><strong>0%</strong><br><small>Sin registrar</small></div>
+          </div>
+        </div>
+        <p class="goal-note">Cuando configures tu perfil podrás registrar objetivos y visualizar tu evolución.</p>
+        <button class="hero-button" style="width:100%" onclick="navigate('progress')">Conocer mi evolución →</button>
+      </div>
+    </div>
   </section>
 
-  <section class="tool" id="price">
-    <button class="back" onclick="home()">← Volver</button>
-    <h2>🏷️ Calculadora de precios</h2>
-    <label>Costo del producto (S/)</label><input id="cCost" type="number" min="0" step="0.01">
-    <label>Margen de ganancia deseado (%)</label><input id="cMargin" type="number" min="0" max="99.99" step="0.1" placeholder="Ej. 30">
-    <button class="primary" onclick="price()">Calcular precio</button>
-    <div class="result" id="rPrice"></div>
+  <!-- NUTRICIÓN -->
+  <section class="page" id="nutrition">
+    <div class="inner-hero">
+      <div class="eyebrow">YOSHI NUTRITION</div>
+      <h1>Come mejor.<br>Vive mejor. 🥑</h1>
+      <p>Una alimentación equilibrada comienza con alimentos accesibles, recetas prácticas y decisiones informadas. Nuestra prioridad: aprovechar la riqueza de los alimentos peruanos.</p>
+    </div>
+    <div class="module-grid">
+      <article class="module">
+        <div class="module-image nutrition">🍽️</div>
+        <div class="module-body"><small>PLANIFICACIÓN</small><h3>Mi plan alimenticio</h3><p>Organiza tus comidas de acuerdo con tus objetivos y necesidades.</p><span class="coming">En desarrollo</span></div>
+      </article>
+      <article class="module">
+        <div class="module-image food">🥘</div>
+        <div class="module-body"><small>RECETAS</small><h3>Recetario peruano</h3><p>Ideas de desayunos, almuerzos, cenas y meriendas.</p><span class="coming">En desarrollo</span></div>
+      </article>
+      <article class="module">
+        <div class="module-image budget">🌾</div>
+        <div class="module-body"><small>ALIMENTOS</small><h3>Explorar alimentos</h3><p>Conoce la composición nutricional de nuestros alimentos.</p><span class="coming">En desarrollo</span></div>
+      </article>
+    </div>
+    <div class="notice">La información nutricional tendrá fuentes identificadas. Los planes para condiciones médicas especiales requerirán evaluación profesional.</div>
   </section>
 
-  <section class="tool" id="igv">
-    <button class="back" onclick="home()">← Volver</button>
-    <h2>🧾 Calculadora de IGV</h2>
-    <label>Importe (S/)</label><input id="iAmount" type="number" min="0" step="0.01" placeholder="Ej. 118">
-    <label>Tipo de importe</label>
-    <select id="iType"><option value="included">Incluye IGV</option><option value="excluded">No incluye IGV</option></select>
-    <button class="primary" onclick="igv()">Calcular IGV</button>
-    <div class="result" id="rIgv"></div>
-    <p style="color:var(--muted);font-size:12px">Se utiliza una tasa referencial del 18%. Verifica la tasa vigente y el régimen aplicable antes de usarla para declaraciones.</p>
+  <!-- RENDIMIENTO -->
+  <section class="page" id="performance">
+    <div class="inner-hero" style="background:#e0ede5">
+      <div class="eyebrow">YOSHI PERFORMANCE</div>
+      <h1>Entrena con propósito. ⚽</h1>
+      <p>Mejora tu condición física, desarrolla tus capacidades y prepara tu cuerpo para rendir mejor. Empezaremos por el fútbol amateur.</p>
+    </div>
+    <div class="module-grid">
+      <article class="module"><div class="module-image sport">⚽</div><div class="module-body"><small>FÚTBOL</small><h3>Preparación futbolística</h3><p>Velocidad, resistencia, agilidad y técnica.</p><span class="coming">En desarrollo</span></div></article>
+      <article class="module"><div class="module-image nutrition">🏋️</div><div class="module-body"><small>ENTRENAMIENTO</small><h3>Rutinas físicas</h3><p>Entrenamiento progresivo para distintos niveles.</p><span class="coming">En desarrollo</span></div></article>
+      <article class="module"><div class="module-image health">🧘</div><div class="module-body"><small>RECUPERACIÓN</small><h3>Movilidad y descanso</h3><p>Recuperación, calentamiento y hábitos de descanso.</p><span class="coming">En desarrollo</span></div></article>
+    </div>
   </section>
 
-  <section class="tool" id="expenses">
-    <button class="back" onclick="home()">← Volver</button>
-    <h2>📊 Control de gastos</h2>
-    <label>Ingresos totales (S/)</label><input id="eIncome" type="number" min="0" step="0.01">
-    <label>Gastos totales (S/)</label><input id="eExpense" type="number" min="0" step="0.01">
-    <button class="primary" onclick="expenses()">Calcular balance</button>
-    <div class="result" id="rExpenses"></div>
+  <!-- SALUD -->
+  <section class="page" id="health">
+    <div class="inner-hero" style="background:#f3eadd">
+      <div class="eyebrow">YOSHI HEALTH</div>
+      <h1>Bienestar que va más allá. 🌿</h1>
+      <p>Conoce tus hábitos y encuentra información confiable para cuidar tu bienestar diario.</p>
+    </div>
+    <div class="info-box">
+      <h3>Hábitos saludables</h3>
+      <p>Hidratación, descanso, movimiento y alimentación equilibrada. Pequeñas decisiones que pueden contribuir a tu bienestar.</p>
+      <span class="coming">En desarrollo</span>
+    </div>
+    <div class="notice">Yoshi Fit no diagnostica enfermedades ni sustituye la atención de médicos o nutricionistas. La información de salud tendrá límites claros y fuentes verificables.</div>
   </section>
 
-  <section class="tool" id="quote">
-    <button class="back" onclick="home()">← Volver</button>
-    <h2>📋 Generador de cotizaciones</h2>
-    <label>Nombre del negocio</label><input id="qBusiness" placeholder="Mi negocio">
-    <label>Nombre del cliente</label><input id="qClient" placeholder="Cliente">
-    <label>Producto o servicio</label><input id="qProduct" placeholder="Producto">
-    <label>Cantidad</label><input id="qQty" type="number" min="1" step="1" value="1">
-    <label>Precio unitario (S/)</label><input id="qPrice" type="number" min="0" step="0.01">
-    <button class="primary" onclick="quote()">Generar cotización</button>
-    <div class="result" id="rQuote"></div>
-    <button class="primary" id="copyQuote" style="display:none;background:var(--green);color:#071b16" onclick="copyQuote()">Copiar cotización</button>
+  <!-- PRESUPUESTO -->
+  <section class="page" id="budget">
+    <div class="inner-hero" style="background:#eeeadd">
+      <div class="eyebrow">YOSHI BUDGET</div>
+      <h1>Come bien sin descuidar tu bolsillo. 🛒</h1>
+      <p>Queremos ayudarte a organizar tus compras, comparar precios y encontrar alternativas alimenticias accesibles en tu localidad.</p>
+    </div>
+    <div class="module-grid">
+      <article class="module"><div class="module-image budget">💰</div><div class="module-body"><small>PLANIFICACIÓN</small><h3>Mi presupuesto</h3><p>Organiza cuánto puedes destinar a tu alimentación.</p><span class="coming">En desarrollo</span></div></article>
+      <article class="module"><div class="module-image nutrition">🥬</div><div class="module-body"><small>PRECIOS</small><h3>Comparador de alimentos</h3><p>Compara precios por zona, mercado y establecimiento.</p><span class="coming">En desarrollo</span></div></article>
+      <article class="module"><div class="module-image food">🧺</div><div class="module-body"><small>COMPRAS</small><h3>Lista inteligente</h3><p>Prepara tu lista de compras según tu planificación.</p><span class="coming">En desarrollo</span></div></article>
+    </div>
+    <div class="notice">Los precios se mostrarán con fuente, ubicación y fecha de actualización. No presentaremos precios estimados como si fueran precios reales.</div>
   </section>
+
+  <!-- EVOLUCIÓN -->
+  <section class="page" id="progress">
+    <div class="inner-hero" style="background:#e9e7f1">
+      <div class="eyebrow">MY EVOLUTION</div>
+      <h1>Cada avance cuenta. 📈</h1>
+      <p>Tu espacio para registrar objetivos, hábitos y evolución a lo largo del tiempo.</p>
+    </div>
+    <div class="module-grid">
+      <article class="module"><div class="module-image progress">🎯</div><div class="module-body"><small>OBJETIVOS</small><h3>Mis metas</h3><p>Define objetivos personales y deportivos.</p><span class="coming">En desarrollo</span></div></article>
+      <article class="module"><div class="module-image nutrition">📅</div><div class="module-body"><small>HÁBITOS</small><h3>Mi constancia</h3><p>Registra tus actividades y hábitos.</p><span class="coming">En desarrollo</span></div></article>
+      <article class="module"><div class="module-image sport">📊</div><div class="module-body"><small>ESTADÍSTICAS</small><h3>Mis resultados</h3><p>Visualiza tus registros y cambios.</p><span class="coming">En desarrollo</span></div></article>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="page" id="about">
+    <div class="inner-hero">
+      <div class="eyebrow">NUESTRA IDENTIDAD</div>
+      <h1>Yoshi Fit 🇵🇪</h1>
+      <p>Una plataforma que busca acercar la nutrición, el entrenamiento y el bienestar a las personas, considerando los alimentos, costumbres y presupuestos de nuestra realidad.</p>
+    </div>
+    <div class="info-box">
+      <h3>Nuestra visión</h3>
+      <p>Construir una herramienta útil, accesible y confiable para ayudar a las personas a tomar mejores decisiones sobre su alimentación y actividad física.</p>
+    </div>
+    <div class="info-box">
+      <h3>Una plataforma para todos</h3>
+      <p>Queremos desarrollar herramientas para diferentes edades, objetivos, niveles de actividad y presupuestos, siempre respetando la seguridad y las necesidades individuales.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span><strong>YOSHI FIT.</strong> Nutrición y rendimiento con identidad peruana.</span>
+    <span>© 2026 Yoshi Fit · Proyecto en desarrollo</span>
+  </footer>
 </main>
+</div>
 
-<footer>
-  <strong>YOSHI TOOLS</strong><br><br>
-  Herramientas digitales gratuitas para todos.<br>
-  © 2026 Yoshi Tools. Todos los derechos reservados.<br><br>
-  <a href="mailto:contacto@ejemplo.com">Contacto</a> ·
-  <a href="#" onclick="alert('Próximamente publicaremos nuestra política de privacidad.');return false">Privacidad</a>
-</footer>
+<nav class="mobile-nav">
+  <button class="active" data-page="home"><span>⌂</span>Inicio</button>
+  <button data-page="nutrition"><span>🥗</span>Nutrición</button>
+  <button data-page="performance"><span>⚽</span>Deporte</button>
+  <button data-page="budget"><span>🛒</span>Presupuesto</button>
+  <button data-page="progress"><span>📈</span>Progreso</button>
+</nav>
 
 <script>
-const money = n => 'S/ ' + n.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
-function show(id,html){
- const el=document.getElementById(id);
- el.style.display='block';
- el.innerHTML=html;
+const labels = {
+  home:'Inicio',
+  nutrition:'Nutrición',
+  performance:'Rendimiento',
+  health:'Salud y bienestar',
+  budget:'Mi presupuesto',
+  progress:'Mi evolución',
+  about:'Sobre Yoshi Fit'
+};
+
+function navigate(page){
+  document.querySelectorAll('.page').forEach(section=>{
+    section.classList.toggle('active',section.id===page);
+  });
+
+  document.querySelectorAll('[data-page]').forEach(button=>{
+    button.classList.toggle('active',button.dataset.page===page);
+  });
+
+  document.getElementById('crumb').textContent=labels[page]||'Inicio';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-function openTool(id){
- document.getElementById('catalog').classList.add('hidden');
- document.querySelectorAll('.tool').forEach(t=>t.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- window.scrollTo(0,0);
-}
-function home(){
- document.querySelectorAll('.tool').forEach(t=>t.classList.remove('active'));
- document.getElementById('catalog').classList.remove('hidden');
- window.scrollTo(0,0);
-}
-function val(id){return Number(document.getElementById(id).value)}
-function profit(){
- const c=val('pCost'),s=val('pSale'),q=val('pQty');
- if(c<0||s<0||q<=0||!Number.isFinite(c+s+q)){alert('Ingresa valores válidos y una cantidad mayor a cero.');return}
- const revenue=s*q,expense=c*q,net=revenue-expense;
- show('rProfit',`<small>Ingresos por ventas</small><strong>${money(revenue)}</strong><p>Costo total: ${money(expense)}</p><p>Ganancia: <b>${money(net)}</b></p><p>Margen sobre ventas: ${revenue?((net/revenue)*100).toFixed(2):'0.00'}%</p>`);
-}
-function price(){
- const c=val('cCost'),m=val('cMargin');
- if(c<=0||m<0||m>=100||!Number.isFinite(c+m)){alert('El costo debe ser mayor a cero y el margen debe estar entre 0 y 99.99%.');return}
- const p=c/(1-m/100);
- show('rPrice',`<small>Precio de venta recomendado</small><strong>${money(p)}</strong><p>Ganancia por unidad: ${money(p-c)}</p><p>Margen sobre el precio de venta: ${m}%</p>`);
-}
-function igv(){
- const a=val('iAmount'),rate=.18;
- if(a<0||!Number.isFinite(a)){alert('Ingresa un importe válido.');return}
- const base=document.getElementById('iType').value==='included'?a/(1+rate):a;
- const tax=base*rate,total=base+tax;
- show('rIgv',`<small>Valor de venta sin IGV</small><strong>${money(base)}</strong><p>IGV referencial: ${money(tax)}</p><p>Total con IGV: ${money(total)}</p>`);
-}
-function expenses(){
- const i=val('eIncome'),e=val('eExpense');
- if(i<0||e<0||!Number.isFinite(i+e)){alert('Ingresa valores válidos.');return}
- const b=i-e;
- show('rExpenses',`<small>Balance disponible</small><strong>${money(b)}</strong><p>Ingresos: ${money(i)}</p><p>Gastos: ${money(e)}</p><p>${b>=0?'Tienes un saldo positivo.':'Tus gastos superan tus ingresos.'}</p>`);
-}
-let quoteText='';
-function quote(){
- const b=document.getElementById('qBusiness').value.trim()||'Mi negocio';
- const c=document.getElementById('qClient').value.trim()||'Cliente';
- const p=document.getElementById('qProduct').value.trim();
- const q=val('qQty'),v=val('qPrice');
- if(!p||q<=0||v<0||!Number.isFinite(q+v)){alert('Completa el producto y los valores correctamente.');return}
- const total=q*v;
- quoteText=`COTIZACIÓN\n${b}\nCliente: ${c}\nProducto/servicio: ${p}\nCantidad: ${q}\nPrecio unitario: ${money(v)}\nTOTAL: ${money(total)}\n\nGracias por tu preferencia.`;
- show('rQuote',`<small>Total de la cotización</small><strong>${money(total)}</strong><p>Cliente: ${escapeHTML(c)}</p><p>Producto: ${escapeHTML(p)}</p><p>Cantidad: ${q}</p><p>Negocio: ${escapeHTML(b)}</p>`);
- document.getElementById('copyQuote').style.display='block';
-}
-function escapeHTML(s){
- return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-async function copyQuote(){
- try{await navigator.clipboard.writeText(quoteText);alert('Cotización copiada.')}
- catch(e){alert('No se pudo copiar.')}
-}
-function filterTools(){
- const s=document.getElementById('search').value.toLowerCase();
- document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hidden',!c.dataset.name.includes(s)));
-}
+
+document.querySelectorAll('[data-page]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    navigate(button.dataset.page);
+  });
+});
 </script>
 </body>
 </html>
