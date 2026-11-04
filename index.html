@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,113 +13,36 @@
 
 <style>
 :root {
-  --bg:#f5f6ef;
-  --white:#ffffff;
-  --dark:#183b2c;
-  --green:#285b40;
-  --lime:#c8e6a0;
-  --soft:#e9f0e4;
-  --text:#24352b;
-  --muted:#829087;
-  --border:#e7ebe3;
-  --orange:#e9a45b;
+  --bg:#f5f6ef;--white:#fff;--dark:#183b2c;--green:#285b40;
+  --lime:#c8e6a0;--soft:#e9f0e4;--text:#24352b;
+  --muted:#829087;--border:#e7ebe3;--orange:#e9a45b;
   --shadow:0 12px 35px rgba(28,58,39,.06);
 }
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:'DM Sans',sans-serif;
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 .app{min-height:100vh;display:flex}
 .sidebar{
-  width:250px;
-  background:var(--dark);
-  color:white;
-  padding:30px 19px;
-  position:fixed;
-  inset:0 auto 0 0;
-  display:flex;
-  flex-direction:column;
-  z-index:20;
+  width:250px;background:var(--dark);color:white;padding:30px 19px;
+  position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;z-index:20
 }
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:0 10px;
-  margin-bottom:45px;
-}
-.brand-icon{
-  width:39px;height:39px;
-  border-radius:13px;
-  background:var(--lime);
-  color:var(--dark);
-  display:grid;
-  place-items:center;
-  font-size:22px;
-  font-weight:800;
-}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px;margin-bottom:45px}
+.brand-icon{width:39px;height:39px;border-radius:13px;background:var(--lime);color:var(--dark);display:grid;place-items:center;font-size:22px;font-weight:800}
 .brand-name{font-family:Manrope;font-size:19px;font-weight:800;letter-spacing:-.8px}
 .brand-name span{color:var(--lime)}
-.menu-label{
-  color:#91aa98;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:1.5px;
-  padding:0 12px;
-  margin-bottom:12px;
-}
+.menu-label{color:#91aa98;font-size:10px;font-weight:800;letter-spacing:1.5px;padding:0 12px;margin-bottom:12px}
 .nav{display:grid;gap:7px}
-.nav button{
-  border:0;
-  background:transparent;
-  color:#c4d2c8;
-  display:flex;
-  align-items:center;
-  gap:13px;
-  padding:13px 14px;
-  border-radius:12px;
-  text-align:left;
-  font-size:13px;
-  font-weight:600;
-  transition:.2s;
-}
-.nav button:hover,.nav button.active{
-  background:#315c43;
-  color:white;
-}
+.nav button{border:0;background:transparent;color:#c4d2c8;display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:12px;text-align:left;font-size:13px;font-weight:600;transition:.2s}
+.nav button:hover,.nav button.active{background:#315c43;color:white}
 .nav .ico{font-size:18px;width:22px;text-align:center}
 .sidebar-bottom{margin-top:auto}
-.mini-profile{
-  border-top:1px solid #ffffff20;
-  padding:20px 8px 0;
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-.avatar{
-  width:38px;height:38px;border-radius:50%;
-  background:#d4e6c9;color:var(--dark);
-  display:grid;place-items:center;font-weight:800;
-}
+.mini-profile{border-top:1px solid #ffffff20;padding:20px 8px 0;display:flex;align-items:center;gap:11px}
+.avatar{width:38px;height:38px;border-radius:50%;background:#d4e6c9;color:var(--dark);display:grid;place-items:center;font-weight:800}
 .mini-profile strong{font-size:12px;display:block}
 .mini-profile small{font-size:10px;color:#a9c0ae}
-.main{
-  margin-left:250px;
-  width:calc(100% - 250px);
-  max-width:1600px;
-  padding:27px 4.2% 60px;
-}
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:34px;
-}
+.main{margin-left:250px;width:calc(100% - 250px);max-width:1600px;padding:27px 4.2% 60px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
 .breadcrumb{font-size:12px;color:var(--muted)}
 .breadcrumb strong{color:var(--dark)}
 .top-right{display:flex;align-items:center;gap:15px}
@@ -129,141 +51,34 @@ button{cursor:pointer}
 .page{display:none;animation:fade .3s ease}
 .page.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
-.welcome{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:25px;
-  margin-bottom:27px;
-}
-.eyebrow{
-  font-size:10px;
-  font-weight:800;
-  color:#72916f;
-  letter-spacing:1.8px;
-  text-transform:uppercase;
-}
-h1{
-  font-family:Manrope,sans-serif;
-  font-size:clamp(28px,3.5vw,42px);
-  letter-spacing:-2px;
-  line-height:1.13;
-  color:var(--dark);
-  margin:10px 0;
-}
+.welcome{display:flex;justify-content:space-between;align-items:center;gap:25px;margin-bottom:27px}
+.eyebrow{font-size:10px;font-weight:800;color:#72916f;letter-spacing:1.8px;text-transform:uppercase}
+h1{font-family:Manrope,sans-serif;font-size:clamp(28px,3.5vw,42px);letter-spacing:-2px;line-height:1.13;color:var(--dark);margin:10px 0}
 .welcome p{font-size:14px;color:var(--muted);line-height:1.7;margin:0}
-.welcome-art{
-  width:190px;height:145px;
-  border-radius:25px;
-  background:#dcebd2;
-  display:grid;place-items:center;
-  font-size:75px;
-  flex-shrink:0;
-  overflow:hidden;
-}
-.hero-card{
-  position:relative;
-  min-height:225px;
-  border-radius:23px;
-  overflow:hidden;
-  background:#234d35;
-  color:white;
-  display:flex;
-  align-items:center;
-  padding:35px 38px;
-  margin-bottom:27px;
-}
-.hero-card:after{
-  content:"";
-  position:absolute;
-  width:300px;height:300px;
-  border-radius:50%;
-  border:1px solid #ffffff20;
-  right:8%;top:-100px;
-  box-shadow:0 0 0 35px #ffffff08,0 0 0 75px #ffffff05;
-}
+.welcome-art{width:190px;height:145px;border-radius:25px;background:#dcebd2;display:grid;place-items:center;font-size:75px;flex-shrink:0;overflow:hidden}
+.hero-card{position:relative;min-height:225px;border-radius:23px;overflow:hidden;background:#234d35;color:white;display:flex;align-items:center;padding:35px 38px;margin-bottom:27px}
+.hero-card:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid #ffffff20;right:8%;top:-100px;box-shadow:0 0 0 35px #ffffff08,0 0 0 75px #ffffff05}
 .hero-content{position:relative;z-index:1;max-width:480px}
 .hero-card .eyebrow{color:var(--lime)}
-.hero-card h2{
-  font:800 clamp(23px,3vw,32px) Manrope;
-  letter-spacing:-1.3px;
-  margin:12px 0;
-}
+.hero-card h2{font:800 clamp(23px,3vw,32px) Manrope;letter-spacing:-1.3px;margin:12px 0}
 .hero-card p{color:#d2e1d4;font-size:13px;line-height:1.7}
-.hero-button{
-  background:var(--lime);
-  color:var(--dark);
-  border:0;border-radius:10px;
-  padding:12px 17px;
-  font-size:12px;font-weight:800;
-  margin-top:10px;
-}
+.hero-button{background:var(--lime);color:var(--dark);border:0;border-radius:10px;padding:12px 17px;font-size:12px;font-weight:800;margin-top:10px}
 .hero-button:hover{filter:brightness(.96);transform:translateY(-1px)}
-.hero-plant{
-  position:absolute;
-  right:10%;bottom:-12px;
-  font-size:125px;
-  opacity:.95;
-  z-index:1;
-}
-.section-head{
-  display:flex;justify-content:space-between;align-items:center;
-  margin:32px 0 16px;
-}
-.section-head h2{
-  font:800 18px Manrope;
-  color:var(--dark);
-  margin:0;
-  letter-spacing:-.5px;
-}
+.hero-plant{position:absolute;right:10%;bottom:-12px;font-size:125px;opacity:.95;z-index:1}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:32px 0 16px}
+.section-head h2{font:800 18px Manrope;color:var(--dark);margin:0;letter-spacing:-.5px}
 .section-head span{font-size:11px;color:var(--muted)}
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:13px;
-}
-.stat{
-  background:white;
-  border:1px solid var(--border);
-  padding:19px;
-  border-radius:17px;
-}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.stat{background:white;border:1px solid var(--border);padding:19px;border-radius:17px}
 .stat-top{display:flex;justify-content:space-between;align-items:center}
-.stat-icon{
-  width:34px;height:34px;
-  background:var(--soft);
-  border-radius:11px;
-  display:grid;place-items:center;font-size:17px;
-}
+.stat-icon{width:34px;height:34px;background:var(--soft);border-radius:11px;display:grid;place-items:center;font-size:17px}
 .stat small{font-size:10px;color:var(--muted)}
-.stat strong{
-  display:block;
-  font:800 23px Manrope;
-  color:var(--dark);
-  margin:13px 0 4px;
-}
+.stat strong{display:block;font:800 23px Manrope;color:var(--dark);margin:13px 0 4px}
 .stat p{font-size:10px;color:var(--muted);margin:0}
-.module-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-.module{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:18px;
-  overflow:hidden;
-  transition:.2s;
-  cursor:pointer;
-}
+.module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.module{background:white;border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:.2s;cursor:pointer}
 .module:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.module-image{
-  height:130px;
-  display:grid;place-items:center;
-  font-size:55px;
-  position:relative;
-  overflow:hidden;
-}
+.module-image{height:130px;display:grid;place-items:center;font-size:55px;position:relative;overflow:hidden}
 .module-image.nutrition{background:#e9efdc}
 .module-image.sport{background:#dcebe3}
 .module-image.health{background:#f5e8d9}
@@ -271,189 +86,78 @@ h1{
 .module-image.progress{background:#e6e5f1}
 .module-image.food{background:#e8eddf}
 .module-body{padding:17px}
-.module-body small{
-  color:#79906f;font-size:9px;
-  font-weight:800;letter-spacing:1px;
-}
-.module-body h3{
-  font:800 15px Manrope;color:var(--dark);
-  margin:7px 0;
-}
-.module-body p{
-  font-size:11px;line-height:1.6;color:var(--muted);
-  margin:0 0 13px;
-}
+.module-body small{color:#79906f;font-size:9px;font-weight:800;letter-spacing:1px}
+.module-body h3{font:800 15px Manrope;color:var(--dark);margin:7px 0}
+.module-body p{font-size:11px;line-height:1.6;color:var(--muted);margin:0 0 13px}
 .module-link{font-size:11px;font-weight:800;color:var(--green)}
-.bottom-grid{
-  display:grid;grid-template-columns:1.2fr .8fr;
-  gap:15px;margin-top:27px;
-}
-.panel{
-  background:white;border:1px solid var(--border);
-  border-radius:18px;padding:22px;
-}
+.bottom-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:15px;margin-top:27px}
+.panel{background:white;border:1px solid var(--border);border-radius:18px;padding:22px}
 .panel h3{font:800 15px Manrope;color:var(--dark);margin:0 0 6px}
 .panel-sub{font-size:11px;color:var(--muted);margin:0 0 18px}
-.meal-row{
-  display:flex;align-items:center;gap:13px;
-  padding:12px 0;border-bottom:1px solid var(--border);
-}
+.meal-row{display:flex;align-items:center;gap:13px;padding:12px 0;border-bottom:1px solid var(--border)}
 .meal-row:last-child{border:0}
-.meal-emoji{
-  width:43px;height:43px;border-radius:13px;
-  background:#f1f3e9;display:grid;place-items:center;font-size:22px;
-}
+.meal-emoji{width:43px;height:43px;border-radius:13px;background:#f1f3e9;display:grid;place-items:center;font-size:22px}
 .meal-row strong{display:block;font-size:12px;color:var(--dark)}
 .meal-row small{font-size:10px;color:var(--muted)}
 .meal-time{margin-left:auto;font-size:10px;color:var(--muted)}
-.goal-circle{
-  width:120px;height:120px;border-radius:50%;
-  margin:18px auto;
-  background:conic-gradient(#477c52 0 0%,#e9eee5 0 100%);
-  display:grid;place-items:center;
-}
-.goal-inner{
-  width:94px;height:94px;background:white;
-  border-radius:50%;display:grid;place-items:center;
-  text-align:center;
-}
+.goal-circle{width:120px;height:120px;border-radius:50%;margin:18px auto;background:conic-gradient(#477c52 0 0%,#e9eee5 0 100%);display:grid;place-items:center}
+.goal-inner{width:94px;height:94px;background:white;border-radius:50%;display:grid;place-items:center;text-align:center}
 .goal-inner strong{font:800 23px Manrope;color:var(--dark)}
 .goal-inner small{font-size:9px;color:var(--muted)}
 .goal-note{text-align:center;font-size:11px;color:var(--muted);line-height:1.6}
-.inner-hero{
-  padding:32px;
-  border-radius:22px;
-  background:#e4eddd;
-  margin-bottom:22px;
-}
+.inner-hero{padding:32px;border-radius:22px;background:#e4eddd;margin-bottom:22px}
 .inner-hero h1{font-size:34px}
 .inner-hero p{font-size:13px;color:#718174;line-height:1.7;max-width:600px}
-.info-box{
-  background:#fff;border:1px solid var(--border);
-  border-radius:17px;padding:22px;margin-top:16px;
-}
+.info-box{background:#fff;border:1px solid var(--border);border-radius:17px;padding:22px;margin-top:16px}
 .info-box h3{font:800 16px Manrope;color:var(--dark);margin:0 0 10px}
 .info-box p{font-size:12px;line-height:1.7;color:var(--muted)}
-.notice{
-  background:#fff8e9;border:1px solid #f1e5c9;
-  color:#866d45;border-radius:12px;
-  padding:13px 15px;font-size:11px;line-height:1.6;
-  margin-top:18px;
-}
-.coming{
-  display:inline-block;
-  background:#edf2e9;color:#54764f;
-  padding:6px 10px;border-radius:20px;
-  font-size:10px;font-weight:800;
-}
+.notice{background:#fff8e9;border:1px solid #f1e5c9;color:#866d45;border-radius:12px;padding:13px 15px;font-size:11px;line-height:1.6;margin-top:18px}
+.coming{display:inline-block;background:#edf2e9;color:#54764f;padding:6px 10px;border-radius:20px;font-size:10px;font-weight:800}
 
-/* PERFIL */
-.profile-intro{
-  display:flex;
-  align-items:center;
-  gap:16px;
-}
-.profile-symbol{
-  width:60px;height:60px;flex-shrink:0;
-  display:grid;place-items:center;
-  background:#d3e6c9;border-radius:18px;
-  font-size:29px;
-}
-.profile-form{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:17px;
-  margin-top:20px;
-}
+/* PERFIL Y AUTENTICACIÓN */
+.profile-intro{display:flex;align-items:center;gap:16px}
+.profile-symbol{width:60px;height:60px;flex-shrink:0;display:grid;place-items:center;background:#d3e6c9;border-radius:18px;font-size:29px}
+.profile-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin-top:20px}
 .form-field{display:flex;flex-direction:column;gap:7px}
 .form-field.full{grid-column:1/-1}
-.form-field label{
-  font-size:11px;font-weight:800;color:var(--dark);
-}
-.form-field input,
-.form-field select,
-.form-field textarea{
-  width:100%;
-  border:1px solid var(--border);
-  background:#fbfcf9;
-  color:var(--text);
-  border-radius:10px;
-  padding:12px 13px;
-  font-size:12px;
-  outline:none;
-  transition:.2s;
-}
-.form-field input:focus,
-.form-field select:focus,
-.form-field textarea:focus{
-  border-color:#80a77c;
-  box-shadow:0 0 0 3px #80a77c20;
-}
+.form-field label{font-size:11px;font-weight:800;color:var(--dark)}
+.form-field input,.form-field select,.form-field textarea{width:100%;border:1px solid var(--border);background:#fbfcf9;color:var(--text);border-radius:10px;padding:12px 13px;font-size:12px;outline:none;transition:.2s}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:#80a77c;box-shadow:0 0 0 3px #80a77c20}
 .form-field textarea{resize:vertical;min-height:80px}
 .form-hint{font-size:10px;color:var(--muted);line-height:1.5}
-.profile-actions{
-  grid-column:1/-1;
-  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-}
-.save-button{
-  border:0;border-radius:11px;
-  background:var(--dark);color:white;
-  padding:13px 20px;font-size:12px;font-weight:800;
-}
+.profile-actions{grid-column:1/-1;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.save-button{border:0;border-radius:11px;background:var(--dark);color:white;padding:13px 20px;font-size:12px;font-weight:800}
 .save-button:hover{background:var(--green)}
-.clear-button{
-  border:1px solid var(--border);
-  background:white;color:#8b6558;
-  border-radius:11px;padding:12px 16px;
-  font-size:11px;font-weight:700;
-}
-.profile-message{
-  display:none;
-  padding:13px 15px;border-radius:11px;
-  margin-top:16px;font-size:12px;
-  line-height:1.5;
-}
+.clear-button{border:1px solid var(--border);background:white;color:#8b6558;border-radius:11px;padding:12px 16px;font-size:11px;font-weight:700}
+.profile-message{display:none;padding:13px 15px;border-radius:11px;margin-top:16px;font-size:12px;line-height:1.5}
 .profile-message.success{display:block;background:#e9f3e6;color:#315c43}
 .profile-message.error{display:block;background:#fff0ec;color:#9a493d}
-.profile-summary{
-  display:none;
-  background:white;border:1px solid var(--border);
-  border-radius:17px;padding:22px;margin-top:18px;
-}
-.profile-summary h3{
-  font:800 16px Manrope;color:var(--dark);margin:0 0 5px;
-}
+.profile-summary{display:none;background:white;border:1px solid var(--border);border-radius:17px;padding:22px;margin-top:18px}
+.profile-summary h3{font:800 16px Manrope;color:var(--dark);margin:0 0 5px}
 .summary-sub{font-size:11px;color:var(--muted);margin-bottom:17px}
-.summary-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
-}
-.summary-item{
-  background:#f7f9f4;border:1px solid var(--border);
-  border-radius:12px;padding:13px;
-  min-width:0;
-}
-.summary-item small{
-  display:block;font-size:9px;color:var(--muted);
-  margin-bottom:7px;font-weight:700;
-}
-.summary-item strong{
-  display:block;font-size:12px;color:var(--dark);
-  overflow-wrap:anywhere;
-}
-.summary-preferences{
-  margin-top:13px;padding:13px;
-  border-radius:12px;background:#f7f9f4;
-  font-size:11px;line-height:1.6;color:var(--text);
-}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.summary-item{background:#f7f9f4;border:1px solid var(--border);border-radius:12px;padding:13px;min-width:0}
+.summary-item small{display:block;font-size:9px;color:var(--muted);margin-bottom:7px;font-weight:700}
+.summary-item strong{display:block;font-size:12px;color:var(--dark);overflow-wrap:anywhere}
+.summary-preferences{margin-top:13px;padding:13px;border-radius:12px;background:#f7f9f4;font-size:11px;line-height:1.6;color:var(--text)}
 .summary-preferences strong{color:var(--dark)}
 .profile-summary .hero-button{margin-top:16px}
 
-footer{
-  border-top:1px solid var(--border);
-  margin-top:45px;padding-top:20px;
-  font-size:10px;color:var(--muted);
-  display:flex;justify-content:space-between;gap:10px;
-}
+/* ACCESO SUPABASE */
+.auth-card{background:#f7f9f4;border:1px solid var(--border);border-radius:14px;padding:18px;margin:18px 0}
+.auth-card h3{margin:0 0 7px;color:var(--dark);font:800 15px Manrope}
+.auth-card p{margin:0 0 14px}
+.auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.auth-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
+.auth-button{border:0;border-radius:10px;padding:11px 15px;font-size:11px;font-weight:800;background:var(--dark);color:white}
+.auth-button.secondary{background:#e4eddd;color:var(--dark)}
+.auth-button.danger{background:#fff0ec;color:#9a493d}
+.auth-button:disabled{opacity:.5;cursor:not-allowed}
+.auth-status{font-size:11px;color:var(--muted);margin-top:12px;line-height:1.6}
+.auth-status.logged{color:#315c43;font-weight:700}
+.auth-status.error{color:#9a493d}
+.auth-user{font-size:11px;color:var(--dark);font-weight:700;margin-top:10px;overflow-wrap:anywhere}
+footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-size:10px;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
 .mobile-nav{display:none}
 @media(max-width:1050px){
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -484,23 +188,15 @@ footer{
   .section-head{margin-top:26px}
   .inner-hero{padding:23px}
   .inner-hero h1{font-size:29px}
-  .mobile-nav{
-    display:flex;position:fixed;bottom:0;left:0;right:0;
-    background:#fff;border-top:1px solid var(--border);
-    padding:9px 4px calc(9px + env(safe-area-inset-bottom));
-    justify-content:space-around;z-index:30;
-  }
-  .mobile-nav button{
-    border:0;background:none;color:#87938a;
-    display:flex;flex-direction:column;align-items:center;
-    gap:4px;font-size:9px;font-weight:700;padding:4px;
-  }
+  .mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:9px 4px calc(9px + env(safe-area-inset-bottom));justify-content:space-around;z-index:30}
+  .mobile-nav button{border:0;background:none;color:#87938a;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9px;font-weight:700;padding:4px}
   .mobile-nav button span{font-size:19px}
   .mobile-nav button.active{color:var(--green)}
   footer{flex-direction:column}
   .profile-form{grid-template-columns:1fr}
   .form-field.full,.profile-actions{grid-column:auto}
   .summary-grid{grid-template-columns:1fr 1fr}
+  .auth-grid{grid-template-columns:1fr}
 }
 @media(max-width:380px){
   .module-grid{grid-template-columns:1fr}
@@ -517,7 +213,6 @@ footer{
     <div class="brand-icon">Y</div>
     <div class="brand-name">YOSHI <span>FIT.</span></div>
   </div>
-
   <div class="menu-label">MENÚ PRINCIPAL</div>
   <nav class="nav">
     <button class="active" data-page="home"><span class="ico">⌂</span> Inicio</button>
@@ -527,7 +222,6 @@ footer{
     <button data-page="budget"><span class="ico">🛒</span> Mi presupuesto</button>
     <button data-page="progress"><span class="ico">↗</span> Mi evolución</button>
   </nav>
-
   <div class="sidebar-bottom">
     <div class="menu-label">TU ESPACIO</div>
     <nav class="nav">
@@ -551,7 +245,6 @@ footer{
     <div class="top-right"><span class="today">Nutrición y rendimiento para tu día a día 🇵🇪</span></div>
   </div>
 
-  <!-- INICIO -->
   <section class="page active" id="home">
     <div class="welcome">
       <div>
@@ -561,7 +254,6 @@ footer{
       </div>
       <div class="welcome-art">🌿</div>
     </div>
-
     <div class="hero-card">
       <div class="hero-content">
         <div class="eyebrow">BIENVENIDO A YOSHI FIT</div>
@@ -571,146 +263,47 @@ footer{
       </div>
       <div class="hero-plant">🥑</div>
     </div>
-
-    <div class="section-head">
-      <h2>Tu espacio de bienestar</h2>
-      <span>Explora nuestros módulos</span>
-    </div>
-
+    <div class="section-head"><h2>Tu espacio de bienestar</h2><span>Explora nuestros módulos</span></div>
     <div class="module-grid">
-      <article class="module" onclick="navigate('nutrition')">
-        <div class="module-image nutrition">🥑</div>
-        <div class="module-body">
-          <small>ALIMENTACIÓN</small>
-          <h3>Yoshi Nutrition</h3>
-          <p>Planes de comida, recetas y alimentos peruanos.</p>
-          <span class="module-link">Descubrir módulo →</span>
-        </div>
-      </article>
-
-      <article class="module" onclick="navigate('performance')">
-        <div class="module-image sport">⚽</div>
-        <div class="module-body">
-          <small>ACTIVIDAD FÍSICA</small>
-          <h3>Yoshi Performance</h3>
-          <p>Entrenamientos, fútbol y preparación física.</p>
-          <span class="module-link">Descubrir módulo →</span>
-        </div>
-      </article>
-
-      <article class="module" onclick="navigate('health')">
-        <div class="module-image health">🌱</div>
-        <div class="module-body">
-          <small>BIENESTAR</small>
-          <h3>Yoshi Health</h3>
-          <p>Hábitos saludables y orientación responsable.</p>
-          <span class="module-link">Descubrir módulo →</span>
-        </div>
-      </article>
-
-      <article class="module" onclick="navigate('budget')">
-        <div class="module-image budget">🛍️</div>
-        <div class="module-body">
-          <small>ECONOMÍA</small>
-          <h3>Yoshi Budget</h3>
-          <p>Organiza tus compras y alimentación según tu bolsillo.</p>
-          <span class="module-link">Descubrir módulo →</span>
-        </div>
-      </article>
-
-      <article class="module" onclick="navigate('progress')">
-        <div class="module-image progress">📈</div>
-        <div class="module-body">
-          <small>SEGUIMIENTO</small>
-          <h3>My Evolution</h3>
-          <p>Observa tus avances y sigue tus objetivos.</p>
-          <span class="module-link">Descubrir módulo →</span>
-        </div>
-      </article>
-
-      <article class="module" onclick="navigate('profile')">
-        <div class="module-image food">👤</div>
-        <div class="module-body">
-          <small>PERSONALIZACIÓN</small>
-          <h3>Mi perfil</h3>
-          <p>Configura tus datos y objetivos personales.</p>
-          <span class="module-link">Completar perfil →</span>
-        </div>
-      </article>
+      <article class="module" onclick="navigate('nutrition')"><div class="module-image nutrition">🥑</div><div class="module-body"><small>ALIMENTACIÓN</small><h3>Yoshi Nutrition</h3><p>Planes de comida, recetas y alimentos peruanos.</p><span class="module-link">Descubrir módulo →</span></div></article>
+      <article class="module" onclick="navigate('performance')"><div class="module-image sport">⚽</div><div class="module-body"><small>ACTIVIDAD FÍSICA</small><h3>Yoshi Performance</h3><p>Entrenamientos, fútbol y preparación física.</p><span class="module-link">Descubrir módulo →</span></div></article>
+      <article class="module" onclick="navigate('health')"><div class="module-image health">🌱</div><div class="module-body"><small>BIENESTAR</small><h3>Yoshi Health</h3><p>Hábitos saludables y orientación responsable.</p><span class="module-link">Descubrir módulo →</span></div></article>
+      <article class="module" onclick="navigate('budget')"><div class="module-image budget">🛍️</div><div class="module-body"><small>ECONOMÍA</small><h3>Yoshi Budget</h3><p>Organiza tus compras y alimentación según tu bolsillo.</p><span class="module-link">Descubrir módulo →</span></div></article>
+      <article class="module" onclick="navigate('progress')"><div class="module-image progress">📈</div><div class="module-body"><small>SEGUIMIENTO</small><h3>My Evolution</h3><p>Observa tus avances y sigue tus objetivos.</p><span class="module-link">Descubrir módulo →</span></div></article>
+      <article class="module" onclick="navigate('profile')"><div class="module-image food">👤</div><div class="module-body"><small>PERSONALIZACIÓN</small><h3>Mi perfil</h3><p>Configura tus datos y objetivos personales.</p><span class="module-link">Completar perfil →</span></div></article>
     </div>
-
     <div class="bottom-grid">
       <div class="panel">
         <h3>Una alimentación equilibrada</h3>
         <p class="panel-sub">Ejemplo de cómo organizaremos tus comidas.</p>
-        <div class="meal-row">
-          <div class="meal-emoji">🍳</div>
-          <div><strong>Desayuno</strong><small>Huevos, avena y fruta</small></div>
-          <span class="meal-time">Mañana</span>
-        </div>
-        <div class="meal-row">
-          <div class="meal-emoji">🍛</div>
-          <div><strong>Almuerzo</strong><small>Arroz, pollo y verduras</small></div>
-          <span class="meal-time">Mediodía</span>
-        </div>
-        <div class="meal-row">
-          <div class="meal-emoji">🍌</div>
-          <div><strong>Media tarde</strong><small>Fruta o yogur natural</small></div>
-          <span class="meal-time">Tarde</span>
-        </div>
-        <div class="meal-row">
-          <div class="meal-emoji">🥗</div>
-          <div><strong>Cena</strong><small>Una comida completa y equilibrada</small></div>
-          <span class="meal-time">Noche</span>
-        </div>
+        <div class="meal-row"><div class="meal-emoji">🍳</div><div><strong>Desayuno</strong><small>Huevos, avena y fruta</small></div><span class="meal-time">Mañana</span></div>
+        <div class="meal-row"><div class="meal-emoji">🍛</div><div><strong>Almuerzo</strong><small>Arroz, pollo y verduras</small></div><span class="meal-time">Mediodía</span></div>
+        <div class="meal-row"><div class="meal-emoji">🍌</div><div><strong>Media tarde</strong><small>Fruta o yogur natural</small></div><span class="meal-time">Tarde</span></div>
+        <div class="meal-row"><div class="meal-emoji">🥗</div><div><strong>Cena</strong><small>Una comida completa y equilibrada</small></div><span class="meal-time">Noche</span></div>
         <div class="notice">Ejemplo ilustrativo. No es un plan nutricional personalizado.</div>
       </div>
-
       <div class="panel">
         <h3>Tu progreso empieza aquí</h3>
         <p class="panel-sub">Un paso a la vez, sin comparaciones.</p>
-        <div class="goal-circle">
-          <div class="goal-inner">
-            <div><strong>0%</strong><br><small>Sin registrar</small></div>
-          </div>
-        </div>
+        <div class="goal-circle"><div class="goal-inner"><div><strong>0%</strong><br><small>Sin registrar</small></div></div></div>
         <p class="goal-note">Cuando configures tu perfil podrás registrar objetivos y visualizar tu evolución.</p>
         <button class="hero-button" style="width:100%" onclick="navigate('profile')">Configurar mi perfil →</button>
       </div>
     </div>
   </section>
 
-  <!-- NUTRICIÓN -->
   <section class="page" id="nutrition">
-    <div class="inner-hero">
-      <div class="eyebrow">YOSHI NUTRITION</div>
-      <h1>Come mejor.<br>Vive mejor. 🥑</h1>
-      <p>Una alimentación equilibrada comienza con alimentos accesibles, recetas prácticas y decisiones informadas. Nuestra prioridad: aprovechar la riqueza de los alimentos peruanos.</p>
-    </div>
+    <div class="inner-hero"><div class="eyebrow">YOSHI NUTRITION</div><h1>Come mejor.<br>Vive mejor. 🥑</h1><p>Una alimentación equilibrada comienza con alimentos accesibles, recetas prácticas y decisiones informadas. Nuestra prioridad: aprovechar la riqueza de los alimentos peruanos.</p></div>
     <div class="module-grid">
-      <article class="module">
-        <div class="module-image nutrition">🍽️</div>
-        <div class="module-body"><small>PLANIFICACIÓN</small><h3>Mi plan alimenticio</h3><p>Organiza tus comidas de acuerdo con tus objetivos y necesidades.</p><span class="coming">En desarrollo</span></div>
-      </article>
-      <article class="module">
-        <div class="module-image food">🥘</div>
-        <div class="module-body"><small>RECETAS</small><h3>Recetario peruano</h3><p>Ideas de desayunos, almuerzos, cenas y meriendas.</p><span class="coming">En desarrollo</span></div>
-      </article>
-      <article class="module">
-        <div class="module-image budget">🌾</div>
-        <div class="module-body"><small>ALIMENTOS</small><h3>Explorar alimentos</h3><p>Conoce la composición nutricional de nuestros alimentos.</p><span class="coming">En desarrollo</span></div>
-      </article>
+      <article class="module"><div class="module-image nutrition">🍽️</div><div class="module-body"><small>PLANIFICACIÓN</small><h3>Mi plan alimenticio</h3><p>Organiza tus comidas de acuerdo con tus objetivos y necesidades.</p><span class="coming">En desarrollo</span></div></article>
+      <article class="module"><div class="module-image food">🥘</div><div class="module-body"><small>RECETAS</small><h3>Recetario peruano</h3><p>Ideas de desayunos, almuerzos, cenas y meriendas.</p><span class="coming">En desarrollo</span></div></article>
+      <article class="module"><div class="module-image budget">🌾</div><div class="module-body"><small>ALIMENTOS</small><h3>Explorar alimentos</h3><p>Conoce la composición nutricional de nuestros alimentos.</p><span class="coming">En desarrollo</span></div></article>
     </div>
     <div class="notice">La información nutricional tendrá fuentes identificadas. Los planes para condiciones médicas especiales requerirán evaluación profesional.</div>
   </section>
 
-  <!-- RENDIMIENTO -->
   <section class="page" id="performance">
-    <div class="inner-hero" style="background:#e0ede5">
-      <div class="eyebrow">YOSHI PERFORMANCE</div>
-      <h1>Entrena con propósito. ⚽</h1>
-      <p>Mejora tu condición física, desarrolla tus capacidades y prepara tu cuerpo para rendir mejor. Empezaremos por el fútbol amateur.</p>
-    </div>
+    <div class="inner-hero" style="background:#e0ede5"><div class="eyebrow">YOSHI PERFORMANCE</div><h1>Entrena con propósito. ⚽</h1><p>Mejora tu condición física, desarrolla tus capacidades y prepara tu cuerpo para rendir mejor. Empezaremos por el fútbol amateur.</p></div>
     <div class="module-grid">
       <article class="module"><div class="module-image sport">⚽</div><div class="module-body"><small>FÚTBOL</small><h3>Preparación futbolística</h3><p>Velocidad, resistencia, agilidad y técnica.</p><span class="coming">En desarrollo</span></div></article>
       <article class="module"><div class="module-image nutrition">🏋️</div><div class="module-body"><small>ENTRENAMIENTO</small><h3>Rutinas físicas</h3><p>Entrenamiento progresivo para distintos niveles.</p><span class="coming">En desarrollo</span></div></article>
@@ -718,28 +311,14 @@ footer{
     </div>
   </section>
 
-  <!-- SALUD -->
   <section class="page" id="health">
-    <div class="inner-hero" style="background:#f3eadd">
-      <div class="eyebrow">YOSHI HEALTH</div>
-      <h1>Bienestar que va más allá. 🌿</h1>
-      <p>Conoce tus hábitos y encuentra información confiable para cuidar tu bienestar diario.</p>
-    </div>
-    <div class="info-box">
-      <h3>Hábitos saludables</h3>
-      <p>Hidratación, descanso, movimiento y alimentación equilibrada. Pequeñas decisiones que pueden contribuir a tu bienestar.</p>
-      <span class="coming">En desarrollo</span>
-    </div>
+    <div class="inner-hero" style="background:#f3eadd"><div class="eyebrow">YOSHI HEALTH</div><h1>Bienestar que va más allá. 🌿</h1><p>Conoce tus hábitos y encuentra información confiable para cuidar tu bienestar diario.</p></div>
+    <div class="info-box"><h3>Hábitos saludables</h3><p>Hidratación, descanso, movimiento y alimentación equilibrada. Pequeñas decisiones que pueden contribuir a tu bienestar.</p><span class="coming">En desarrollo</span></div>
     <div class="notice">Yoshi Fit no diagnostica enfermedades ni sustituye la atención de médicos o nutricionistas. La información de salud tendrá límites claros y fuentes verificables.</div>
   </section>
 
-  <!-- PRESUPUESTO -->
   <section class="page" id="budget">
-    <div class="inner-hero" style="background:#eeeadd">
-      <div class="eyebrow">YOSHI BUDGET</div>
-      <h1>Come bien sin descuidar tu bolsillo. 🛒</h1>
-      <p>Queremos ayudarte a organizar tus compras, comparar precios y encontrar alternativas alimenticias accesibles en tu localidad.</p>
-    </div>
+    <div class="inner-hero" style="background:#eeeadd"><div class="eyebrow">YOSHI BUDGET</div><h1>Come bien sin descuidar tu bolsillo. 🛒</h1><p>Queremos ayudarte a organizar tus compras, comparar precios y encontrar alternativas alimenticias accesibles en tu localidad.</p></div>
     <div class="module-grid">
       <article class="module"><div class="module-image budget">💰</div><div class="module-body"><small>PLANIFICACIÓN</small><h3>Mi presupuesto</h3><p>Organiza cuánto puedes destinar a tu alimentación.</p><span class="coming">En desarrollo</span></div></article>
       <article class="module"><div class="module-image nutrition">🥬</div><div class="module-body"><small>PRECIOS</small><h3>Comparador de alimentos</h3><p>Compara precios por zona, mercado y establecimiento.</p><span class="coming">En desarrollo</span></div></article>
@@ -748,13 +327,8 @@ footer{
     <div class="notice">Los precios se mostrarán con fuente, ubicación y fecha de actualización. No presentaremos precios estimados como si fueran precios reales.</div>
   </section>
 
-  <!-- EVOLUCIÓN -->
   <section class="page" id="progress">
-    <div class="inner-hero" style="background:#e9e7f1">
-      <div class="eyebrow">MY EVOLUTION</div>
-      <h1>Cada avance cuenta. 📈</h1>
-      <p>Tu espacio para registrar objetivos, hábitos y evolución a lo largo del tiempo.</p>
-    </div>
+    <div class="inner-hero" style="background:#e9e7f1"><div class="eyebrow">MY EVOLUTION</div><h1>Cada avance cuenta. 📈</h1><p>Tu espacio para registrar objetivos, hábitos y evolución a lo largo del tiempo.</p></div>
     <div class="module-grid">
       <article class="module"><div class="module-image progress">🎯</div><div class="module-body"><small>OBJETIVOS</small><h3>Mis metas</h3><p>Define objetivos personales y deportivos.</p><span class="coming">En desarrollo</span></div></article>
       <article class="module"><div class="module-image nutrition">📅</div><div class="module-body"><small>HÁBITOS</small><h3>Mi constancia</h3><p>Registra tus actividades y hábitos.</p><span class="coming">En desarrollo</span></div></article>
@@ -762,121 +336,59 @@ footer{
     </div>
   </section>
 
-  <!-- PERFIL -->
   <section class="page" id="profile">
     <div class="inner-hero">
-      <div class="profile-intro">
-        <div class="profile-symbol">👤</div>
-        <div>
-          <div class="eyebrow">MI ESPACIO PERSONAL</div>
-          <h1>Construyamos tu perfil.</h1>
-        </div>
-      </div>
+      <div class="profile-intro"><div class="profile-symbol">👤</div><div><div class="eyebrow">MI ESPACIO PERSONAL</div><h1>Construyamos tu perfil.</h1></div></div>
       <p>Cuéntanos sobre ti, tus objetivos y tu día a día. Esta información será la base para personalizar las herramientas de Yoshi Fit.</p>
     </div>
 
     <div class="info-box">
+      <h3>Tu cuenta Yoshi Fit</h3>
+      <p>Crea una cuenta o inicia sesión para guardar tu perfil en la nube y acceder desde otros dispositivos.</p>
+
+      <div class="auth-card">
+        <h3 id="authTitle">Accede a tu cuenta</h3>
+        <div class="auth-grid">
+          <div class="form-field">
+            <label for="authEmail">Correo electrónico</label>
+            <input id="authEmail" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com">
+          </div>
+          <div class="form-field">
+            <label for="authPassword">Contraseña</label>
+            <input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="Mínimo 8 caracteres">
+          </div>
+        </div>
+        <div class="auth-actions">
+          <button class="auth-button" id="registerButton" type="button">Crear cuenta</button>
+          <button class="auth-button secondary" id="loginButton" type="button">Iniciar sesión</button>
+          <button class="auth-button danger" id="logoutButton" type="button" hidden>Cerrar sesión</button>
+        </div>
+        <div id="authUser" class="auth-user" hidden></div>
+        <div id="authStatus" class="auth-status" role="status" aria-live="polite">Puedes explorar Yoshi Fit sin registrarte. Para sincronizar tu perfil, crea una cuenta.</div>
+      </div>
+
       <h3>Información personal</h3>
       <p>Comencemos con algunos datos básicos.</p>
 
       <form id="profileForm" class="profile-form">
-        <div class="form-field">
-          <label for="profileName">¿Cómo te llamas?</label>
-          <input id="profileName" type="text" maxlength="60" placeholder="Tu nombre" required>
-        </div>
-
-        <div class="form-field">
-          <label for="profileAge">Edad</label>
-          <input id="profileAge" type="number" min="1" max="110" placeholder="Ej. 23" required>
-        </div>
-
-        <div class="form-field">
-          <label for="profileSex">Sexo para estimaciones nutricionales (opcional)</label>
-          <select id="profileSex">
-            <option value="">Prefiero no indicarlo</option>
-            <option value="Hombre">Hombre</option>
-            <option value="Mujer">Mujer</option>
-          </select>
-        </div>
-
-        <div class="form-field">
-          <label for="profileCountry">País</label>
-          <input id="profileCountry" type="text" value="Perú">
-        </div>
-
-        <div class="form-field">
-          <label for="profileRegion">Región</label>
-          <input id="profileRegion" type="text" placeholder="Ej. La Libertad">
-        </div>
-
-        <div class="form-field">
-          <label for="profileCity">Distrito o ciudad</label>
-          <input id="profileCity" type="text" placeholder="Ej. Paiján">
-        </div>
-
-        <div class="form-field">
-          <label for="profileWeight">Peso actual (kg)</label>
-          <input id="profileWeight" type="number" min="1" max="500" step="0.1" placeholder="Ej. 70" required>
-        </div>
-
-        <div class="form-field">
-          <label for="profileHeight">Estatura (cm)</label>
-          <input id="profileHeight" type="number" min="50" max="250" step="0.1" placeholder="Ej. 170" required>
-        </div>
-
-        <div class="form-field">
-          <label for="profileGoal">¿Cuál es tu objetivo principal?</label>
-          <select id="profileGoal" required>
-            <option value="">Selecciona tu objetivo</option>
-            <option value="Perder grasa">Perder grasa</option>
-            <option value="Ganar masa muscular">Ganar masa muscular</option>
-            <option value="Mantener mi peso">Mantener mi peso</option>
-            <option value="Mejorar mi condición física">Mejorar mi condición física</option>
-            <option value="Mejorar mi rendimiento deportivo">Mejorar mi rendimiento deportivo</option>
-          </select>
-        </div>
-
-        <div class="form-field">
-          <label for="profileActivity">¿Cómo es tu actividad diaria?</label>
-          <select id="profileActivity" required>
-            <option value="">Selecciona tu actividad</option>
-            <option value="Sedentaria">Mayormente sentado</option>
-            <option value="Ligera">Actividad ligera</option>
-            <option value="Moderada">Actividad moderada</option>
-            <option value="Alta">Actividad física intensa</option>
-          </select>
-        </div>
-
-        <div class="form-field">
-          <label for="profileSport">¿Qué deporte practicas?</label>
-          <select id="profileSport">
-            <option value="">Selecciona una opción</option>
-            <option value="Fútbol">Fútbol</option>
-            <option value="Gimnasio">Gimnasio</option>
-            <option value="Running">Running</option>
-            <option value="Ciclismo">Ciclismo</option>
-            <option value="Otro">Otro</option>
-            <option value="Ninguno">Actualmente ninguno</option>
-          </select>
-        </div>
-
-        <div class="form-field">
-          <label for="profileBudget">Presupuesto semanal para alimentación (S/)</label>
-          <input id="profileBudget" type="number" min="0" step="0.5" placeholder="Ej. 100">
-        </div>
-
-        <div class="form-field full">
-          <label for="profilePreferences">Preferencias alimentarias</label>
-          <textarea id="profilePreferences" maxlength="500" placeholder="Ej. Prefiero comidas económicas, me gustan las menestras, no consumo pescado..."></textarea>
-          <span class="form-hint">Puedes mencionar gustos, alimentos que evitas o el tipo de comida que prefieres.</span>
-        </div>
-
+        <div class="form-field"><label for="profileName">¿Cómo te llamas?</label><input id="profileName" type="text" maxlength="60" placeholder="Tu nombre" required></div>
+        <div class="form-field"><label for="profileAge">Edad</label><input id="profileAge" type="number" min="1" max="110" placeholder="Ej. 23" required></div>
+        <div class="form-field"><label for="profileSex">Sexo para estimaciones nutricionales (opcional)</label><select id="profileSex"><option value="">Prefiero no indicarlo</option><option value="Hombre">Hombre</option><option value="Mujer">Mujer</option></select></div>
+        <div class="form-field"><label for="profileCountry">País</label><input id="profileCountry" type="text" value="Perú"></div>
+        <div class="form-field"><label for="profileRegion">Región</label><input id="profileRegion" type="text" placeholder="Ej. La Libertad"></div>
+        <div class="form-field"><label for="profileCity">Distrito o ciudad</label><input id="profileCity" type="text" placeholder="Ej. Paiján"></div>
+        <div class="form-field"><label for="profileWeight">Peso actual (kg)</label><input id="profileWeight" type="number" min="1" max="500" step="0.1" placeholder="Ej. 70" required></div>
+        <div class="form-field"><label for="profileHeight">Estatura (cm)</label><input id="profileHeight" type="number" min="50" max="250" step="0.1" placeholder="Ej. 170" required></div>
+        <div class="form-field"><label for="profileGoal">¿Cuál es tu objetivo principal?</label><select id="profileGoal" required><option value="">Selecciona tu objetivo</option><option value="Perder grasa">Perder grasa</option><option value="Ganar masa muscular">Ganar masa muscular</option><option value="Mantener mi peso">Mantener mi peso</option><option value="Mejorar mi condición física">Mejorar mi condición física</option><option value="Mejorar mi rendimiento deportivo">Mejorar mi rendimiento deportivo</option></select></div>
+        <div class="form-field"><label for="profileActivity">¿Cómo es tu actividad diaria?</label><select id="profileActivity" required><option value="">Selecciona tu actividad</option><option value="Sedentaria">Mayormente sentado</option><option value="Ligera">Actividad ligera</option><option value="Moderada">Actividad moderada</option><option value="Alta">Actividad física intensa</option></select></div>
+        <div class="form-field"><label for="profileSport">¿Qué deporte practicas?</label><select id="profileSport"><option value="">Selecciona una opción</option><option value="Fútbol">Fútbol</option><option value="Gimnasio">Gimnasio</option><option value="Running">Running</option><option value="Ciclismo">Ciclismo</option><option value="Otro">Otro</option><option value="Ninguno">Actualmente ninguno</option></select></div>
+        <div class="form-field"><label for="profileBudget">Presupuesto semanal para alimentación (S/)</label><input id="profileBudget" type="number" min="0" step="0.5" placeholder="Ej. 100"></div>
+        <div class="form-field full"><label for="profilePreferences">Preferencias alimentarias</label><textarea id="profilePreferences" maxlength="500" placeholder="Ej. Prefiero comidas económicas, me gustan las menestras, no consumo pescado..."></textarea><span class="form-hint">Puedes mencionar gustos, alimentos que evitas o el tipo de comida que prefieres.</span></div>
         <div class="profile-actions">
           <button class="save-button" type="submit">Guardar mi perfil ✓</button>
           <button class="clear-button" type="button" id="clearProfile">Borrar datos de este navegador</button>
         </div>
       </form>
-
       <div id="profileMessage" class="profile-message" role="status" aria-live="polite"></div>
     </div>
 
@@ -888,32 +400,16 @@ footer{
       <button class="hero-button" type="button" onclick="editProfile()">Editar mi información ✎</button>
     </div>
 
-    <div class="notice">
-      Versión de prueba: los datos se guardan solamente en el almacenamiento local de este navegador y no se sincronizan con otros dispositivos ni con Supabase. No introduzcas información médica sensible. Si compartes el dispositivo, otras personas que usen este navegador podrían acceder a estos datos.
-    </div>
+    <div class="notice">Tus datos de perfil se guardan en tu navegador y, cuando inicias sesión, también en tu cuenta de Yoshi Fit. No introduzcas información médica sensible. Cierra sesión si compartes el dispositivo.</div>
   </section>
 
-  <!-- SOBRE -->
   <section class="page" id="about">
-    <div class="inner-hero">
-      <div class="eyebrow">NUESTRA IDENTIDAD</div>
-      <h1>Yoshi Fit 🇵🇪</h1>
-      <p>Una plataforma que busca acercar la nutrición, el entrenamiento y el bienestar a las personas, considerando los alimentos, costumbres y presupuestos de nuestra realidad.</p>
-    </div>
-    <div class="info-box">
-      <h3>Nuestra visión</h3>
-      <p>Construir una herramienta útil, accesible y confiable para ayudar a las personas a tomar mejores decisiones sobre su alimentación y actividad física.</p>
-    </div>
-    <div class="info-box">
-      <h3>Una plataforma para todos</h3>
-      <p>Queremos desarrollar herramientas para diferentes edades, objetivos, niveles de actividad y presupuestos, siempre respetando la seguridad y las necesidades individuales.</p>
-    </div>
+    <div class="inner-hero"><div class="eyebrow">NUESTRA IDENTIDAD</div><h1>Yoshi Fit 🇵🇪</h1><p>Una plataforma que busca acercar la nutrición, el entrenamiento y el bienestar a las personas, considerando los alimentos, costumbres y presupuestos de nuestra realidad.</p></div>
+    <div class="info-box"><h3>Nuestra visión</h3><p>Construir una herramienta útil, accesible y confiable para ayudar a las personas a tomar mejores decisiones sobre su alimentación y actividad física.</p></div>
+    <div class="info-box"><h3>Una plataforma para todos</h3><p>Queremos desarrollar herramientas para diferentes edades, objetivos, niveles de actividad y presupuestos, siempre respetando la seguridad y las necesidades individuales.</p></div>
   </section>
 
-  <footer>
-    <span><strong>YOSHI FIT.</strong> Nutrición y rendimiento con identidad peruana.</span>
-    <span>© 2026 Yoshi Fit · Proyecto en desarrollo</span>
-  </footer>
+  <footer><span><strong>YOSHI FIT.</strong> Nutrición y rendimiento con identidad peruana.</span><span>© 2026 Yoshi Fit · Proyecto en desarrollo</span></footer>
 </main>
 </div>
 
@@ -925,7 +421,30 @@ footer{
   <button data-page="profile"><span>👤</span>Perfil</button>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+/* =====================================================
+   CONFIGURACIÓN SUPABASE
+   Utiliza únicamente la clave pública publishable.
+   Nunca coloques aquí una clave service_role.
+===================================================== */
+
+const SUPABASE_URL = "https://mkqajuaqiclhosxdzeux.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_A5WIQB6B-NedZgjLJMONDA_";
+
+let supabaseClient = null;
+let currentUser = null;
+let authReady = false;
+
+if (window.supabase && window.supabase.createClient) {
+  supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+}
+
+/* NAVEGACIÓN */
+
 const labels = {
   home:'Inicio',
   nutrition:'Nutrición',
@@ -951,33 +470,46 @@ function navigate(page){
 }
 
 document.querySelectorAll('[data-page]').forEach(button=>{
-  button.addEventListener('click',()=>{
-    navigate(button.dataset.page);
-  });
+  button.addEventListener('click',()=>navigate(button.dataset.page));
 });
 
-/* PERFIL DE USUARIO */
+/* PERFIL */
 
 const profileFields = [
-  'profileName',
-  'profileAge',
-  'profileSex',
-  'profileCountry',
-  'profileRegion',
-  'profileCity',
-  'profileWeight',
-  'profileHeight',
-  'profileGoal',
-  'profileActivity',
-  'profileSport',
-  'profileBudget',
+  'profileName','profileAge','profileSex','profileCountry',
+  'profileRegion','profileCity','profileWeight','profileHeight',
+  'profileGoal','profileActivity','profileSport','profileBudget',
   'profilePreferences'
 ];
+
+function getProfileFromForm(){
+  const data={};
+  profileFields.forEach(id=>{
+    data[id]=document.getElementById(id).value.trim();
+  });
+  return data;
+}
+
+function fillProfileForm(data){
+  if(!data)return;
+  profileFields.forEach(id=>{
+    const field=document.getElementById(id);
+    if(field && data[id]!==undefined && data[id]!==null){
+      field.value=data[id];
+    }
+  });
+}
 
 function showProfileMessage(message,type){
   const box=document.getElementById('profileMessage');
   box.textContent=message;
   box.className='profile-message '+type;
+}
+
+function showAuthStatus(message,type=''){
+  const box=document.getElementById('authStatus');
+  box.textContent=message;
+  box.className='auth-status '+type;
 }
 
 function updateSidebarProfile(data){
@@ -986,7 +518,7 @@ function updateSidebarProfile(data){
   document.getElementById('sidebarAvatar').textContent=
     name.trim().charAt(0).toUpperCase() || 'Y';
   document.getElementById('sidebarSubtitle').textContent=
-    'Perfil personal';
+    currentUser ? 'Cuenta sincronizada' : 'Perfil personal';
 }
 
 function renderProfileSummary(data){
@@ -1017,16 +549,12 @@ function renderProfileSummary(data){
 
   fields.forEach(([label,value])=>{
     if(!value)return;
-
     const item=document.createElement('div');
     item.className='summary-item';
-
     const small=document.createElement('small');
     small.textContent=label;
-
     const strong=document.createElement('strong');
     strong.textContent=value;
-
     item.append(small,strong);
     content.appendChild(item);
   });
@@ -1034,10 +562,8 @@ function renderProfileSummary(data){
   if(data.profilePreferences){
     preferences.style.display='block';
     preferences.replaceChildren();
-
     const title=document.createElement('strong');
     title.textContent='Preferencias alimentarias: ';
-
     preferences.append(title,document.createTextNode(data.profilePreferences));
   }else{
     preferences.style.display='none';
@@ -1047,78 +573,352 @@ function renderProfileSummary(data){
   updateSidebarProfile(data);
 }
 
-function loadProfile(){
+function loadLocalProfile(){
   try{
     const saved=localStorage.getItem('yoshiFitProfile');
-
-    if(!saved)return;
-
+    if(!saved)return null;
     const data=JSON.parse(saved);
-
-    profileFields.forEach(id=>{
-      const field=document.getElementById(id);
-
-      if(field && data[id]!==undefined){
-        field.value=data[id];
-      }
-    });
-
+    fillProfileForm(data);
     renderProfileSummary(data);
+    return data;
   }catch(error){
-    console.error('No se pudo cargar el perfil.',error);
+    console.error('No se pudo cargar el perfil local.',error);
+    return null;
   }
 }
 
-document.getElementById('profileForm').addEventListener('submit',function(event){
-  event.preventDefault();
-
-  const data={};
-
-  profileFields.forEach(id=>{
-    data[id]=document.getElementById(id).value.trim();
-  });
-
+function validateProfile(data){
   const age=Number(data.profileAge);
   const weight=Number(data.profileWeight);
   const height=Number(data.profileHeight);
   const budget=Number(data.profileBudget);
 
   if(!data.profileName){
-    showProfileMessage('Escribe tu nombre para continuar.','error');
+    return 'Escribe tu nombre para continuar.';
+  }
+  if(!Number.isFinite(age)||age<1||age>110){
+    return 'Ingresa una edad válida.';
+  }
+  if(!Number.isFinite(weight)||weight<1||weight>500){
+    return 'Revisa el peso que has ingresado.';
+  }
+  if(!Number.isFinite(height)||height<50||height>250){
+    return 'Revisa tu estatura.';
+  }
+  if(!data.profileGoal||!data.profileActivity){
+    return 'Selecciona tu objetivo y nivel de actividad.';
+  }
+  if(data.profileBudget!==''&&(!Number.isFinite(budget)||budget<0)){
+    return 'Revisa tu presupuesto semanal.';
+  }
+  return null;
+}
+
+/* CONVERSIÓN DE DATOS PARA SUPABASE */
+
+function profileToDatabase(data,userId){
+  const preferences=data.profilePreferences
+    ? data.profilePreferences.split(/[,;\n]/).map(item=>item.trim()).filter(Boolean)
+    : [];
+
+  return {
+    user_id:userId,
+    display_name:data.profileName || null,
+    country_code:'PE',
+    preferred_currency:'PEN',
+    age:data.profileAge ? Number(data.profileAge) : null,
+    sex:data.profileSex || null,
+    weight_kg:data.profileWeight ? Number(data.profileWeight) : null,
+    height_cm:data.profileHeight ? Number(data.profileHeight) : null,
+    goal:data.profileGoal || null,
+    activity_level:data.profileActivity || null,
+    sport:data.profileSport || null,
+    weekly_food_budget:data.profileBudget!=='' ? Number(data.profileBudget) : null,
+    food_preferences:preferences,
+    region_name:data.profileRegion || null,
+    city_name:data.profileCity || null,
+    updated_at:new Date().toISOString()
+  };
+}
+
+function databaseToProfile(row){
+  const preferences=Array.isArray(row.food_preferences)
+    ? row.food_preferences.join(', ')
+    : '';
+
+  return {
+    profileName:row.display_name || '',
+    profileAge:row.age ?? '',
+    profileSex:row.sex || '',
+    profileCountry:'Perú',
+    profileRegion:row.region_name || '',
+    profileCity:row.city_name || '',
+    profileWeight:row.weight_kg ?? '',
+    profileHeight:row.height_cm ?? '',
+    profileGoal:row.goal || '',
+    profileActivity:row.activity_level || '',
+    profileSport:row.sport || '',
+    profileBudget:row.weekly_food_budget ?? '',
+    profilePreferences:preferences
+  };
+}
+
+/* GUARDAR PERFIL EN LA NUBE */
+
+async function saveProfileToCloud(data){
+  if(!supabaseClient || !currentUser){
+    throw new Error('Debes iniciar sesión para sincronizar tu perfil.');
+  }
+
+  const row=profileToDatabase(data,currentUser.id);
+
+  const {error}=await supabaseClient
+    .from('profiles')
+    .upsert(row,{onConflict:'user_id'});
+
+  if(error)throw error;
+}
+
+/* RECUPERAR PERFIL DE LA NUBE */
+
+async function loadCloudProfile(){
+  if(!supabaseClient || !currentUser)return null;
+
+  const {data,error}=await supabaseClient
+    .from('profiles')
+    .select('*')
+    .eq('user_id',currentUser.id)
+    .maybeSingle();
+
+  if(error){
+    console.error('Error recuperando perfil:',error);
+    showAuthStatus('Iniciaste sesión, pero no se pudo recuperar el perfil: '+error.message,'error');
+    return null;
+  }
+
+  if(!data)return null;
+
+  const profile=databaseToProfile(data);
+  fillProfileForm(profile);
+
+  try{
+    localStorage.setItem('yoshiFitProfile',JSON.stringify(profile));
+  }catch(error){
+    console.warn('No se pudo actualizar el almacenamiento local.',error);
+  }
+
+  renderProfileSummary(profile);
+  return profile;
+}
+
+/* ESTADO DE AUTENTICACIÓN */
+
+function updateAuthInterface(user){
+  currentUser=user;
+
+  const registerButton=document.getElementById('registerButton');
+  const loginButton=document.getElementById('loginButton');
+  const logoutButton=document.getElementById('logoutButton');
+  const authUser=document.getElementById('authUser');
+  const authTitle=document.getElementById('authTitle');
+
+  if(user){
+    registerButton.hidden=true;
+    loginButton.hidden=true;
+    logoutButton.hidden=false;
+    authUser.hidden=false;
+    authUser.textContent='Sesión iniciada: '+user.email;
+    authTitle.textContent='Tu cuenta está activa';
+    document.getElementById('authPassword').value='';
+    document.getElementById('sidebarSubtitle').textContent='Cuenta sincronizada';
+  }else{
+    registerButton.hidden=false;
+    loginButton.hidden=false;
+    logoutButton.hidden=true;
+    authUser.hidden=true;
+    authTitle.textContent='Accede a tu cuenta';
+    document.getElementById('sidebarSubtitle').textContent='Perfil personal';
+  }
+}
+
+async function handleAuthenticatedUser(user){
+  updateAuthInterface(user);
+
+  if(!user)return;
+
+  showAuthStatus('Sesión iniciada. Estamos comprobando tu perfil en la nube...');
+
+  const cloudProfile=await loadCloudProfile();
+
+  if(cloudProfile){
+    showAuthStatus('Tu perfil se ha sincronizado correctamente.','logged');
     return;
   }
 
-  if(!Number.isFinite(age) || age<1 || age>110){
-    showProfileMessage('Ingresa una edad válida.','error');
+  const localProfile=loadLocalProfile();
+
+  if(localProfile){
+    showAuthStatus('No encontramos un perfil en la nube. Tus datos locales siguen disponibles. Guarda tu perfil para subirlos a tu cuenta.','logged');
+  }else{
+    showAuthStatus('Cuenta lista. Completa tu perfil y guárdalo para sincronizarlo.','logged');
+  }
+}
+
+/* REGISTRO */
+
+async function registerAccount(){
+  if(!supabaseClient){
+    showAuthStatus('No se pudo conectar con Supabase. Recarga la página.','error');
     return;
   }
 
-  if(!Number.isFinite(weight) || weight<1 || weight>500){
-    showProfileMessage('Revisa el peso que has ingresado.','error');
+  const email=document.getElementById('authEmail').value.trim();
+  const password=document.getElementById('authPassword').value;
+
+  if(!email||!password){
+    showAuthStatus('Escribe tu correo y contraseña.','error');
     return;
   }
 
-  if(!Number.isFinite(height) || height<50 || height>250){
-    showProfileMessage('Revisa tu estatura.','error');
+  if(password.length<8){
+    showAuthStatus('La contraseña debe tener al menos 8 caracteres.','error');
     return;
   }
 
-  if(!data.profileGoal || !data.profileActivity){
-    showProfileMessage('Selecciona tu objetivo y nivel de actividad.','error');
+  const button=document.getElementById('registerButton');
+  button.disabled=true;
+  showAuthStatus('Creando tu cuenta...');
+
+  try{
+    const {data,error}=await supabaseClient.auth.signUp({
+      email,
+      password,
+      options:{
+        emailRedirectTo:'https://yoshiharu0504.github.io/yoshi-tools/'
+      }
+    });
+
+    if(error)throw error;
+
+    if(data.session){
+      await handleAuthenticatedUser(data.user);
+      showAuthStatus('¡Cuenta creada! Ya puedes guardar tu perfil en la nube.','logged');
+    }else{
+      showAuthStatus('¡Registro iniciado! Revisa tu correo y confirma tu cuenta. Después vuelve a Yoshi Fit e inicia sesión.','logged');
+    }
+  }catch(error){
+    console.error(error);
+    showAuthStatus('No se pudo crear la cuenta: '+error.message,'error');
+  }finally{
+    button.disabled=false;
+  }
+}
+
+/* INICIAR SESIÓN */
+
+async function loginAccount(){
+  if(!supabaseClient){
+    showAuthStatus('No se pudo conectar con Supabase. Recarga la página.','error');
     return;
   }
 
-  if(data.profileBudget!=='' && (!Number.isFinite(budget) || budget<0)){
-    showProfileMessage('Revisa tu presupuesto semanal.','error');
+  const email=document.getElementById('authEmail').value.trim();
+  const password=document.getElementById('authPassword').value;
+
+  if(!email||!password){
+    showAuthStatus('Escribe tu correo y contraseña.','error');
+    return;
+  }
+
+  const button=document.getElementById('loginButton');
+  button.disabled=true;
+  showAuthStatus('Iniciando sesión...');
+
+  try{
+    const {data,error}=await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if(error)throw error;
+
+    await handleAuthenticatedUser(data.user);
+  }catch(error){
+    console.error(error);
+    showAuthStatus('No se pudo iniciar sesión: '+error.message,'error');
+  }finally{
+    button.disabled=false;
+  }
+}
+
+/* CERRAR SESIÓN */
+
+async function logoutAccount(){
+  if(!supabaseClient)return;
+
+  const button=document.getElementById('logoutButton');
+  button.disabled=true;
+
+  try{
+    const {error}=await supabaseClient.auth.signOut();
+    if(error)throw error;
+
+    updateAuthInterface(null);
+    showAuthStatus('Has cerrado sesión. Tu copia local del perfil permanece en este navegador.');
+    showProfileMessage('Sesión cerrada correctamente.','success');
+  }catch(error){
+    showAuthStatus('No se pudo cerrar sesión: '+error.message,'error');
+  }finally{
+    button.disabled=false;
+  }
+}
+
+/* BOTONES DE AUTENTICACIÓN */
+
+document.getElementById('registerButton').addEventListener('click',registerAccount);
+document.getElementById('loginButton').addEventListener('click',loginAccount);
+document.getElementById('logoutButton').addEventListener('click',logoutAccount);
+
+/* GUARDAR PERFIL */
+
+document.getElementById('profileForm').addEventListener('submit',async function(event){
+  event.preventDefault();
+
+  const data=getProfileFromForm();
+  const validationError=validateProfile(data);
+
+  if(validationError){
+    showProfileMessage(validationError,'error');
     return;
   }
 
   try{
     localStorage.setItem('yoshiFitProfile',JSON.stringify(data));
     renderProfileSummary(data);
-    showProfileMessage('¡Perfil guardado correctamente! Ya tienes tu información registrada en este navegador.','success');
   }catch(error){
-    showProfileMessage('No se pudo guardar. Comprueba el almacenamiento del navegador.','error');
+    showProfileMessage('No se pudo guardar en este navegador. Comprueba el almacenamiento.','error');
+    return;
+  }
+
+  if(!currentUser){
+    showProfileMessage('Perfil guardado en este navegador. Para sincronizarlo con otros dispositivos, crea una cuenta o inicia sesión.','success');
+    return;
+  }
+
+  const saveButton=document.querySelector('#profileForm .save-button');
+  saveButton.disabled=true;
+  saveButton.textContent='Sincronizando...';
+
+  try{
+    await saveProfileToCloud(data);
+    showProfileMessage('¡Perfecto! Tu perfil se guardó en este navegador y en tu cuenta de Yoshi Fit.','success');
+    showAuthStatus('Perfil sincronizado correctamente con tu cuenta.','logged');
+  }catch(error){
+    console.error('Error guardando perfil:',error);
+    showProfileMessage('El perfil quedó guardado en este navegador, pero no se pudo sincronizar con la nube: '+error.message,'error');
+  }finally{
+    saveButton.disabled=false;
+    saveButton.textContent='Guardar mi perfil ✓';
   }
 });
 
@@ -1129,22 +929,63 @@ function editProfile(){
   });
 }
 
+/* BORRAR COPIA LOCAL
+   Esto NO elimina el perfil de la nube. */
+
 document.getElementById('clearProfile').addEventListener('click',()=>{
-  const confirmDelete=confirm('¿Seguro que deseas borrar el perfil guardado en este navegador?');
+  const confirmDelete=confirm('¿Seguro que deseas borrar el perfil guardado en este navegador? Esta acción no elimina el perfil de tu cuenta en la nube.');
 
   if(!confirmDelete)return;
 
   localStorage.removeItem('yoshiFitProfile');
   document.getElementById('profileForm').reset();
+  document.getElementById('profileCountry').value='Perú';
   document.getElementById('profileSummary').style.display='none';
   document.getElementById('sidebarName').textContent='Mi espacio';
   document.getElementById('sidebarAvatar').textContent='Y';
-  document.getElementById('sidebarSubtitle').textContent='Bienvenido a Yoshi Fit';
+  document.getElementById('sidebarSubtitle').textContent=currentUser?'Cuenta sincronizada':'Bienvenido a Yoshi Fit';
 
-  showProfileMessage('Los datos del perfil fueron borrados de este navegador.','success');
+  showProfileMessage('Se borró la copia del perfil de este navegador. El perfil de la nube no fue eliminado.','success');
 });
 
-loadProfile();
+/* INICIALIZACIÓN */
+
+async function initializeYoshiFit(){
+  loadLocalProfile();
+
+  if(!supabaseClient){
+    showAuthStatus('No se pudo cargar el servicio de autenticación. Comprueba tu conexión e inténtalo de nuevo.','error');
+    return;
+  }
+
+  const {data,error}=await supabaseClient.auth.getSession();
+
+  if(error){
+    console.error(error);
+    showAuthStatus('No se pudo comprobar la sesión: '+error.message,'error');
+    return;
+  }
+
+  if(data.session){
+    await handleAuthenticatedUser(data.session.user);
+  }else{
+    updateAuthInterface(null);
+  }
+
+  supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if(event==='SIGNED_IN' && session?.user){
+      setTimeout(()=>handleAuthenticatedUser(session.user),0);
+    }
+
+    if(event==='SIGNED_OUT'){
+      updateAuthInterface(null);
+    }
+  });
+
+  authReady=true;
+}
+
+initializeYoshiFit();
 </script>
 </body>
 </html>
