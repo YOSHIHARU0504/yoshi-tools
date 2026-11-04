@@ -209,6 +209,9 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
 
 /* YOSHI PERFORMANCE */
 .workout-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:15px 0 28px}.workout-card{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:16px;padding:18px}.workout-card small{font-size:10px;font-weight:800;letter-spacing:1px;color:#66806f}.workout-card h3{margin:8px 0}.workout-card p{font-size:13px;color:#6d796f;line-height:1.55}.workout-card strong{display:block;font-size:12px;color:#315a40;margin-top:10px}@media(max-width:700px){.workout-grid{grid-template-columns:1fr}}
+
+/* HÁBITOS, PRESUPUESTO Y EVOLUCIÓN */
+.habit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0 24px}.habit-item{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:14px}.habit-item input{width:19px;height:19px;accent-color:#477b56}.habit-item span{font-size:13px;font-weight:600}.budget-summary{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:16px;padding:20px;margin:18px 0}.budget-summary strong{font-size:30px;color:#315a40}.budget-breakdown{display:grid;gap:12px}.budget-line{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:13px}.budget-line div{height:8px;background:#edf1eb;border-radius:10px;grid-column:1/-1;overflow:hidden}.budget-line i{display:block;height:100%;background:#739777;border-radius:10px}.shopping-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:15px 0 28px}.shopping-item{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:12px;padding:12px;font-size:13px;display:flex;align-items:center;gap:9px}.shopping-item input{accent-color:#477b56}.progress-form{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.progress-history{display:grid;gap:10px;margin:15px 0 25px}.progress-entry{display:grid;grid-template-columns:1fr auto;gap:5px;padding:15px;background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:13px}.progress-entry small{color:#718076}.progress-entry p{grid-column:1/-1;font-size:13px;color:#66746a;margin:3px 0 0}@media(max-width:700px){.habit-grid,.shopping-list,.progress-form{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -335,28 +338,27 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
   </section>
 
   <section class="page" id="health">
-    <div class="inner-hero" style="background:#f3eadd"><div class="eyebrow">YOSHI HEALTH</div><h1>Bienestar que va más allá. 🌿</h1><p>Conoce tus hábitos y encuentra información confiable para cuidar tu bienestar diario.</p></div>
-    <div class="info-box"><h3>Hábitos saludables</h3><p>Hidratación, descanso, movimiento y alimentación equilibrada. Pequeñas decisiones que pueden contribuir a tu bienestar.</p><span class="coming">En desarrollo</span></div>
-    <div class="notice">Yoshi Fit no diagnostica enfermedades ni sustituye la atención de médicos o nutricionistas. La información de salud tendrá límites claros y fuentes verificables.</div>
+    <div class="inner-hero" style="background:#f3eadd"><div class="eyebrow">YOSHI HEALTH · HÁBITOS</div><h1>Cuida tu bienestar. 🌿</h1><p>Pequeñas acciones que puedes adaptar a tu día. Marca tus hábitos y construye constancia sin perseguir la perfección.</p></div>
+    <div class="section-head"><h2 id="healthGreeting">Tus hábitos diarios</h2><span>Se guarda en este dispositivo</span></div>
+    <div class="habit-grid" id="healthHabits"></div>
+    <div class="panel"><h3>Orientación para tu rutina</h3><p id="healthPersonalTip" class="panel-sub"></p><div class="nutrition-list"><div class="nutrition-tip">💧 Bebe agua regularmente y aumenta la atención al calor y al ejercicio.</div><div class="nutrition-tip">😴 Mantén horarios de sueño lo más regulares posible.</div><div class="nutrition-tip">🚶 Interrumpe periodos largos sentado con pausas de movimiento.</div><div class="nutrition-tip">🥗 Prioriza alimentos variados y comidas suficientes, evitando restricciones extremas.</div></div></div>
+    <div class="notice">Este módulo es educativo y no diagnostica ni trata enfermedades. Las necesidades de agua, sueño y actividad varían entre personas. Si tienes síntomas persistentes o una condición médica, consulta a un profesional.</div>
   </section>
 
   <section class="page" id="budget">
-    <div class="inner-hero" style="background:#eeeadd"><div class="eyebrow">YOSHI BUDGET</div><h1>Come bien sin descuidar tu bolsillo. 🛒</h1><p>Queremos ayudarte a organizar tus compras, comparar precios y encontrar alternativas alimenticias accesibles en tu localidad.</p></div>
-    <div class="module-grid">
-      <article class="module"><div class="module-image budget">💰</div><div class="module-body"><small>PLANIFICACIÓN</small><h3>Mi presupuesto</h3><p>Organiza cuánto puedes destinar a tu alimentación.</p><span class="coming">En desarrollo</span></div></article>
-      <article class="module"><div class="module-image nutrition">🥬</div><div class="module-body"><small>PRECIOS</small><h3>Comparador de alimentos</h3><p>Compara precios por zona, mercado y establecimiento.</p><span class="coming">En desarrollo</span></div></article>
-      <article class="module"><div class="module-image food">🧺</div><div class="module-body"><small>COMPRAS</small><h3>Lista inteligente</h3><p>Prepara tu lista de compras según tu planificación.</p><span class="coming">En desarrollo</span></div></article>
-    </div>
-    <div class="notice">Los precios se mostrarán con fuente, ubicación y fecha de actualización. No presentaremos precios estimados como si fueran precios reales.</div>
+    <div class="inner-hero" style="background:#eeeadd"><div class="eyebrow">YOSHI BUDGET · COMPRAS INTELIGENTES</div><h1>Tu alimentación y tu bolsillo. 🛒</h1><p>Organiza tu presupuesto semanal y crea una lista base de alimentos económicos. Los importes son tu límite de gasto, no precios de mercado inventados.</p></div>
+    <div class="budget-summary" id="budgetSummary"></div>
+    <div class="panel"><h3>Distribución orientativa de tu presupuesto</h3><p class="panel-sub">Una propuesta flexible que puedes modificar según lo que ya tengas en casa.</p><div id="budgetBreakdown" class="budget-breakdown"></div></div>
+    <div class="section-head"><h2>Lista de compra sugerida</h2><span>Marca lo que ya compraste</span></div>
+    <div id="budgetShoppingList" class="shopping-list"></div>
+    <div class="notice">Los alimentos sugeridos son ejemplos generales. Compara precios reales en tu mercado y ajusta cantidades a las personas que comen en casa, preferencias y necesidades. No se muestran cotizaciones locales en tiempo real.</div>
   </section>
 
   <section class="page" id="progress">
-    <div class="inner-hero" style="background:#e9e7f1"><div class="eyebrow">MY EVOLUTION</div><h1>Cada avance cuenta. 📈</h1><p>Tu espacio para registrar objetivos, hábitos y evolución a lo largo del tiempo.</p></div>
-    <div class="module-grid">
-      <article class="module"><div class="module-image progress">🎯</div><div class="module-body"><small>OBJETIVOS</small><h3>Mis metas</h3><p>Define objetivos personales y deportivos.</p><span class="coming">En desarrollo</span></div></article>
-      <article class="module"><div class="module-image nutrition">📅</div><div class="module-body"><small>HÁBITOS</small><h3>Mi constancia</h3><p>Registra tus actividades y hábitos.</p><span class="coming">En desarrollo</span></div></article>
-      <article class="module"><div class="module-image sport">📊</div><div class="module-body"><small>ESTADÍSTICAS</small><h3>Mis resultados</h3><p>Visualiza tus registros y cambios.</p><span class="coming">En desarrollo</span></div></article>
-    </div>
+    <div class="inner-hero" style="background:#e9e7f1"><div class="eyebrow">MY EVOLUTION · SEGUIMIENTO</div><h1>Tu avance, paso a paso. 📈</h1><p>Registra tu evolución sin obsesionarte con la balanza. La constancia también se mide en hábitos y energía.</p></div>
+    <div class="panel"><h3>Registrar un nuevo seguimiento</h3><form id="progressForm" class="progress-form"><div class="form-field"><label for="progressDate">Fecha</label><input id="progressDate" type="date" required></div><div class="form-field"><label for="progressWeight">Peso (kg), opcional</label><input id="progressWeight" type="number" min="1" max="500" step="0.1" placeholder="Ej. 70"></div><div class="form-field"><label for="progressActivity">Actividad realizada</label><select id="progressActivity"><option value="Descanso">Descanso</option><option value="Caminata">Caminata</option><option value="Fuerza">Fuerza</option><option value="Fútbol/deporte">Fútbol/deporte</option><option value="Movilidad">Movilidad</option><option value="Otra actividad">Otra actividad</option></select></div><div class="form-field"><label for="progressNote">Nota breve, opcional</label><input id="progressNote" type="text" maxlength="140" placeholder="¿Cómo te sentiste?"></div><div class="profile-actions"><button class="save-button" type="submit">Guardar seguimiento ✓</button></div></form><div id="progressMessage" class="profile-message" role="status"></div></div>
+    <div class="section-head"><h2>Tu historial</h2><span>Guardado en este dispositivo</span></div><div id="progressHistory" class="progress-history"></div>
+    <div class="notice">El peso puede variar naturalmente de un día a otro. Registra solo si te resulta útil. Estos datos quedan en el almacenamiento local del navegador y no se sincronizan con tu cuenta todavía.</div>
   </section>
 
   <section class="page" id="profile">
@@ -491,6 +493,9 @@ function navigate(page){
   document.getElementById('crumb').textContent=labels[page]||'Inicio';
   if(page==='nutrition') renderNutrition();
   if(page==='performance') renderPerformance();
+  if(page==='health') renderHealth();
+  if(page==='budget') renderBudget();
+  if(page==='progress') renderProgress();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -605,6 +610,65 @@ function renderPerformance(){
   }
   document.getElementById('performanceWeek').innerHTML=days.map(d=>'<article class="workout-card"><small>'+d[0]+'</small><h3>'+d[1]+'</h3><p>'+d[2]+'</p></article>').join('');
 }
+
+/* SALUD Y BIENESTAR */
+function renderHealth(){
+  const p=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return null}})()||{};
+  document.getElementById('healthGreeting').textContent=p.profileName?'Hábitos de '+p.profileName.split(' ')[0]:'Tus hábitos diarios';
+  let tip='Elige uno o dos hábitos pequeños para empezar y aumenta gradualmente.';
+  if(p.profileActivity==='Sedentaria')tip='Como tu día suele ser sedentario, prueba pausas breves para caminar y movilidad suave durante el día.';
+  if(p.profileActivity==='Alta')tip='Tu actividad diaria es alta: presta atención a la recuperación, comidas suficientes y descanso.';
+  if(p.profileSport&&p.profileSport!=='Ninguno')tip='Al practicar '+p.profileSport+', considera el calentamiento, la hidratación y el descanso entre sesiones.';
+  document.getElementById('healthPersonalTip').textContent=tip;
+  const habits=['Tomé agua durante el día','Comí frutas o verduras','Realicé algo de movimiento','Hice pausas para estirarme','Respeté mi hora de descanso'];
+  const key='yoshiFitHabits-'+new Date().toISOString().slice(0,10);
+  let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+  document.getElementById('healthHabits').innerHTML=habits.map((h,i)=>'<label class="habit-item"><input type="checkbox" '+(saved[i]?'checked':'')+' onchange="saveHealthHabit('+i+',this.checked)"><span>'+h+'</span></label>').join('');
+}
+function saveHealthHabit(index,checked){
+  const key='yoshiFitHabits-'+new Date().toISOString().slice(0,10);let saved={};
+  try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+  saved[index]=checked;localStorage.setItem(key,JSON.stringify(saved));
+}
+/* PRESUPUESTO PERSONAL */
+function renderBudget(){
+  const p=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return null}})()||{};
+  const amount=Number(p.profileBudget);
+  const summary=document.getElementById('budgetSummary');
+  if(!p.profileBudget){summary.innerHTML='<h3>Aún no indicaste tu presupuesto</h3><p class="panel-sub">Añade tu monto semanal en Mi perfil para calcular una distribución orientativa.</p><button class="hero-button" onclick="navigate(\'profile\')">Editar presupuesto →</button>';document.getElementById('budgetBreakdown').innerHTML='';}
+  else{
+    summary.innerHTML='<small>PRESUPUESTO SEMANAL REGISTRADO</small><br><strong>S/ '+amount.toLocaleString('es-PE',{maximumFractionDigits:2})+'</strong><p class="panel-sub">Monto indicado en tu perfil. La distribución es una guía editable.</p>';
+    const parts=[['Cereales y tubérculos',.25],['Proteínas y menestras',.30],['Frutas y verduras',.25],['Lácteos y otros',.15],['Reserva flexible',.05]];
+    document.getElementById('budgetBreakdown').innerHTML=parts.map(x=>'<div class="budget-line"><span>'+x[0]+'</span><b>S/ '+(amount*x[1]).toFixed(2)+'</b><div><i style="width:'+(x[1]*100)+'%"></i></div></div>').join('');
+  }
+  const items=['Avena','Arroz o papa','Lentejas o frejoles','Huevos','Pollo o pescado según oferta','Plátano u otra fruta de estación','Verduras de temporada','Leche o yogur natural'];
+  const k='yoshiFitShopping-'+new Date().toISOString().slice(0,10);let checked={};try{checked=JSON.parse(localStorage.getItem(k)||'{}')}catch(e){}
+  document.getElementById('budgetShoppingList').innerHTML=items.map((x,i)=>'<label class="shopping-item"><input type="checkbox" '+(checked[i]?'checked':'')+' onchange="saveShoppingItem('+i+',this.checked)">'+x+'</label>').join('');
+}
+function saveShoppingItem(index,checked){
+  const k='yoshiFitShopping-'+new Date().toISOString().slice(0,10);let saved={};try{saved=JSON.parse(localStorage.getItem(k)||'{}')}catch(e){}
+  saved[index]=checked;localStorage.setItem(k,JSON.stringify(saved));
+}
+/* SEGUIMIENTO PERSONAL */
+function renderProgress(){
+  const date=document.getElementById('progressDate');
+  if(!date.value)date.value=new Date().toISOString().slice(0,10);
+  let rows=[];try{rows=JSON.parse(localStorage.getItem('yoshiFitProgress')||'[]')}catch(e){}
+  const box=document.getElementById('progressHistory');
+  if(!rows.length){box.innerHTML='<div class="panel"><p class="panel-sub">Todavía no tienes registros. Tu primer paso puede ser anotar una actividad.</p></div>';return;}
+  box.innerHTML=rows.slice().reverse().map(x=>'<article class="progress-entry"><strong>'+escapeNutritionText(x.date)+' · '+escapeNutritionText(x.activity)+'</strong><b>'+(x.weight?escapeNutritionText(x.weight)+' kg':'')+'</b><small>Registro personal</small><p>'+escapeNutritionText(x.note||'Sin nota')+'</p></article>').join('');
+}
+document.getElementById('progressForm').addEventListener('submit',event=>{
+  event.preventDefault();
+  const weight=document.getElementById('progressWeight').value;
+  if(weight&&(!Number.isFinite(Number(weight))||Number(weight)<=0)){document.getElementById('progressMessage').textContent='Revisa el peso ingresado.';return;}
+  let rows=[];try{rows=JSON.parse(localStorage.getItem('yoshiFitProgress')||'[]')}catch(e){}
+  rows.push({date:document.getElementById('progressDate').value,weight,activity:document.getElementById('progressActivity').value,note:document.getElementById('progressNote').value.trim()});
+  localStorage.setItem('yoshiFitProgress',JSON.stringify(rows.slice(-100)));
+  document.getElementById('progressWeight').value='';document.getElementById('progressNote').value='';
+  document.getElementById('progressMessage').textContent='Seguimiento guardado en este dispositivo.';
+  renderProgress();
+});
 
 /* PERFIL */
 
