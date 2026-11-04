@@ -683,7 +683,7 @@ function renderShoppingQuote(){
     const included=checked[i]!==false;
     const qtyText=item.unit==='unidad'?suggestedRounded+' '+(suggestedRounded===1?'unidad':'unidades'):suggestedRounded.toFixed(2)+' '+item.unit;
     const subtotal=qty*price;
-    return '<article class="quote-item"><label class="quote-check"><input type="checkbox" '+(included?'checked':'')+' onchange="toggleShoppingItem('+i+',this.checked)"><strong>'+item.name+'</strong></label><div class="quote-meta"><span>Cantidad sugerida</span><b>'+qtyText+'</b></div><div class="quote-price"><label for="shoppingQty'+i+'">Cantidad que comprarás ('+item.unit+')</label><input id="shoppingQty'+i+'" type="number" min="0" step="'+(item.unit==='unidad'?'1':'0.05')+'" value="'+qty+'" oninput="saveShoppingQuantity('+i+',this.value)"></div><div class="quote-price"><label for="shoppingPrice'+i+'">Precio por '+item.unit+' (S/)</label><input id="shoppingPrice'+i+'" type="number" min="0" step="0.01" placeholder="Ingresa precio" value="'+(saved[i]??'')+'" oninput="saveShoppingPrice('+i+',this.value)"></div><div class="quote-meta"><span>Subtotal</span><b>S/ '+subtotal.toFixed(2)+'</b></div></article>';
+    return '<article class="quote-item"><label class="quote-check"><input type="checkbox" '+(included?'checked':'')+' onchange="toggleShoppingItem('+i+',this.checked)"><strong>'+item.name+'</strong></label><div class="quote-meta"><span>Cantidad sugerida</span><b>'+qtyText+'</b></div><div class="quote-price"><label for="shoppingQty'+i+'">Cantidad que comprarás ('+item.unit+')</label><input id="shoppingQty'+i+'" type="number" min="0" step="'+(item.unit==='unidad'?'1':'0.05')+'" value="'+qty+'" onchange="saveShoppingQuantity('+i+',this.value)"></div><div class="quote-price"><label for="shoppingPrice'+i+'">Precio por '+item.unit+' (S/)</label><input id="shoppingPrice'+i+'" type="number" min="0" step="0.01" placeholder="Ingresa precio" value="'+(saved[i]??'')+'" onchange="saveShoppingPrice('+i+',this.value)"></div><div class="quote-meta"><span>Subtotal</span><b>S/ '+subtotal.toFixed(2)+'</b></div></article>';
   }).join('');
   document.getElementById('budgetShoppingList').innerHTML=list;
   const total=shoppingBase.reduce((sum,item,i)=>{
@@ -702,14 +702,7 @@ function saveShoppingQuantity(index,value){
   const saved=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingQuantities')||'{}')}catch(e){return {}}})();
   saved[index]=value===''?'':Math.max(0,Number(value)||0);
   localStorage.setItem('yoshiFitShoppingQuantities',JSON.stringify(saved));
-  const item=shoppingBase[index],price=Number((()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingPrices')||'{}')}catch(e){return {}}})()[index])||0;
-  const included=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingSelected')||'{}')}catch(e){return {}}})();
-  if(included[index]!==false){
-    const totalBox=document.getElementById('shoppingQuoteTotal');
-    renderShoppingQuote();
-    const field=document.getElementById('shoppingQty'+index);
-    if(field){field.focus();field.setSelectionRange(field.value.length,field.value.length);}
-  }else renderShoppingQuote();
+  renderShoppingQuote();
 }
 function toggleShoppingItem(index,checked){
   const saved=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingSelected')||'{}')}catch(e){return {}}})();
@@ -720,8 +713,6 @@ function saveShoppingPrice(index,value){
   const price=value===''?'':Math.max(0,Number(value)||0);
   saved[index]=price;localStorage.setItem('yoshiFitShoppingPrices',JSON.stringify(saved));
   renderShoppingQuote();
-  const field=document.getElementById('shoppingPrice'+index);
-  if(field){field.focus();field.setSelectionRange(field.value.length,field.value.length);}
 }
 /* SEGUIMIENTO PERSONAL */
 function renderProgress(){
