@@ -349,7 +349,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
   <section class="page" id="budget">
     <div class="inner-hero" style="background:#eeeadd"><div class="eyebrow">YOSHI BUDGET · COMPRAS INTELIGENTES</div><h1>Del menú a tu mercado. 🛒</h1><p>Calcula cantidades semanales según cuántas personas comerán y arma una cotización con los precios que encuentres en tu mercado.</p></div>
     <div class="budget-summary" id="budgetSummary"></div>
-    <div class="panel"><h3>¿Para cuántas personas organizamos?</h3><p class="panel-sub">La lista se ajusta automáticamente. Puedes cambiarlo cuando quieras.</p><div class="budget-controls"><div class="form-field"><label for="shoppingPeople">Personas</label><input id="shoppingPeople" type="number" min="1" max="12" step="1" value="1" onchange="updateShoppingPlan()"></div><div class="form-field"><label for="shoppingDays">Días de compra</label><select id="shoppingDays" onchange="updateShoppingPlan()"><option value="3">3 días</option><option value="5">5 días</option><option value="7" selected>7 días</option></select></div></div><p class="panel-sub">Cantidades orientativas para una canasta base de alimentación. Ajusta según apetito, menú, edad y alimentos que ya tengas.</p></div>
+    <div class="panel"><h3>¿Para cuántas personas organizamos?</h3><p class="panel-sub">La lista se ajusta automáticamente. Puedes cambiarlo cuando quieras.</p><div class="budget-controls"><div class="form-field"><label for="shoppingPeople">Personas</label><input id="shoppingPeople" type="number" min="1" max="12" step="1" value="1" oninput="updateShoppingPlan()"></div><div class="form-field"><label for="shoppingDays">Días de compra</label><select id="shoppingDays" onchange="updateShoppingPlan()"><option value="3">3 días</option><option value="5">5 días</option><option value="7" selected>7 días</option></select></div></div><p class="panel-sub" id="shoppingScaleHint">Las cantidades se ajustan según personas y días.</p><p class="panel-sub">Cantidades orientativas para una canasta base de alimentación. Ajusta según apetito, menú, edad y alimentos que ya tengas.</p></div>
     <div class="section-head"><h2>Tu lista y cotización</h2><span>Precios editables en soles</span></div>
     <div id="budgetShoppingList" class="shopping-list shopping-quote"></div>
     <div class="budget-total" id="shoppingQuoteTotal"></div>
@@ -672,6 +672,8 @@ function renderShoppingQuote(){
   const saved=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingPrices')||'{}')}catch(e){return {}}})();
   const checked=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingSelected')||'{}')}catch(e){return {}}})();
   const factor=people*days/7;
+  const hint=document.getElementById('shoppingScaleHint');
+  if(hint) hint.textContent='Cálculo activo: '+people+' persona(s) × '+days+' días ÷ 7 = '+factor.toFixed(2)+' veces la canasta semanal base. Las cantidades de abajo se actualizan con esta proporción.';
   const list=shoppingBase.map((item,i)=>{
     const qty=item.perPerson*factor;
     const price=Number(saved[i]??item.price)||0;
