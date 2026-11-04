@@ -410,7 +410,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
         <div class="form-field"><label for="profileActivity">¿Cómo es tu actividad diaria?</label><select id="profileActivity" required><option value="">Selecciona tu actividad</option><option value="Sedentaria">Mayormente sentado</option><option value="Ligera">Actividad ligera</option><option value="Moderada">Actividad moderada</option><option value="Alta">Actividad física intensa</option></select></div>
         <div class="form-field"><label for="profileSport">¿Qué deporte practicas?</label><select id="profileSport"><option value="">Selecciona una opción</option><option value="Fútbol">Fútbol</option><option value="Gimnasio">Gimnasio</option><option value="Running">Running</option><option value="Ciclismo">Ciclismo</option><option value="Otro">Otro</option><option value="Ninguno">Actualmente ninguno</option></select></div>
         <div class="form-field"><label for="profileBudget">Presupuesto semanal para alimentación (S/)</label><input id="profileBudget" type="number" min="0" step="0.5" placeholder="Ej. 100"></div>
-        <div class="form-field full"><label for="profilePreferences">Preferencias alimentarias</label><textarea id="profilePreferences" maxlength="500" placeholder="Ej. Prefiero comidas económicas, me gustan las menestras, no consumo pescado..."></textarea><span class="form-hint">Puedes mencionar gustos, alimentos que evitas o el tipo de comida que prefieres.</span></div>
+        <div class="form-field full"><label for="profileHealthNotes">¿Hay alguna condición de salud que debamos tener en cuenta? (opcional)</label><textarea id="profileHealthNotes" maxlength="300" placeholder="Ej. diabetes, presión alta, enfermedad renal, colesterol alto, dificultad para masticar..."></textarea><span class="form-hint">Este dato es sensible y se guardará solo en este dispositivo, no en tu cuenta en la nube. No ingreses diagnósticos detallados ni datos identificatorios.</span></div><div class="form-field full"><label for="profilePreferences">Preferencias alimentarias</label><textarea id="profilePreferences" maxlength="500" placeholder="Ej. Prefiero comidas económicas, me gustan las menestras, no consumo pescado..."></textarea><span class="form-hint">Puedes mencionar gustos, alimentos que evitas o el tipo de comida que prefieres.</span></div>
         <div class="profile-actions">
           <button class="save-button" type="submit">Guardar mi perfil ✓</button>
           <button class="clear-button" type="button" id="clearProfile">Borrar datos de este navegador</button>
@@ -427,7 +427,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
       <button class="hero-button" type="button" onclick="editProfile()">Editar mi información ✎</button>
     </div>
 
-    <div class="notice">Tus datos de perfil se guardan en tu navegador y, cuando inicias sesión, también en tu cuenta de Yoshi Fit. No introduzcas información médica sensible. Cierra sesión si compartes el dispositivo.</div>
+    <div class="notice">Tus datos de perfil se guardan en tu navegador y, cuando inicias sesión, también en tu cuenta de Yoshi Fit. La información médica opcional se guarda solo en este dispositivo y no se sincroniza. Cierra sesión si compartes el dispositivo.</div>
   </section>
 
   <section class="page" id="about">
@@ -516,6 +516,9 @@ function renderNutrition(){
   document.getElementById('nutritionDashboard').hidden=!complete;
   if(!complete)return;
   const age=Number(p.profileAge), weight=Number(p.profileWeight), height=Number(p.profileHeight), h=height/100;
+  const healthNotes=(localStorage.getItem('yoshiFitHealthNotes')||'').trim();
+  const olderAdult=age>=60;
+  const medicalFlag=!!healthNotes;
   const bmi=weight/(h*h);
   const activity={Sedentaria:1.2,Ligera:1.375,Moderada:1.55,Alta:1.725}[p.profileActivity]||1.2;
   const goal=p.profileGoal;
@@ -524,8 +527,10 @@ function renderNutrition(){
   if(goal==='Ganar masa muscular')focus='Combina entrenamiento de fuerza progresivo, suficiente energía y proteína repartida durante el día.';
   if(goal==='Mejorar mi condición física'||goal==='Mejorar mi rendimiento deportivo')focus='Distribuye comidas y colaciones alrededor de tu actividad; hidrátate y prioriza recuperación.';
   if(age<18)focus='Como eres menor de 18 años, esta plataforma no fija metas de pérdida de peso ni calorías. Prioriza comidas suficientes, variedad, descanso y orientación de un profesional de salud junto con tu familia.';
+  if(olderAdult)focus='Para personas de 60 años o más, priorizamos fuerza funcional, alimentación suficiente, proteína distribuida, hidratación y prevención de fragilidad. Las necesidades deben revisarse con un profesional según enfermedades y medicamentos.';
+  if(medicalFlag)focus='Registraste una condición de salud. Yoshi Fit mostrará orientación general y opciones de alimentación cotidiana, pero no prescribirá dietas terapéuticas ni remedios caseros. Confirma cambios con tu médico o nutricionista.';
   let calories=null,protein=null;
-  if(age>=18&&(p.profileSex==='Hombre'||p.profileSex==='Mujer')){
+  if(age>=18&&!olderAdult&&!medicalFlag&&(p.profileSex==='Hombre'||p.profileSex==='Mujer')){
     const bmr=10*weight+6.25*height-5*age+(p.profileSex==='Hombre'?5:-161);
     const maintenance=bmr*activity;
     calories=Math.round(maintenance*(goal==='Perder grasa'?0.9:goal==='Ganar masa muscular'?1.08:1));
@@ -535,11 +540,17 @@ function renderNutrition(){
   document.getElementById('nutritionGoalLabel').textContent=goal;
   document.getElementById('nutritionCalories').textContent=calories?calories.toLocaleString('es-PE')+' kcal':'No disponible';
   document.getElementById('nutritionProtein').textContent=protein?protein+' g':'No disponible';
-  document.getElementById('nutritionBmi').textContent=Number.isFinite(bmi)?bmi.toFixed(1):'No disponible';
+  document.getElementById('nutritionBmi').textContent=age>=60?'No usar como referencia única en mayores':Number.isFinite(bmi)?bmi.toFixed(1):'No disponible';
   document.getElementById('nutritionFocus').textContent=focus;
   const portionGuide=document.getElementById('nutritionPortionGuide');
   const portionDetails=document.getElementById('nutritionPortionDetails');
-  if(age<18){
+  if(medicalFlag){
+    portionGuide.textContent='Orientación general para conversar con el profesional que conoce tu historia clínica.';
+    portionDetails.innerHTML=['Mantén horarios regulares y comidas variadas; evita ayunos o dietas restrictivas sin indicación profesional.','No elimines grupos de alimentos ni uses infusiones, suplementos o preparados caseros como tratamiento.','Si tienes diabetes, enfermedad renal, cardíaca o restricciones de líquidos, las porciones y bebidas deben individualizarse.','Si hay dificultad para tragar, atragantamiento o pérdida de peso involuntaria, solicita evaluación médica; no cambies texturas por tu cuenta.'].map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
+  }else if(olderAdult){
+    portionGuide.textContent='Prioriza comidas suficientes, fáciles de preparar y adaptadas a masticación, apetito y autonomía.';
+    portionDetails.innerHTML=['Incluye una fuente de proteína en cada comida principal: huevo, pescado, pollo, yogur o menestras según tolerancia.','Combina verduras y frutas variadas con arroz, papa, camote, avena o menestras.','Ten agua disponible durante el día, salvo que el equipo médico haya indicado limitar líquidos.','Si hay poco apetito, pérdida de peso, problemas dentales o dificultad para tragar, consulta al centro de salud.'].map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
+  }else 
     portionGuide.textContent='Por tu edad, evita contar calorías o reducir porciones para cambiar tu peso. Busca comidas completas y suficientes.';
     portionDetails.innerHTML=['En almuerzo y cena incluye verduras o fruta, una fuente de proteína y un alimento energético.','Come con regularidad y escucha tus señales de hambre y saciedad.','No elimines arroz, papa, pan ni grasas por tu cuenta.','Coordina cambios importantes con tu familia y un profesional de salud.'].map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
   }else{
@@ -1233,6 +1244,8 @@ document.getElementById('profileForm').addEventListener('submit',async function(
   event.preventDefault();
 
   const data=getProfileFromForm();
+  const healthNotesField=document.getElementById('profileHealthNotes');
+  if(healthNotesField)localStorage.setItem('yoshiFitHealthNotes',healthNotesField.value.trim());
   const validationError=validateProfile(data);
 
   if(validationError){
