@@ -317,8 +317,8 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
         <div class="panel"><h3>Tu enfoque</h3><p id="nutritionFocus" class="panel-sub"></p><div id="nutritionTips" class="nutrition-list"></div></div>
         <div class="panel"><h3>Tu plato equilibrado</h3><p class="panel-sub">Una guía visual flexible para almuerzo y cena.</p><div class="plate-guide"><div><b>½</b><strong>Verduras</strong><small>Variadas y de temporada</small></div><div><b>¼</b><strong>Proteína</strong><small>Huevo, pollo, pescado o menestras</small></div><div><b>¼</b><strong>Energía</strong><small>Arroz, papa, camote o choclo</small></div></div></div>
       </div>
-      <div class="section-head"><h2>Menú de ejemplo para tu día</h2><span id="nutritionLocation"></span></div>
-      <div class="meal-plan" id="nutritionMeals"></div>
+      <div class="section-head"><h2>Tu menú semanal</h2><span id="nutritionLocation"></span></div>
+      <p class="panel-sub">Siete días de ideas económicas con alimentos comunes en Perú. Puedes intercambiar comidas según disponibilidad, apetito y preferencias.</p><div class="meal-plan" id="nutritionMeals"></div>
       <div class="section-head"><h2>Recetas económicas</h2><span>Ingredientes cotidianos</span></div>
       <div class="recipe-grid" id="nutritionRecipes"></div>
       <div class="notice">Las calorías y porciones son aproximaciones educativas. No son indicaciones clínicas. Si eres menor de 18 años, estás embarazada o lactando, tienes una enfermedad, tomas medicación o antecedentes de trastornos alimentarios, consulta con un profesional antes de seguir objetivos de peso o calorías.</div>
@@ -349,7 +349,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
   <section class="page" id="budget">
     <div class="inner-hero" style="background:#eeeadd"><div class="eyebrow">YOSHI BUDGET · COMPRAS INTELIGENTES</div><h1>Del menú a tu mercado. 🛒</h1><p>Calcula cantidades semanales según cuántas personas comerán y arma una cotización con los precios que encuentres en tu mercado.</p></div>
     <div class="budget-summary" id="budgetSummary"></div>
-    <div class="panel"><h3>¿Para cuántas personas organizamos?</h3><p class="panel-sub">La lista se ajusta automáticamente. Puedes cambiarlo cuando quieras.</p><div class="budget-controls"><div class="form-field"><label for="shoppingPeople">Personas</label><input id="shoppingPeople" type="number" min="1" max="12" step="1" value="1" oninput="updateShoppingPlan()"></div><div class="form-field"><label for="shoppingDays">Días de compra</label><select id="shoppingDays" onchange="updateShoppingPlan()"><option value="3">3 días</option><option value="5">5 días</option><option value="7" selected>7 días</option></select></div></div><p class="panel-sub" id="shoppingScaleHint">Las cantidades se ajustan según personas y días.</p><p class="panel-sub">Canasta orientativa basada en los alimentos del menú de ejemplo: avena, fruta, huevo, pollo o menestras, arroz o tubérculos y verduras. Yogur es opcional. Ajusta según el menú real y lo que ya tengas.</p><button class="btn btn-secondary" type="button" onclick="resetShoppingQuantities()">Restablecer cantidades sugeridas</button></div>
+    <div class="panel"><h3>¿Para cuántas personas organizamos?</h3><p class="panel-sub">La lista se ajusta automáticamente. Puedes cambiarlo cuando quieras.</p><div class="budget-controls"><div class="form-field"><label for="shoppingPeople">Personas</label><input id="shoppingPeople" type="number" min="1" max="12" step="1" value="1" oninput="updateShoppingPlan()"></div><div class="form-field"><label for="shoppingDays">Días de compra</label><select id="shoppingDays" onchange="updateShoppingPlan()"><option value="3">3 días</option><option value="5">5 días</option><option value="7" selected>7 días</option></select></div></div><p class="panel-sub" id="shoppingScaleHint">Las cantidades se ajustan según personas y días. La base corresponde a una semana de menú orientativo.</p><p class="panel-sub">Canasta estimada para preparar el menú semanal propuesto: avena, fruta, huevo, pollo o menestras, arroz o tubérculos y verduras. Yogur es opcional. Ajusta según el menú real y lo que ya tengas.</p><button class="btn btn-secondary" type="button" onclick="resetShoppingQuantities()">Restablecer cantidades sugeridas</button></div>
     <div class="section-head"><h2>Tu lista y cotización</h2><span>Precios editables en soles</span></div>
     <div id="budgetShoppingList" class="shopping-list shopping-quote"></div>
     <div class="budget-total" id="shoppingQuoteTotal"></div>
@@ -545,13 +545,16 @@ function renderNutrition(){
     p.profilePreferences?('Ten en cuenta tus preferencias: '+p.profilePreferences+'.'):'Varía entre alimentos accesibles: huevo, menestras, pollo, pescado, avena y tubérculos.'
   ];
   document.getElementById('nutritionTips').innerHTML=tips.map(t=>'<div class="nutrition-tip">✓ '+escapeNutritionText(t)+'</div>').join('');
-  const meals=[
-    ['🌅','Desayuno','Avena con leche, plátano y huevo.','Combina cereal, fruta y proteína.'],
-    ['🍛','Almuerzo','Arroz o papa, pollo guisado o lentejas y ensalada de temporada.','La lista de compras contempla estas bases; elige pollo o menestras según tu semana.'],
-    ['🍌','Media tarde','Fruta de estación y yogur natural opcional o un huevo sancochado.','Úsalo si tienes hambre o entrenas más tarde.'],
-    ['🌙','Cena','Tortilla de verduras con camote o pan integral y una fruta.','Una comida completa, sin necesidad de saltártela.']
+  const weeklyMenu=[
+    ['Lunes','Avena con leche y plátano','Arroz con pollo y ensalada','Tortilla de verduras con papa'],
+    ['Martes','Pan con huevo y fruta','Lentejas guisadas con arroz y ensalada','Sopa de verduras con huevo'],
+    ['Miércoles','Avena con fruta','Pollo guisado con papa y verduras','Ensalada de garbanzos o frejoles con huevo'],
+    ['Jueves','Yogur o leche con avena y plátano','Arroz con menestra y ensalada','Tortilla de verduras con camote'],
+    ['Viernes','Pan con huevo y fruta','Pollo saltado casero con arroz y verduras','Crema/sopa de verduras con papa y huevo'],
+    ['Sábado','Avena con leche y fruta','Pescado o pollo con papa y ensalada','Lentejas con verduras'],
+    ['Domingo','Huevo sancochado, pan y fruta','Arroz con pollo o menestra y ensalada','Cena ligera de tortilla y verduras']
   ];
-  document.getElementById('nutritionMeals').innerHTML=meals.map(m=>'<article class="meal-card"><div class="meal-icon">'+m[0]+'</div><small>'+m[1]+'</small><h3>'+m[2]+'</h3><p>'+m[3]+'</p></article>').join('');
+  document.getElementById('nutritionMeals').innerHTML=weeklyMenu.map((m,i)=>'<article class="meal-card"><div class="meal-icon">'+['🌅','🥣','🍛','🥗','🍲','🐟','🌿'][i]+'</div><small>'+m[0]+'</small><h3>Desayuno</h3><p>'+m[1]+'</p><h3>Almuerzo</h3><p>'+m[2]+'</p><h3>Cena</h3><p>'+m[3]+'</p></article>').join('');
   const recipes=[
     ['Tortilla de verduras','2 huevos, tomate, cebolla y verduras disponibles.','Saltea las verduras, añade huevo batido y cocina a fuego bajo.'],
     ['Lentejas caseras','Lentejas, cebolla, ajo, zanahoria y arroz o papa.','Cocina las lentejas hasta ablandar y acompaña con verduras.'],
@@ -633,17 +636,18 @@ function saveHealthHabit(index,checked){
   saved[index]=checked;localStorage.setItem(key,JSON.stringify(saved));
 }
 /* PRESUPUESTO Y COTIZACIÓN DINÁMICA */
+// Cantidades orientativas por persona para preparar el menú semanal propuesto.
 const shoppingBase=[
-  {name:'Avena',unit:'kg',perPerson:0.35,price:0},
-  {name:'Arroz',unit:'kg',perPerson:0.70,price:0},
-  {name:'Lentejas o frejoles',unit:'kg',perPerson:0.35,price:0},
-  {name:'Huevos',unit:'unidad',perPerson:7,price:0},
-  {name:'Pollo o pescado',unit:'kg',perPerson:0.70,price:0},
+  {name:'Avena',unit:'kg',perPerson:0.25,price:0},
+  {name:'Arroz',unit:'kg',perPerson:0.50,price:0},
+  {name:'Lentejas o frejoles',unit:'kg',perPerson:0.25,price:0},
+  {name:'Huevos',unit:'unidad',perPerson:5,price:0},
+  {name:'Pollo o pescado',unit:'kg',perPerson:0.50,price:0},
   {name:'Fruta de estación',unit:'kg',perPerson:1.40,price:0},
-  {name:'Verduras variadas',unit:'kg',perPerson:1.40,price:0},
-  {name:'Leche',unit:'litro',perPerson:2,price:0},
-  {name:'Papa o camote',unit:'kg',perPerson:0.70,price:0},
-  {name:'Yogur natural (opcional)',unit:'litro',perPerson:0.50,price:0}
+  {name:'Verduras variadas',unit:'kg',perPerson:1.50,price:0},
+  {name:'Leche',unit:'litro',perPerson:1.50,price:0},
+  {name:'Papa o camote',unit:'kg',perPerson:0.50,price:0},
+  {name:'Yogur natural (opcional)',unit:'litro',perPerson:0.25,price:0}
 ];
 function getShoppingSettings(){
   try{return JSON.parse(localStorage.getItem('yoshiFitShoppingSettings')||'{}')}catch(e){return {}}
