@@ -656,7 +656,7 @@ function renderBudget(){
   const p=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return null}})()||{};
   const amount=Number(p.profileBudget);
   const summary=document.getElementById('budgetSummary');
-  if(p.profileBudget===''){
+  if(!p.profileBudget){
     summary.innerHTML='<h3>Aún no indicaste tu presupuesto</h3><p class="panel-sub">Añade tu monto semanal en Mi perfil para comparar la cotización con tu límite de gasto.</p><button class="hero-button" onclick="navigate(\'profile\')">Editar presupuesto →</button>';
   }else{
     summary.innerHTML='<small>PRESUPUESTO SEMANAL REGISTRADO</small><br><strong>S/ '+amount.toLocaleString('es-PE',{maximumFractionDigits:2})+'</strong><p class="panel-sub">Tu límite indicado en el perfil. La cotización se calcula con los precios que ingreses abajo.</p>';
