@@ -370,13 +370,9 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
       </div>
     </div>
     <div class="panel" id="careGuidance" aria-live="polite"></div>
-    <div class="section-head"><h2>Ideas caseras para el día a día</h2><span>Preparaciones sencillas</span></div>
-    <div class="nutrition-list">
-      <div class="nutrition-tip"><strong>🥣 Avena cocida:</strong> avena con agua o leche según tolerancia, canela y fruta picada. Evita añadir azúcar de rutina.</div>
-      <div class="nutrition-tip"><strong>🥕 Guiso de lentejas:</strong> lentejas bien cocidas con zanahoria, cebolla y ajo; acompaña con arroz y verduras según necesidades individuales.</div>
-      <div class="nutrition-tip"><strong>🐟 Pescado al horno:</strong> pescado fresco con hierbas culinarias, limón y una porción de papa; evita exceso de sal.</div>
-      <div class="nutrition-tip"><strong>🍳 Tortilla de verduras:</strong> huevo bien cocido con verduras picadas y una guarnición sencilla.</div>
-    </div>
+    <div class="section-head"><h2 id="careIdeasTitle">Ideas caseras según tu selección</h2><span>Preparaciones adaptables</span></div>
+    <p class="panel-sub" id="careIdeasIntro">Estas ideas cambian cuando eliges otro tema. Si hay más de una condición, consulta cómo combinarlas con tu equipo de salud.</p>
+    <div class="nutrition-list" id="careRecipes" aria-live="polite"></div>
     <div class="notice"><strong>Importante:</strong> estas son ideas generales, no recetas terapéuticas ni adecuadas automáticamente para todas las enfermedades. En enfermedad renal, dificultad para tragar, diabetes tratada con insulina u otros medicamentos, embarazo, pérdida involuntaria de peso o varias enfermedades a la vez, un profesional debe adaptar alimentos, porciones y horarios. No suspendas ni cambies medicamentos por consejos de esta web.</div>
     <div class="notice">La ayuda casera segura significa facilitar la preparación, mantener higiene de alimentos, acompañar las comidas y respetar las indicaciones clínicas. No recomendamos infusiones, suplementos ni preparados como tratamiento.</div>
   </section>
@@ -731,44 +727,97 @@ function saveCareFocus(){
 function renderCare(){
   const field=document.getElementById('careFocus');
   const panel=document.getElementById('careGuidance');
-  if(!field||!panel)return;
-  const saved=localStorage.getItem('yoshiFitCareFocus')||'older';
+  const recipes=document.getElementById('careRecipes');
+  const ideasTitle=document.getElementById('careIdeasTitle');
+  const ideasIntro=document.getElementById('careIdeasIntro');
+  if(!field||!panel||!recipes)return;
+  const profile=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return null}})()||{};
+  const saved=localStorage.getItem('yoshiFitCareFocus')||(Number(profile.profileAge)>=60?'older':'older');
   field.value=saved;
   const guidance={
     older:{
       title:'Acompañamiento para personas adultas mayores',
       intro:'La prioridad es comer suficiente, conservar fuerza y facilitar comidas agradables y seguras.',
-      items:['Ofrece variedad de alimentos y alguna fuente de proteína en las comidas, según tolerancia e indicación profesional.','Facilita preparaciones sencillas y alimentos fáciles de masticar si esa textura es segura para la persona.','Mantén agua disponible solo si no existe una restricción médica de líquidos.','Consulta si hay poco apetito persistente, pérdida involuntaria de peso, caídas o dificultad para masticar o tragar.']
+      items:['Ofrece variedad de alimentos y alguna fuente de proteína en las comidas, según tolerancia e indicación profesional.','Facilita preparaciones sencillas; adapta la textura solo si la persona puede tragar con seguridad o tiene una indicación profesional.','Mantén agua disponible solo si no existe una restricción médica de líquidos.','Consulta si hay poco apetito persistente, pérdida involuntaria de peso, caídas o dificultad para masticar o tragar.'],
+      recipeTitle:'Preparaciones sencillas para personas mayores',
+      recipeIntro:'Elige consistencias que la persona mastique y trague sin dificultad. No espeses ni licúes alimentos si no existe una indicación adecuada.',
+      recipes:[
+        ['🥣 Avena cocida suave','Cocina avena con agua o leche habitual hasta que esté tierna. Añade fruta madura picada o aplastada si la tolera.','Evita ofrecerla si hay una pauta de textura o líquidos diferente.'],
+        ['🍳 Tortilla tierna','Cocina bien huevo batido con verduras finamente picadas y blandas. Sirve en trozos pequeños si puede masticarlos.','No es adecuada automáticamente para personas con disfagia.'],
+        ['🐟 Pescado guisado casero','Cocina pescado sin espinas con cebolla y verduras hasta que quede suave; revisa cuidadosamente que no queden espinas.','Ajusta ingredientes y textura a indicaciones individuales.']
+      ]
     },
     diabetes:{
       title:'Orientación general para diabetes',
       intro:'La alimentación debe coordinarse con el tratamiento y los horarios indicados por el equipo de salud.',
-      items:['Prefiere agua en lugar de gaseosas y bebidas azucaradas de consumo habitual.','Organiza comidas regulares y variadas; evita ayunos o cambios bruscos sin indicación clínica.','Combina verduras, fuentes de proteína y carbohidratos en porciones individualizadas.','Si usa insulina o medicamentos que pueden bajar la glucosa, no cambies horarios ni cantidades de comida sin consultar.']
+      items:['Prefiere agua en lugar de gaseosas y bebidas azucaradas de consumo habitual.','Organiza comidas regulares y variadas; evita ayunos o cambios bruscos sin indicación clínica.','Combina verduras, fuentes de proteína y alimentos con carbohidratos; las cantidades dependen de cada persona.','Si usa insulina o medicamentos que pueden bajar la glucosa, no cambies horarios ni cantidades de comida sin consultar.'],
+      recipeTitle:'Ideas caseras para diabetes',
+      recipeIntro:'Son ejemplos de platos mixtos, no una prescripción ni un conteo de carbohidratos. Mantén las porciones y horarios acordados con el equipo tratante.',
+      recipes:[
+        ['🥗 Plato de pollo y verduras','Cocina pollo sin piel a la plancha o guisado. Acompaña con verduras cocidas o frescas y una porción de arroz o papa según su pauta.','No elimines todos los carbohidratos ni ajustes medicación por esta receta.'],
+        ['🥚 Huevo con verduras y pan','Prepara huevo bien cocido con tomate o verduras disponibles. Acompaña con pan en la cantidad que la persona tenga indicada.','Si hay hipoglucemias o tratamiento con insulina, respeta el plan clínico.'],
+        ['🥣 Avena sin azúcar añadida','Cocina avena y acompaña con una porción de fruta entera. Evita endulzar con miel, panela o azúcar como si fueran alternativas libres.','La cantidad de avena y fruta también aporta carbohidratos y debe ajustarse al plan individual.']
+      ]
     },
     pressure:{
       title:'Orientación general para presión alta',
       intro:'Los hábitos alimentarios pueden acompañar el tratamiento, pero no lo reemplazan.',
-      items:['Cocina más en casa y prueba dar sabor con ajo, cebolla, limón, hierbas y especias.','Reduce gradualmente la sal añadida y compara etiquetas de productos envasados por su contenido de sodio.','Modera embutidos, sopas instantáneas y snacks muy salados.','No suspendas medicamentos ni uses sustitutos de sal sin consultar, especialmente si hay enfermedad renal.']
+      items:['Cocina más en casa y prueba dar sabor con ajo, cebolla, limón, hierbas y especias.','Reduce gradualmente la sal añadida y compara etiquetas de productos envasados por su contenido de sodio.','Modera embutidos, sopas instantáneas, cubitos concentrados y snacks muy salados.','No suspendas medicamentos ni uses sustitutos de sal sin consultar, especialmente si hay enfermedad renal.'],
+      recipeTitle:'Ideas caseras con menos sal añadida',
+      recipeIntro:'El sabor puede venir de hierbas, ajo, cebolla, limón y especias. Evita cubitos concentrados y sazonadores muy salados.',
+      recipes:[
+        ['🐟 Pescado al horno con limón','Hornea pescado fresco con limón, ajo, cebolla y hierbas culinarias. Acompaña con verduras y una guarnición sencilla.','No añadas sustitutos de sal con potasio sin autorización médica.'],
+        ['🥕 Guiso de verduras y pollo','Cocina pollo con zanahoria, zapallo, cebolla, ajo y hierbas; usa poca sal o la cantidad indicada por el profesional.','Si también existe enfermedad renal o cardíaca, consulta las porciones y líquidos.'],
+        ['🫘 Menestra casera','Cocina menestras desde secas, sin cubitos ni carnes procesadas; sazona con ajo, cebolla y hierbas.','La menestra puede requerir ajustes si hay enfermedad renal u otras restricciones.']
+      ]
     },
     cholesterol:{
       title:'Orientación general para colesterol elevado',
       intro:'El patrón de alimentación completo importa más que un alimento aislado.',
-      items:['Incluye menestras, avena, frutas y verduras variadas de forma habitual.','Prefiere preparaciones sancochadas, al horno o guisadas frente a frituras frecuentes.','Usa aceites vegetales en cantidades moderadas y limita grasas trans y exceso de grasas saturadas.','Los alimentos no sustituyen controles ni medicamentos recetados.']
+      items:['Incluye menestras, avena, frutas y verduras variadas de forma habitual.','Prefiere preparaciones sancochadas, al horno o guisadas frente a frituras frecuentes.','Usa aceites vegetales en cantidades moderadas y limita grasas trans y exceso de grasas saturadas.','Los alimentos no sustituyen controles ni medicamentos recetados.'],
+      recipeTitle:'Ideas caseras con fibra y menos fritura',
+      recipeIntro:'Estas preparaciones aportan variedad y fibra; ningún plato por sí solo cura ni garantiza reducir el colesterol.',
+      recipes:[
+        ['🫘 Lentejas guisadas','Cocina lentejas con zanahoria, tomate, cebolla y ajo. Usa una cantidad moderada de aceite y acompaña según tu plan habitual.','Si hay enfermedad renal, las menestras necesitan valoración individual.'],
+        ['🥣 Avena con fruta entera','Cocina avena y añade fruta entera picada. Evita convertirla en bebida azucarada.','No sustituye medicamentos ni controles de colesterol.'],
+        ['🐟 Pescado sudado','Cocina pescado con tomate, cebolla y culantro; evita freírlo y acompaña con verduras.','Ajusta sal y guarnición si hay otras condiciones médicas.']
+      ]
     },
     renal:{
       title:'Enfermedad renal: requiere adaptación individual',
       intro:'No existe una dieta renal única. Las recomendaciones dependen de la etapa, análisis, medicamentos y si la persona recibe diálisis.',
-      items:['No restrinjas por cuenta propia potasio, fósforo, proteínas, sal ni líquidos.','No uses listas genéricas de alimentos “prohibidos”: podrían ser inadecuadas para esta persona.','Lleva la lista de medicamentos y resultados de laboratorio a consulta con nutricionista renal o nefrólogo.','Las recetas de esta página no están validadas como aptas para enfermedad renal.']
+      items:['No restrinjas por cuenta propia potasio, fósforo, proteínas, sal ni líquidos.','No uses listas genéricas de alimentos “prohibidos”: podrían ser inadecuadas para esta persona.','Lleva la lista de medicamentos y resultados de laboratorio a consulta con nutricionista renal o nefrólogo.','Las recetas comunes de esta página no están validadas como aptas para enfermedad renal.'],
+      recipeTitle:'Antes de elegir recetas para enfermedad renal',
+      recipeIntro:'No mostraremos una receta renal universal: un alimento apropiado para una persona puede no serlo para otra según análisis, etapa y diálisis.',
+      recipes:[
+        ['📋 Arma tu ficha para la consulta','Anota qué alimentos consume habitualmente, apetito, cambios de peso, medicamentos y las indicaciones que ya recibió.','Lleva la ficha a nutrición renal para definir porciones y sustituciones seguras.'],
+        ['🍲 Cocina según la pauta individual','Usa únicamente la lista de alimentos, porciones y técnicas que haya indicado su equipo renal. Evita añadir cubitos o suplementos por cuenta propia.','No asumas que papa, tomate, plátano, menestras, lácteos o carnes están permitidos o prohibidos sin evaluación.'],
+        ['💧 Respeta la indicación de líquidos','Sigue el volumen diario indicado por el equipo tratante.','No aumentes ni restrinjas agua por recomendaciones generales de internet.']
+      ]
     },
     digestive:{
       title:'Cuidado digestivo y recuperación',
       intro:'La tolerancia cambia según la causa de los síntomas y la condición de cada persona.',
-      items:['Prioriza higiene, lavado de manos, agua segura y alimentos bien cocidos.','Ofrece comidas sencillas en cantidades tolerables, sin forzar la alimentación.','No prolongues dietas restrictivas ni uses infusiones o preparados como tratamiento.','Vómitos persistentes, sangre en heces, dolor intenso o signos de deshidratación requieren evaluación médica.']
+      items:['Prioriza higiene, lavado de manos, agua segura y alimentos bien cocidos.','Ofrece comidas sencillas en cantidades tolerables, sin forzar la alimentación.','No prolongues dietas restrictivas ni uses infusiones o preparados como tratamiento.','Vómitos persistentes, sangre en heces, dolor intenso o signos de deshidratación requieren evaluación médica.'],
+      recipeTitle:'Preparaciones sencillas según tolerancia',
+      recipeIntro:'No son una dieta para tratar gastritis, diarrea u otra enfermedad. Si un alimento empeora síntomas, suspéndelo y consulta si persisten.',
+      recipes:[
+        ['🍚 Arroz bien cocido con pollo','Prepara arroz y pollo completamente cocidos, con poca grasa añadida. Sirve una cantidad pequeña si la persona la tolera.','No es una pauta obligatoria ni adecuada para todas las causas digestivas.'],
+        ['🥕 Sopa casera de verduras','Cocina verduras que la persona tolere con agua segura y pollo o huevo bien cocido si forman parte de su alimentación habitual.','No fuerces líquidos ni texturas si hay dificultad para tragar o restricción médica.'],
+        ['🍌 Fruta según tolerancia','Ofrece una fruta habitual, madura y bien lavada en la forma que la persona tolere.','No todas las molestias digestivas requieren retirar fibra o lácteos.']
+      ]
     },
     unsure:{
       title:'Orientación general',
       intro:'Si no sabes qué enfoque corresponde, empieza por hábitos simples y evita restricciones.',
-      items:['Mantén comidas variadas y suficientes, adaptadas a gustos, cultura y presupuesto.','Evita suplementos, ayunos y remedios caseros que prometan tratar enfermedades.','Anota dudas y medicamentos para conversar con un profesional de salud.','Si hay síntomas nuevos, intensos o persistentes, busca evaluación.']
+      items:['Mantén comidas variadas y suficientes, adaptadas a gustos, cultura y presupuesto.','Evita suplementos, ayunos y remedios caseros que prometan tratar enfermedades.','Anota dudas y medicamentos para conversar con un profesional de salud.','Si hay síntomas nuevos, intensos o persistentes, busca evaluación.'],
+      recipeTitle:'Ideas caseras variadas',
+      recipeIntro:'Son ejemplos de comidas cotidianas; adapta ingredientes a alergias, tolerancia, presupuesto y cualquier indicación médica.',
+      recipes:[
+        ['🥕 Guiso de lentejas','Cocina lentejas con zanahoria, cebolla y ajo; acompaña con arroz o tubérculos.','Si existe enfermedad renal, diabetes u otra condición, confirma porciones y frecuencia.'],
+        ['🍳 Tortilla de verduras','Cocina huevo con verduras picadas hasta que quede completamente cuajado.','Adapta textura y porción a la persona.'],
+        ['🐟 Pescado al horno','Hornea pescado fresco con limón y hierbas; revisa que no queden espinas.','Ajusta sal, porción y guarnición según las indicaciones personales.']
+      ]
     }
   };
   const data=guidance[saved]||guidance.older;
@@ -778,6 +827,16 @@ function renderCare(){
   const list=document.createElement('div');list.className='nutrition-list';
   data.items.forEach(item=>{const row=document.createElement('div');row.className='nutrition-tip';row.textContent='• '+item;list.appendChild(row)});
   panel.append(title,intro,list);
+  if(ideasTitle)ideasTitle.textContent=data.recipeTitle;
+  if(ideasIntro)ideasIntro.textContent=data.recipeIntro;
+  recipes.replaceChildren();
+  data.recipes.forEach(([name,steps,note])=>{
+    const card=document.createElement('article');card.className='nutrition-tip';
+    const heading=document.createElement('strong');heading.textContent=name;
+    const method=document.createElement('p');method.textContent=steps;
+    const caution=document.createElement('small');caution.textContent=note;
+    card.append(heading,method,caution);recipes.appendChild(card);
+  });
 }
  
 /* SALUD Y BIENESTAR */
