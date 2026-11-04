@@ -315,7 +315,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
       </div>
       <div class="nutrition-columns">
         <div class="panel"><h3>Tu enfoque</h3><p id="nutritionFocus" class="panel-sub"></p><div id="nutritionTips" class="nutrition-list"></div></div>
-        <div class="panel"><h3>Tu plato equilibrado</h3><p class="panel-sub">Una guía visual flexible para almuerzo y cena.</p><div class="plate-guide"><div><b>½</b><strong>Verduras</strong><small>Variadas y de temporada</small></div><div><b>¼</b><strong>Proteína</strong><small>Huevo, pollo, pescado o menestras</small></div><div><b>¼</b><strong>Energía</strong><small>Arroz, papa, camote o choclo</small></div></div></div>
+        <div class="panel"><h3>Tu plato equilibrado</h3><p class="panel-sub">Una guía visual flexible para almuerzo y cena.</p><div class="plate-guide"><div><b>½</b><strong>Verduras</strong><small>Variadas y de temporada</small></div><div><b>¼</b><strong>Proteína</strong><small>Huevo, pollo, pescado o menestras</small></div><div><b>¼</b><strong>Energía</strong><small>Arroz, papa, camote o choclo</small></div></div></div><div class="panel"><h3>Porciones orientativas para tu objetivo</h3><p class="panel-sub" id="nutritionPortionGuide">Guía flexible para armar tus comidas principales.</p><div id="nutritionPortionDetails" class="nutrition-list"></div></div>
       </div>
       <div class="section-head"><h2>Tu menú semanal</h2><span id="nutritionLocation"></span></div>
       <p class="panel-sub" id="nutritionMenuNote">El menú se adapta al objetivo registrado en tu perfil.</p><div class="meal-plan" id="nutritionMeals"></div>
@@ -333,7 +333,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
       <div class="section-head"><h2 id="performanceGreeting">Tu punto de partida</h2><span id="performanceSport"></span></div>
       <div class="panel"><h3 id="performanceFocusTitle">Tu enfoque de entrenamiento</h3><p id="performanceFocus" class="panel-sub"></p><div id="performanceCautions" class="nutrition-list"></div></div>
       <div class="section-head"><h2>Semana de inicio</h2><span>Propuesta adaptable</span></div>
-      <div class="workout-grid" id="performanceWeek"></div>
+      <div class="workout-grid" id="performanceWeek"></div><div class="panel"><h3>Cómo ejecutar cada sesión</h3><p class="panel-sub">Series, repeticiones y pausas según tu punto de partida.</p><div id="performanceDetails" class="nutrition-list"></div></div><div class="panel"><h3>Progresión de 4 semanas</h3><div id="performanceProgression" class="nutrition-list"></div></div>
       <div class="notice">Antes de entrenar, realiza 5 a 10 minutos de calentamiento. Detente si aparece dolor agudo, mareo, falta de aire inusual o dolor en el pecho. Si tienes una lesión, enfermedad o llevas mucho tiempo sin actividad, consulta con un profesional antes de iniciar.</div>
     </div>
   </section>
@@ -537,6 +537,16 @@ function renderNutrition(){
   document.getElementById('nutritionProtein').textContent=protein?protein+' g':'No disponible';
   document.getElementById('nutritionBmi').textContent=Number.isFinite(bmi)?bmi.toFixed(1):'No disponible';
   document.getElementById('nutritionFocus').textContent=focus;
+  const portionGuide=document.getElementById('nutritionPortionGuide');
+  const portionDetails=document.getElementById('nutritionPortionDetails');
+  if(age<18){
+    portionGuide.textContent='Por tu edad, evita contar calorías o reducir porciones para cambiar tu peso. Busca comidas completas y suficientes.';
+    portionDetails.innerHTML=['En almuerzo y cena incluye verduras o fruta, una fuente de proteína y un alimento energético.','Come con regularidad y escucha tus señales de hambre y saciedad.','No elimines arroz, papa, pan ni grasas por tu cuenta.','Coordina cambios importantes con tu familia y un profesional de salud.'].map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
+  }else{
+    const portions=goal==='Perder grasa'?['½ plato de verduras variadas.','¼ plato de proteína: pollo, pescado, huevo o menestras.','¼ plato de arroz, papa, camote, choclo o quinua.','Evita saltarte comidas; ajusta según hambre y actividad.']:goal==='Ganar masa muscular'?['½ plato de verduras y fruta a lo largo del día.','Incluye proteína en cada comida principal.','Acompaña con arroz, papa, camote, avena, pan o menestras.','Añade una colación si lo necesitas: leche con avena, yogur o pan con huevo.']:['½ plato de verduras variadas.','¼ plato de proteína: huevo, pollo, pescado o menestras.','¼ plato de arroz, papa o camote.','En días de deporte, añade una colación si tienes hambre.'];
+    portionGuide.textContent='Guía práctica para '+goal.toLowerCase()+'. Ajusta por hambre, presupuesto y carga de actividad.';
+    portionDetails.innerHTML=portions.map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
+  }
   document.getElementById('nutritionLocation').textContent=[p.profileCity,p.profileRegion].filter(Boolean).join(' · ')||'Perú';
   const tips=[
     'Incluye una fuente de proteína en tus comidas principales.',
@@ -657,6 +667,10 @@ function renderPerformance(){
     days[4][0]='VIERNES · FÚTBOL';days[4][2]='Conducción de balón, pases contra una pared y desplazamientos suaves. Evita sprints máximos al inicio.';
   }
   document.getElementById('performanceWeek').innerHTML=days.map(d=>'<article class="workout-card"><small>'+d[0]+'</small><h3>'+d[1]+'</h3><p>'+d[2]+'</p></article>').join('');
+  const strength=beginner?['Sentadilla a silla: 2 × 8 a 10.','Flexiones contra pared: 2 × 8 a 12.','Puente de glúteos: 2 × 10 a 12.','Elevación de talones: 2 × 12.','Descansa 60 a 90 segundos; termina con 2 o 3 repeticiones posibles en reserva.']:['Sentadilla controlada: 2 a 3 × 8 a 12.','Flexión inclinada: 2 a 3 × 6 a 12.','Puente de glúteos: 2 a 3 × 10 a 15.','Remo con mochila ligera: 2 × 8 a 12 por lado.','Plancha: 2 × 15 a 30 segundos. Descansa 60 a 120 segundos.'];
+  document.getElementById('performanceDetails').innerHTML=strength.map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
+  const progression=['Semana 1: aprende la técnica y usa el volumen indicado.','Semana 2: añade 1 o 2 repeticiones si terminas cómodo.','Semana 3: aumenta ligeramente repeticiones o resistencia, nunca ambas a la vez.','Semana 4: consolida; reduce el volumen si notas fatiga acumulada.'];
+  document.getElementById('performanceProgression').innerHTML=progression.map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
 }
 
 /* SALUD Y BIENESTAR */
@@ -744,7 +758,8 @@ function renderShoppingQuote(){
   },0);
   const p=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return null}})()||{};
   const budget=Number(p.profileBudget);
-  const difference=Number.isFinite(budget)&&p.profileBudget!==''?budget-total:null;
+  const comparableBudget=Number.isFinite(budget)&&p.profileBudget!==''?budget*days/7:null;
+  const difference=comparableBudget===null?null:comparableBudget-total;
   document.getElementById('shoppingQuoteTotal').innerHTML='<div><small>COTIZACIÓN APROXIMADA · '+people+' persona(s) · '+days+' días</small><strong>S/ '+total.toFixed(2)+'</strong><p>'+(total===0?'Ingresa precios de tu mercado para calcular el total.': 'Total de los alimentos incluidos en la lista.')+'</p>'+(difference===null?'': '<p class="quote-budget '+(difference>=0?'within':'over')+'">'+(difference>=0?'Dentro de tu presupuesto: sobran ':'Excede tu presupuesto por ')+'S/ '+Math.abs(difference).toFixed(2)+'</p>')+'</div>';
 }
 function resetShoppingQuantities(){
