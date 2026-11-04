@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<meta name="description" content="Yoshi Tools: herramientas gratuitas para emprendedores y pequeños negocios. Calcula ganancias, precios, IGV y gastos.">
+<title>Yoshi Tools | Herramientas inteligentes</title>
+<style>
+:root {
+  --bg:#0b1120;
+  --panel:#151f32;
+  --panel2:#1b2940;
+  --text:#f4f7ff;
+  --muted:#9baac0;
+  --primary:#6c8cff;
+  --green:#30d6a0;
+  --border:#293851;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  font-family:Inter,system-ui,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header {
+  padding:19px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  background:#0b1120ed;
+  backdrop-filter:blur(12px);
+  z-index:5;
+}
+.logo {font-size:22px;font-weight:850;letter-spacing:-1px}
+.logo span {color:var(--primary)}
+.status {font-size:11px;color:var(--green)}
+.hero {
+  text-align:center;
+  padding:55px 20px 35px;
+  max-width:800px;
+  margin:auto;
+}
+.hero h1 {font-size:clamp(32px,7vw,52px);margin:0 0 14px;letter-spacing:-2px}
+.hero h1 span {color:var(--primary)}
+.hero p {color:var(--muted);line-height:1.7}
+.search {
+  width:min(100%,500px);
+  padding:15px 18px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  color:white;
+  border-radius:12px;
+  margin-top:18px;
+  font-size:15px;
+}
+.container {max-width:1050px;margin:auto;padding:15px 20px 70px}
+.section-title {font-size:19px;margin:25px 0 16px}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
+}
+.card {
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:22px;
+  border-radius:17px;
+  cursor:pointer;
+  transition:.2s;
+}
+.card:hover {transform:translateY(-3px);border-color:var(--primary)}
+.icon {font-size:28px}
+.card h3 {margin:12px 0 7px}
+.card p {color:var(--muted);font-size:13px;line-height:1.5}
+.tag {color:var(--green);font-size:11px}
+.tool {
+  display:none;
+  max-width:580px;
+  margin:25px auto;
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:24px;
+  border-radius:18px;
+}
+.tool.active {display:block}
+.tool h2 {margin-top:0}
+label {display:block;font-size:13px;color:var(--muted);margin:15px 0 7px}
+input,select {
+  width:100%;
+  padding:13px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  color:white;
+  border-radius:9px;
+  font-size:15px;
+}
+button {
+  border:0;
+  border-radius:10px;
+  padding:13px 17px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+}
+.primary {background:var(--primary);color:white;width:100%;margin-top:18px}
+.back {background:var(--panel2);color:white;margin-bottom:18px}
+.result {
+  background:var(--panel2);
+  border-radius:12px;
+  padding:18px;
+  margin-top:18px;
+  display:none;
+}
+.result small {color:var(--muted)}
+.result strong {display:block;font-size:26px;color:var(--green);margin-top:6px}
+.result p {color:var(--muted);font-size:13px}
+footer {
+  text-align:center;
+  border-top:1px solid var(--border);
+  padding:28px 15px;
+  color:var(--muted);
+  font-size:12px;
+}
+footer a {color:var(--primary);text-decoration:none}
+.hidden {display:none!important}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">YOSHI <span>TOOLS.</span></div>
+  <div class="status">● Herramientas gratuitas</div>
+</header>
+
+<section class="hero">
+  <h1>Tu negocio, <span>más inteligente.</span></h1>
+  <p>Herramientas gratuitas para calcular, organizar y hacer crecer tu negocio. Sin registros y sin complicaciones.</p>
+  <input class="search" id="search" placeholder="🔎 Buscar una herramienta..." oninput="filterTools()">
+</section>
+
+<main class="container">
+  <div id="catalog">
+    <h2 class="section-title">Herramientas disponibles</h2>
+    <div class="grid" id="grid">
+      <div class="card" data-name="ganancias utilidad beneficio" onclick="openTool('profit')">
+        <div class="icon">💰</div><h3>Calculadora de ganancias</h3>
+        <p>Descubre cuánto ganas realmente por tus ventas.</p><span class="tag">POPULAR</span>
+      </div>
+      <div class="card" data-name="precio venta producto" onclick="openTool('price')">
+        <div class="icon">🏷️</div><h3>Calculadora de precios</h3>
+        <p>Calcula cuánto cobrar según tu costo y margen deseado.</p><span class="tag">NEGOCIOS</span>
+      </div>
+      <div class="card" data-name="igv impuesto peru" onclick="openTool('igv')">
+        <div class="icon">🧾</div><h3>Calculadora de IGV</h3>
+        <p>Separa el valor de venta y el impuesto.</p><span class="tag">PERÚ</span>
+      </div>
+      <div class="card" data-name="gastos presupuesto dinero" onclick="openTool('expenses')">
+        <div class="icon">📊</div><h3>Control de gastos</h3>
+        <p>Calcula la diferencia entre tus ingresos y gastos.</p><span class="tag">FINANZAS</span>
+      </div>
+      <div class="card" data-name="cotizacion presupuesto cliente" onclick="openTool('quote')">
+        <div class="icon">📋</div><h3>Generador de cotizaciones</h3>
+        <p>Prepara una cotización para compartir con clientes.</p><span class="tag">PRODUCTIVIDAD</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="tool" id="profit">
+    <button class="back" onclick="home()">← Volver</button>
+    <h2>💰 Calculadora de ganancias</h2>
+    <label>Costo total (S/)</label><input id="pCost" type="number" min="0" step="0.01" placeholder="Ej. 50">
+    <label>Precio de venta unitario (S/)</label><input id="pSale" type="number" min="0" step="0.01" placeholder="Ej. 80">
+    <label>Cantidad vendida</label><input id="pQty" type="number" min="0" step="1" placeholder="Ej. 10">
+    <button class="primary" onclick="profit()">Calcular ganancias</button>
+    <div class="result" id="rProfit"></div>
+  </section>
+
+  <section class="tool" id="price">
+    <button class="back" onclick="home()">← Volver</button>
+    <h2>🏷️ Calculadora de precios</h2>
+    <label>Costo del producto (S/)</label><input id="cCost" type="number" min="0" step="0.01">
+    <label>Margen de ganancia deseado (%)</label><input id="cMargin" type="number" min="0" max="99.99" step="0.1" placeholder="Ej. 30">
+    <button class="primary" onclick="price()">Calcular precio</button>
+    <div class="result" id="rPrice"></div>
+  </section>
+
+  <section class="tool" id="igv">
+    <button class="back" onclick="home()">← Volver</button>
+    <h2>🧾 Calculadora de IGV</h2>
+    <label>Importe (S/)</label><input id="iAmount" type="number" min="0" step="0.01" placeholder="Ej. 118">
+    <label>Tipo de importe</label>
+    <select id="iType"><option value="included">Incluye IGV</option><option value="excluded">No incluye IGV</option></select>
+    <button class="primary" onclick="igv()">Calcular IGV</button>
+    <div class="result" id="rIgv"></div>
+    <p style="color:var(--muted);font-size:12px">Se utiliza una tasa referencial del 18%. Verifica la tasa vigente y el régimen aplicable antes de usarla para declaraciones.</p>
+  </section>
+
+  <section class="tool" id="expenses">
+    <button class="back" onclick="home()">← Volver</button>
+    <h2>📊 Control de gastos</h2>
+    <label>Ingresos totales (S/)</label><input id="eIncome" type="number" min="0" step="0.01">
+    <label>Gastos totales (S/)</label><input id="eExpense" type="number" min="0" step="0.01">
+    <button class="primary" onclick="expenses()">Calcular balance</button>
+    <div class="result" id="rExpenses"></div>
+  </section>
+
+  <section class="tool" id="quote">
+    <button class="back" onclick="home()">← Volver</button>
+    <h2>📋 Generador de cotizaciones</h2>
+    <label>Nombre del negocio</label><input id="qBusiness" placeholder="Mi negocio">
+    <label>Nombre del cliente</label><input id="qClient" placeholder="Cliente">
+    <label>Producto o servicio</label><input id="qProduct" placeholder="Producto">
+    <label>Cantidad</label><input id="qQty" type="number" min="1" step="1" value="1">
+    <label>Precio unitario (S/)</label><input id="qPrice" type="number" min="0" step="0.01">
+    <button class="primary" onclick="quote()">Generar cotización</button>
+    <div class="result" id="rQuote"></div>
+    <button class="primary" id="copyQuote" style="display:none;background:var(--green);color:#071b16" onclick="copyQuote()">Copiar cotización</button>
+  </section>
+</main>
+
+<footer>
+  <strong>YOSHI TOOLS</strong><br><br>
+  Herramientas digitales gratuitas para todos.<br>
+  © 2026 Yoshi Tools. Todos los derechos reservados.<br><br>
+  <a href="mailto:contacto@ejemplo.com">Contacto</a> ·
+  <a href="#" onclick="alert('Próximamente publicaremos nuestra política de privacidad.');return false">Privacidad</a>
+</footer>
+
+<script>
+const money = n => 'S/ ' + n.toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
+function show(id,html){
+ const el=document.getElementById(id);
+ el.style.display='block';
+ el.innerHTML=html;
+}
+function openTool(id){
+ document.getElementById('catalog').classList.add('hidden');
+ document.querySelectorAll('.tool').forEach(t=>t.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo(0,0);
+}
+function home(){
+ document.querySelectorAll('.tool').forEach(t=>t.classList.remove('active'));
+ document.getElementById('catalog').classList.remove('hidden');
+ window.scrollTo(0,0);
+}
+function val(id){return Number(document.getElementById(id).value)}
+function profit(){
+ const c=val('pCost'),s=val('pSale'),q=val('pQty');
+ if(c<0||s<0||q<=0||!Number.isFinite(c+s+q)){alert('Ingresa valores válidos y una cantidad mayor a cero.');return}
+ const revenue=s*q,expense=c*q,net=revenue-expense;
+ show('rProfit',`<small>Ingresos por ventas</small><strong>${money(revenue)}</strong><p>Costo total: ${money(expense)}</p><p>Ganancia: <b>${money(net)}</b></p><p>Margen sobre ventas: ${revenue?((net/revenue)*100).toFixed(2):'0.00'}%</p>`);
+}
+function price(){
+ const c=val('cCost'),m=val('cMargin');
+ if(c<=0||m<0||m>=100||!Number.isFinite(c+m)){alert('El costo debe ser mayor a cero y el margen debe estar entre 0 y 99.99%.');return}
+ const p=c/(1-m/100);
+ show('rPrice',`<small>Precio de venta recomendado</small><strong>${money(p)}</strong><p>Ganancia por unidad: ${money(p-c)}</p><p>Margen sobre el precio de venta: ${m}%</p>`);
+}
+function igv(){
+ const a=val('iAmount'),rate=.18;
+ if(a<0||!Number.isFinite(a)){alert('Ingresa un importe válido.');return}
+ const base=document.getElementById('iType').value==='included'?a/(1+rate):a;
+ const tax=base*rate,total=base+tax;
+ show('rIgv',`<small>Valor de venta sin IGV</small><strong>${money(base)}</strong><p>IGV referencial: ${money(tax)}</p><p>Total con IGV: ${money(total)}</p>`);
+}
+function expenses(){
+ const i=val('eIncome'),e=val('eExpense');
+ if(i<0||e<0||!Number.isFinite(i+e)){alert('Ingresa valores válidos.');return}
+ const b=i-e;
+ show('rExpenses',`<small>Balance disponible</small><strong>${money(b)}</strong><p>Ingresos: ${money(i)}</p><p>Gastos: ${money(e)}</p><p>${b>=0?'Tienes un saldo positivo.':'Tus gastos superan tus ingresos.'}</p>`);
+}
+let quoteText='';
+function quote(){
+ const b=document.getElementById('qBusiness').value.trim()||'Mi negocio';
+ const c=document.getElementById('qClient').value.trim()||'Cliente';
+ const p=document.getElementById('qProduct').value.trim();
+ const q=val('qQty'),v=val('qPrice');
+ if(!p||q<=0||v<0||!Number.isFinite(q+v)){alert('Completa el producto y los valores correctamente.');return}
+ const total=q*v;
+ quoteText=`COTIZACIÓN\n${b}\nCliente: ${c}\nProducto/servicio: ${p}\nCantidad: ${q}\nPrecio unitario: ${money(v)}\nTOTAL: ${money(total)}\n\nGracias por tu preferencia.`;
+ show('rQuote',`<small>Total de la cotización</small><strong>${money(total)}</strong><p>Cliente: ${escapeHTML(c)}</p><p>Producto: ${escapeHTML(p)}</p><p>Cantidad: ${q}</p><p>Negocio: ${escapeHTML(b)}</p>`);
+ document.getElementById('copyQuote').style.display='block';
+}
+function escapeHTML(s){
+ return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+async function copyQuote(){
+ try{await navigator.clipboard.writeText(quoteText);alert('Cotización copiada.')}
+ catch(e){alert('No se pudo copiar.')}
+}
+function filterTools(){
+ const s=document.getElementById('search').value.toLowerCase();
+ document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hidden',!c.dataset.name.includes(s)));
+}
+</script>
+</body>
+</html>
