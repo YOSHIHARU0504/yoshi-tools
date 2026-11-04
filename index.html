@@ -230,6 +230,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
     <button data-page="nutrition"><span class="ico">🥗</span> Nutrición</button>
     <button data-page="performance"><span class="ico">⚡</span> Rendimiento</button>
     <button data-page="health"><span class="ico">♡</span> Salud y bienestar</button>
+    <button data-page="care"><span class="ico">🤝</span> Yoshi Care</button>
     <button data-page="budget"><span class="ico">🛒</span> Mi presupuesto</button>
     <button data-page="progress"><span class="ico">↗</span> Mi evolución</button>
   </nav>
@@ -344,6 +345,40 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
     <div class="habit-grid" id="healthHabits"></div>
     <div class="panel"><h3>Orientación para tu rutina</h3><p id="healthPersonalTip" class="panel-sub"></p><div class="nutrition-list"><div class="nutrition-tip">💧 Bebe agua regularmente y aumenta la atención al calor y al ejercicio.</div><div class="nutrition-tip">😴 Mantén horarios de sueño lo más regulares posible.</div><div class="nutrition-tip">🚶 Interrumpe periodos largos sentado con pausas de movimiento.</div><div class="nutrition-tip">🥗 Prioriza alimentos variados y comidas suficientes, evitando restricciones extremas.</div></div></div>
     <div class="notice">Este módulo es educativo y no diagnostica ni trata enfermedades. Las necesidades de agua, sueño y actividad varían entre personas. Si tienes síntomas persistentes o una condición médica, consulta a un profesional.</div>
+  </section>
+
+  <section class="page" id="care">
+    <div class="inner-hero" style="background:#e9efe5">
+      <div class="eyebrow">YOSHI CARE · ACOMPAÑAMIENTO</div>
+      <h1>Alimentación y cuidado con atención. 🌿</h1>
+      <p>Orientación cotidiana para personas mayores y personas que viven con alguna condición de salud. Sin dietas milagro ni remedios que prometen curar.</p>
+    </div>
+    <div class="panel">
+      <h3>¿Para quién buscamos orientación?</h3>
+      <p class="panel-sub">Elige un tema para ver recomendaciones generales. No necesitas compartir un diagnóstico ni datos personales.</p>
+      <div class="form-field">
+        <label for="careFocus">Tema de interés</label>
+        <select id="careFocus" onchange="saveCareFocus()">
+          <option value="older">Persona adulta mayor</option>
+          <option value="diabetes">Diabetes</option>
+          <option value="pressure">Presión alta</option>
+          <option value="cholesterol">Colesterol elevado</option>
+          <option value="renal">Enfermedad renal</option>
+          <option value="digestive">Cuidado digestivo y recuperación</option>
+          <option value="unsure">No estoy seguro / orientación general</option>
+        </select>
+      </div>
+    </div>
+    <div class="panel" id="careGuidance" aria-live="polite"></div>
+    <div class="section-head"><h2>Ideas caseras para el día a día</h2><span>Preparaciones sencillas</span></div>
+    <div class="nutrition-list">
+      <div class="nutrition-tip"><strong>🥣 Avena cocida:</strong> avena con agua o leche según tolerancia, canela y fruta picada. Evita añadir azúcar de rutina.</div>
+      <div class="nutrition-tip"><strong>🥕 Guiso de lentejas:</strong> lentejas bien cocidas con zanahoria, cebolla y ajo; acompaña con arroz y verduras según necesidades individuales.</div>
+      <div class="nutrition-tip"><strong>🐟 Pescado al horno:</strong> pescado fresco con hierbas culinarias, limón y una porción de papa; evita exceso de sal.</div>
+      <div class="nutrition-tip"><strong>🍳 Tortilla de verduras:</strong> huevo bien cocido con verduras picadas y una guarnición sencilla.</div>
+    </div>
+    <div class="notice"><strong>Importante:</strong> estas son ideas generales, no recetas terapéuticas ni adecuadas automáticamente para todas las enfermedades. En enfermedad renal, dificultad para tragar, diabetes tratada con insulina u otros medicamentos, embarazo, pérdida involuntaria de peso o varias enfermedades a la vez, un profesional debe adaptar alimentos, porciones y horarios. No suspendas ni cambies medicamentos por consejos de esta web.</div>
+    <div class="notice">La ayuda casera segura significa facilitar la preparación, mantener higiene de alimentos, acompañar las comidas y respetar las indicaciones clínicas. No recomendamos infusiones, suplementos ni preparados como tratamiento.</div>
   </section>
 
   <section class="page" id="budget">
@@ -477,6 +512,7 @@ const labels = {
   nutrition:'Nutrición',
   performance:'Rendimiento',
   health:'Salud y bienestar',
+  care:'Yoshi Care',
   budget:'Mi presupuesto',
   progress:'Mi evolución',
   profile:'Mi perfil',
@@ -496,6 +532,7 @@ function navigate(page){
   if(page==='nutrition') renderNutrition();
   if(page==='performance') renderPerformance();
   if(page==='health') renderHealth();
+  if(page==='care') renderCare();
   if(page==='budget') renderBudget();
   if(page==='progress') renderProgress();
   window.scrollTo({top:0,behavior:'smooth'});
@@ -684,6 +721,65 @@ function renderPerformance(){
   document.getElementById('performanceProgression').innerHTML=progression.map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
 }
 
+/* YOSHI CARE · ORIENTACIÓN GENERAL Y SEGURA */
+function saveCareFocus(){
+  const field=document.getElementById('careFocus');
+  if(!field)return;
+  localStorage.setItem('yoshiFitCareFocus',field.value);
+  renderCare();
+}
+function renderCare(){
+  const field=document.getElementById('careFocus');
+  const panel=document.getElementById('careGuidance');
+  if(!field||!panel)return;
+  const saved=localStorage.getItem('yoshiFitCareFocus')||'older';
+  field.value=saved;
+  const guidance={
+    older:{
+      title:'Acompañamiento para personas adultas mayores',
+      intro:'La prioridad es comer suficiente, conservar fuerza y facilitar comidas agradables y seguras.',
+      items:['Ofrece variedad de alimentos y alguna fuente de proteína en las comidas, según tolerancia e indicación profesional.','Facilita preparaciones sencillas y alimentos fáciles de masticar si esa textura es segura para la persona.','Mantén agua disponible solo si no existe una restricción médica de líquidos.','Consulta si hay poco apetito persistente, pérdida involuntaria de peso, caídas o dificultad para masticar o tragar.']
+    },
+    diabetes:{
+      title:'Orientación general para diabetes',
+      intro:'La alimentación debe coordinarse con el tratamiento y los horarios indicados por el equipo de salud.',
+      items:['Prefiere agua en lugar de gaseosas y bebidas azucaradas de consumo habitual.','Organiza comidas regulares y variadas; evita ayunos o cambios bruscos sin indicación clínica.','Combina verduras, fuentes de proteína y carbohidratos en porciones individualizadas.','Si usa insulina o medicamentos que pueden bajar la glucosa, no cambies horarios ni cantidades de comida sin consultar.']
+    },
+    pressure:{
+      title:'Orientación general para presión alta',
+      intro:'Los hábitos alimentarios pueden acompañar el tratamiento, pero no lo reemplazan.',
+      items:['Cocina más en casa y prueba dar sabor con ajo, cebolla, limón, hierbas y especias.','Reduce gradualmente la sal añadida y compara etiquetas de productos envasados por su contenido de sodio.','Modera embutidos, sopas instantáneas y snacks muy salados.','No suspendas medicamentos ni uses sustitutos de sal sin consultar, especialmente si hay enfermedad renal.']
+    },
+    cholesterol:{
+      title:'Orientación general para colesterol elevado',
+      intro:'El patrón de alimentación completo importa más que un alimento aislado.',
+      items:['Incluye menestras, avena, frutas y verduras variadas de forma habitual.','Prefiere preparaciones sancochadas, al horno o guisadas frente a frituras frecuentes.','Usa aceites vegetales en cantidades moderadas y limita grasas trans y exceso de grasas saturadas.','Los alimentos no sustituyen controles ni medicamentos recetados.']
+    },
+    renal:{
+      title:'Enfermedad renal: requiere adaptación individual',
+      intro:'No existe una dieta renal única. Las recomendaciones dependen de la etapa, análisis, medicamentos y si la persona recibe diálisis.',
+      items:['No restrinjas por cuenta propia potasio, fósforo, proteínas, sal ni líquidos.','No uses listas genéricas de alimentos “prohibidos”: podrían ser inadecuadas para esta persona.','Lleva la lista de medicamentos y resultados de laboratorio a consulta con nutricionista renal o nefrólogo.','Las recetas de esta página no están validadas como aptas para enfermedad renal.']
+    },
+    digestive:{
+      title:'Cuidado digestivo y recuperación',
+      intro:'La tolerancia cambia según la causa de los síntomas y la condición de cada persona.',
+      items:['Prioriza higiene, lavado de manos, agua segura y alimentos bien cocidos.','Ofrece comidas sencillas en cantidades tolerables, sin forzar la alimentación.','No prolongues dietas restrictivas ni uses infusiones o preparados como tratamiento.','Vómitos persistentes, sangre en heces, dolor intenso o signos de deshidratación requieren evaluación médica.']
+    },
+    unsure:{
+      title:'Orientación general',
+      intro:'Si no sabes qué enfoque corresponde, empieza por hábitos simples y evita restricciones.',
+      items:['Mantén comidas variadas y suficientes, adaptadas a gustos, cultura y presupuesto.','Evita suplementos, ayunos y remedios caseros que prometan tratar enfermedades.','Anota dudas y medicamentos para conversar con un profesional de salud.','Si hay síntomas nuevos, intensos o persistentes, busca evaluación.']
+    }
+  };
+  const data=guidance[saved]||guidance.older;
+  panel.replaceChildren();
+  const title=document.createElement('h3');title.textContent=data.title;
+  const intro=document.createElement('p');intro.className='panel-sub';intro.textContent=data.intro;
+  const list=document.createElement('div');list.className='nutrition-list';
+  data.items.forEach(item=>{const row=document.createElement('div');row.className='nutrition-tip';row.textContent='• '+item;list.appendChild(row)});
+  panel.append(title,intro,list);
+}
+ 
 /* SALUD Y BIENESTAR */
 function renderHealth(){
   const p=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return null}})()||{};
@@ -933,6 +1029,9 @@ function renderProfileSummary(data){
 }
 
 function loadLocalProfile(){
+  const healthNotesField=document.getElementById('profileHealthNotes');
+  if(healthNotesField)healthNotesField.value=localStorage.getItem('yoshiFitHealthNotes')||'';
+
   try{
     const saved=localStorage.getItem('yoshiFitProfile');
     if(!saved)return null;
@@ -1299,6 +1398,9 @@ document.getElementById('clearProfile').addEventListener('click',()=>{
   if(!confirmDelete)return;
 
   localStorage.removeItem('yoshiFitProfile');
+  localStorage.removeItem('yoshiFitHealthNotes');
+  const healthNotesField=document.getElementById('profileHealthNotes');
+  if(healthNotesField)healthNotesField.value='';
   document.getElementById('profileForm').reset();
   document.getElementById('profileCountry').value='Perú';
   document.getElementById('profileSummary').style.display='none';
