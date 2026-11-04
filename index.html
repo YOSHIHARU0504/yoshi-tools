@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -32,7 +33,8 @@ body{
   color:var(--text);
   font-family:'DM Sans',sans-serif;
 }
-button{font:inherit;cursor:pointer}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
 .app{min-height:100vh;display:flex}
 .sidebar{
   width:250px;
@@ -196,6 +198,7 @@ h1{
   font-size:12px;font-weight:800;
   margin-top:10px;
 }
+.hero-button:hover{filter:brightness(.96);transform:translateY(-1px)}
 .hero-plant{
   position:absolute;
   right:10%;bottom:-12px;
@@ -306,7 +309,7 @@ h1{
 .goal-circle{
   width:120px;height:120px;border-radius:50%;
   margin:18px auto;
-  background:conic-gradient(#477c52 0 68%,#e9eee5 68% 100%);
+  background:conic-gradient(#477c52 0 0%,#e9eee5 0 100%);
   display:grid;place-items:center;
 }
 .goal-inner{
@@ -343,6 +346,108 @@ h1{
   padding:6px 10px;border-radius:20px;
   font-size:10px;font-weight:800;
 }
+
+/* PERFIL */
+.profile-intro{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+.profile-symbol{
+  width:60px;height:60px;flex-shrink:0;
+  display:grid;place-items:center;
+  background:#d3e6c9;border-radius:18px;
+  font-size:29px;
+}
+.profile-form{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:17px;
+  margin-top:20px;
+}
+.form-field{display:flex;flex-direction:column;gap:7px}
+.form-field.full{grid-column:1/-1}
+.form-field label{
+  font-size:11px;font-weight:800;color:var(--dark);
+}
+.form-field input,
+.form-field select,
+.form-field textarea{
+  width:100%;
+  border:1px solid var(--border);
+  background:#fbfcf9;
+  color:var(--text);
+  border-radius:10px;
+  padding:12px 13px;
+  font-size:12px;
+  outline:none;
+  transition:.2s;
+}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus{
+  border-color:#80a77c;
+  box-shadow:0 0 0 3px #80a77c20;
+}
+.form-field textarea{resize:vertical;min-height:80px}
+.form-hint{font-size:10px;color:var(--muted);line-height:1.5}
+.profile-actions{
+  grid-column:1/-1;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.save-button{
+  border:0;border-radius:11px;
+  background:var(--dark);color:white;
+  padding:13px 20px;font-size:12px;font-weight:800;
+}
+.save-button:hover{background:var(--green)}
+.clear-button{
+  border:1px solid var(--border);
+  background:white;color:#8b6558;
+  border-radius:11px;padding:12px 16px;
+  font-size:11px;font-weight:700;
+}
+.profile-message{
+  display:none;
+  padding:13px 15px;border-radius:11px;
+  margin-top:16px;font-size:12px;
+  line-height:1.5;
+}
+.profile-message.success{display:block;background:#e9f3e6;color:#315c43}
+.profile-message.error{display:block;background:#fff0ec;color:#9a493d}
+.profile-summary{
+  display:none;
+  background:white;border:1px solid var(--border);
+  border-radius:17px;padding:22px;margin-top:18px;
+}
+.profile-summary h3{
+  font:800 16px Manrope;color:var(--dark);margin:0 0 5px;
+}
+.summary-sub{font-size:11px;color:var(--muted);margin-bottom:17px}
+.summary-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+}
+.summary-item{
+  background:#f7f9f4;border:1px solid var(--border);
+  border-radius:12px;padding:13px;
+  min-width:0;
+}
+.summary-item small{
+  display:block;font-size:9px;color:var(--muted);
+  margin-bottom:7px;font-weight:700;
+}
+.summary-item strong{
+  display:block;font-size:12px;color:var(--dark);
+  overflow-wrap:anywhere;
+}
+.summary-preferences{
+  margin-top:13px;padding:13px;
+  border-radius:12px;background:#f7f9f4;
+  font-size:11px;line-height:1.6;color:var(--text);
+}
+.summary-preferences strong{color:var(--dark)}
+.profile-summary .hero-button{margin-top:16px}
+
 footer{
   border-top:1px solid var(--border);
   margin-top:45px;padding-top:20px;
@@ -353,6 +458,7 @@ footer{
 @media(max-width:1050px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .module-grid{grid-template-columns:repeat(2,1fr)}
+  .summary-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:720px){
   .sidebar{display:none}
@@ -392,9 +498,13 @@ footer{
   .mobile-nav button span{font-size:19px}
   .mobile-nav button.active{color:var(--green)}
   footer{flex-direction:column}
+  .profile-form{grid-template-columns:1fr}
+  .form-field.full,.profile-actions{grid-column:auto}
+  .summary-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:380px){
   .module-grid{grid-template-columns:1fr}
+  .summary-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -421,11 +531,15 @@ footer{
   <div class="sidebar-bottom">
     <div class="menu-label">TU ESPACIO</div>
     <nav class="nav">
+      <button data-page="profile"><span class="ico">👤</span> Mi perfil</button>
       <button data-page="about"><span class="ico">✳</span> Sobre Yoshi Fit</button>
     </nav>
     <div class="mini-profile">
-      <div class="avatar">Y</div>
-      <div><strong>Mi espacio</strong><small>Bienvenido a Yoshi Fit</small></div>
+      <div class="avatar" id="sidebarAvatar">Y</div>
+      <div>
+        <strong id="sidebarName">Mi espacio</strong>
+        <small id="sidebarSubtitle">Bienvenido a Yoshi Fit</small>
+      </div>
     </div>
   </div>
 </aside>
@@ -453,7 +567,7 @@ footer{
         <div class="eyebrow">BIENVENIDO A YOSHI FIT</div>
         <h2>Tu mejor versión<br>se construye cada día.</h2>
         <p>Descubre herramientas prácticas para alimentarte mejor y desarrollar tu rendimiento físico.</p>
-        <button class="hero-button" onclick="navigate('nutrition')">Explorar nutrición →</button>
+        <button class="hero-button" onclick="navigate('profile')">Configurar mi perfil →</button>
       </div>
       <div class="hero-plant">🥑</div>
     </div>
@@ -514,13 +628,13 @@ footer{
         </div>
       </article>
 
-      <article class="module" onclick="navigate('about')">
-        <div class="module-image food">🇵🇪</div>
+      <article class="module" onclick="navigate('profile')">
+        <div class="module-image food">👤</div>
         <div class="module-body">
-          <small>NUESTRA IDENTIDAD</small>
-          <h3>Hecho para nuestra tierra</h3>
-          <p>Una plataforma pensada para la realidad peruana.</p>
-          <span class="module-link">Conócenos →</span>
+          <small>PERSONALIZACIÓN</small>
+          <h3>Mi perfil</h3>
+          <p>Configura tus datos y objetivos personales.</p>
+          <span class="module-link">Completar perfil →</span>
         </div>
       </article>
     </div>
@@ -561,7 +675,7 @@ footer{
           </div>
         </div>
         <p class="goal-note">Cuando configures tu perfil podrás registrar objetivos y visualizar tu evolución.</p>
-        <button class="hero-button" style="width:100%" onclick="navigate('progress')">Conocer mi evolución →</button>
+        <button class="hero-button" style="width:100%" onclick="navigate('profile')">Configurar mi perfil →</button>
       </div>
     </div>
   </section>
@@ -648,6 +762,137 @@ footer{
     </div>
   </section>
 
+  <!-- PERFIL -->
+  <section class="page" id="profile">
+    <div class="inner-hero">
+      <div class="profile-intro">
+        <div class="profile-symbol">👤</div>
+        <div>
+          <div class="eyebrow">MI ESPACIO PERSONAL</div>
+          <h1>Construyamos tu perfil.</h1>
+        </div>
+      </div>
+      <p>Cuéntanos sobre ti, tus objetivos y tu día a día. Esta información será la base para personalizar las herramientas de Yoshi Fit.</p>
+    </div>
+
+    <div class="info-box">
+      <h3>Información personal</h3>
+      <p>Comencemos con algunos datos básicos.</p>
+
+      <form id="profileForm" class="profile-form">
+        <div class="form-field">
+          <label for="profileName">¿Cómo te llamas?</label>
+          <input id="profileName" type="text" maxlength="60" placeholder="Tu nombre" required>
+        </div>
+
+        <div class="form-field">
+          <label for="profileAge">Edad</label>
+          <input id="profileAge" type="number" min="1" max="110" placeholder="Ej. 23" required>
+        </div>
+
+        <div class="form-field">
+          <label for="profileSex">Sexo para estimaciones nutricionales (opcional)</label>
+          <select id="profileSex">
+            <option value="">Prefiero no indicarlo</option>
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="profileCountry">País</label>
+          <input id="profileCountry" type="text" value="Perú">
+        </div>
+
+        <div class="form-field">
+          <label for="profileRegion">Región</label>
+          <input id="profileRegion" type="text" placeholder="Ej. La Libertad">
+        </div>
+
+        <div class="form-field">
+          <label for="profileCity">Distrito o ciudad</label>
+          <input id="profileCity" type="text" placeholder="Ej. Paiján">
+        </div>
+
+        <div class="form-field">
+          <label for="profileWeight">Peso actual (kg)</label>
+          <input id="profileWeight" type="number" min="1" max="500" step="0.1" placeholder="Ej. 70" required>
+        </div>
+
+        <div class="form-field">
+          <label for="profileHeight">Estatura (cm)</label>
+          <input id="profileHeight" type="number" min="50" max="250" step="0.1" placeholder="Ej. 170" required>
+        </div>
+
+        <div class="form-field">
+          <label for="profileGoal">¿Cuál es tu objetivo principal?</label>
+          <select id="profileGoal" required>
+            <option value="">Selecciona tu objetivo</option>
+            <option value="Perder grasa">Perder grasa</option>
+            <option value="Ganar masa muscular">Ganar masa muscular</option>
+            <option value="Mantener mi peso">Mantener mi peso</option>
+            <option value="Mejorar mi condición física">Mejorar mi condición física</option>
+            <option value="Mejorar mi rendimiento deportivo">Mejorar mi rendimiento deportivo</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="profileActivity">¿Cómo es tu actividad diaria?</label>
+          <select id="profileActivity" required>
+            <option value="">Selecciona tu actividad</option>
+            <option value="Sedentaria">Mayormente sentado</option>
+            <option value="Ligera">Actividad ligera</option>
+            <option value="Moderada">Actividad moderada</option>
+            <option value="Alta">Actividad física intensa</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="profileSport">¿Qué deporte practicas?</label>
+          <select id="profileSport">
+            <option value="">Selecciona una opción</option>
+            <option value="Fútbol">Fútbol</option>
+            <option value="Gimnasio">Gimnasio</option>
+            <option value="Running">Running</option>
+            <option value="Ciclismo">Ciclismo</option>
+            <option value="Otro">Otro</option>
+            <option value="Ninguno">Actualmente ninguno</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="profileBudget">Presupuesto semanal para alimentación (S/)</label>
+          <input id="profileBudget" type="number" min="0" step="0.5" placeholder="Ej. 100">
+        </div>
+
+        <div class="form-field full">
+          <label for="profilePreferences">Preferencias alimentarias</label>
+          <textarea id="profilePreferences" maxlength="500" placeholder="Ej. Prefiero comidas económicas, me gustan las menestras, no consumo pescado..."></textarea>
+          <span class="form-hint">Puedes mencionar gustos, alimentos que evitas o el tipo de comida que prefieres.</span>
+        </div>
+
+        <div class="profile-actions">
+          <button class="save-button" type="submit">Guardar mi perfil ✓</button>
+          <button class="clear-button" type="button" id="clearProfile">Borrar datos de este navegador</button>
+        </div>
+      </form>
+
+      <div id="profileMessage" class="profile-message" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="profile-summary" id="profileSummary">
+      <h3>Tu resumen personal</h3>
+      <div class="summary-sub">Así queda configurado tu perfil en Yoshi Fit.</div>
+      <div class="summary-grid" id="profileSummaryContent"></div>
+      <div class="summary-preferences" id="profilePreferencesSummary" style="display:none"></div>
+      <button class="hero-button" type="button" onclick="editProfile()">Editar mi información ✎</button>
+    </div>
+
+    <div class="notice">
+      Versión de prueba: los datos se guardan solamente en el almacenamiento local de este navegador y no se sincronizan con otros dispositivos ni con Supabase. No introduzcas información médica sensible. Si compartes el dispositivo, otras personas que usen este navegador podrían acceder a estos datos.
+    </div>
+  </section>
+
   <!-- SOBRE -->
   <section class="page" id="about">
     <div class="inner-hero">
@@ -677,7 +922,7 @@ footer{
   <button data-page="nutrition"><span>🥗</span>Nutrición</button>
   <button data-page="performance"><span>⚽</span>Deporte</button>
   <button data-page="budget"><span>🛒</span>Presupuesto</button>
-  <button data-page="progress"><span>📈</span>Progreso</button>
+  <button data-page="profile"><span>👤</span>Perfil</button>
 </nav>
 
 <script>
@@ -688,6 +933,7 @@ const labels = {
   health:'Salud y bienestar',
   budget:'Mi presupuesto',
   progress:'Mi evolución',
+  profile:'Mi perfil',
   about:'Sobre Yoshi Fit'
 };
 
@@ -709,6 +955,196 @@ document.querySelectorAll('[data-page]').forEach(button=>{
     navigate(button.dataset.page);
   });
 });
+
+/* PERFIL DE USUARIO */
+
+const profileFields = [
+  'profileName',
+  'profileAge',
+  'profileSex',
+  'profileCountry',
+  'profileRegion',
+  'profileCity',
+  'profileWeight',
+  'profileHeight',
+  'profileGoal',
+  'profileActivity',
+  'profileSport',
+  'profileBudget',
+  'profilePreferences'
+];
+
+function showProfileMessage(message,type){
+  const box=document.getElementById('profileMessage');
+  box.textContent=message;
+  box.className='profile-message '+type;
+}
+
+function updateSidebarProfile(data){
+  const name=data.profileName || 'Mi espacio';
+  document.getElementById('sidebarName').textContent=name;
+  document.getElementById('sidebarAvatar').textContent=
+    name.trim().charAt(0).toUpperCase() || 'Y';
+  document.getElementById('sidebarSubtitle').textContent=
+    'Perfil personal';
+}
+
+function renderProfileSummary(data){
+  const summary=document.getElementById('profileSummary');
+  const content=document.getElementById('profileSummaryContent');
+  const preferences=document.getElementById('profilePreferencesSummary');
+
+  content.innerHTML='';
+
+  const location=[
+    data.profileCity,
+    data.profileRegion,
+    data.profileCountry
+  ].filter(Boolean).join(', ');
+
+  const fields=[
+    ['Nombre',data.profileName],
+    ['Edad',data.profileAge ? data.profileAge+' años' : ''],
+    ['Sexo',data.profileSex || 'No indicado'],
+    ['Ubicación',location],
+    ['Peso',data.profileWeight ? data.profileWeight+' kg' : ''],
+    ['Estatura',data.profileHeight ? data.profileHeight+' cm' : ''],
+    ['Objetivo',data.profileGoal],
+    ['Actividad diaria',data.profileActivity],
+    ['Deporte',data.profileSport],
+    ['Presupuesto semanal',data.profileBudget ? 'S/ '+data.profileBudget : 'No indicado']
+  ];
+
+  fields.forEach(([label,value])=>{
+    if(!value)return;
+
+    const item=document.createElement('div');
+    item.className='summary-item';
+
+    const small=document.createElement('small');
+    small.textContent=label;
+
+    const strong=document.createElement('strong');
+    strong.textContent=value;
+
+    item.append(small,strong);
+    content.appendChild(item);
+  });
+
+  if(data.profilePreferences){
+    preferences.style.display='block';
+    preferences.replaceChildren();
+
+    const title=document.createElement('strong');
+    title.textContent='Preferencias alimentarias: ';
+
+    preferences.append(title,document.createTextNode(data.profilePreferences));
+  }else{
+    preferences.style.display='none';
+  }
+
+  summary.style.display='block';
+  updateSidebarProfile(data);
+}
+
+function loadProfile(){
+  try{
+    const saved=localStorage.getItem('yoshiFitProfile');
+
+    if(!saved)return;
+
+    const data=JSON.parse(saved);
+
+    profileFields.forEach(id=>{
+      const field=document.getElementById(id);
+
+      if(field && data[id]!==undefined){
+        field.value=data[id];
+      }
+    });
+
+    renderProfileSummary(data);
+  }catch(error){
+    console.error('No se pudo cargar el perfil.',error);
+  }
+}
+
+document.getElementById('profileForm').addEventListener('submit',function(event){
+  event.preventDefault();
+
+  const data={};
+
+  profileFields.forEach(id=>{
+    data[id]=document.getElementById(id).value.trim();
+  });
+
+  const age=Number(data.profileAge);
+  const weight=Number(data.profileWeight);
+  const height=Number(data.profileHeight);
+  const budget=Number(data.profileBudget);
+
+  if(!data.profileName){
+    showProfileMessage('Escribe tu nombre para continuar.','error');
+    return;
+  }
+
+  if(!Number.isFinite(age) || age<1 || age>110){
+    showProfileMessage('Ingresa una edad válida.','error');
+    return;
+  }
+
+  if(!Number.isFinite(weight) || weight<1 || weight>500){
+    showProfileMessage('Revisa el peso que has ingresado.','error');
+    return;
+  }
+
+  if(!Number.isFinite(height) || height<50 || height>250){
+    showProfileMessage('Revisa tu estatura.','error');
+    return;
+  }
+
+  if(!data.profileGoal || !data.profileActivity){
+    showProfileMessage('Selecciona tu objetivo y nivel de actividad.','error');
+    return;
+  }
+
+  if(data.profileBudget!=='' && (!Number.isFinite(budget) || budget<0)){
+    showProfileMessage('Revisa tu presupuesto semanal.','error');
+    return;
+  }
+
+  try{
+    localStorage.setItem('yoshiFitProfile',JSON.stringify(data));
+    renderProfileSummary(data);
+    showProfileMessage('¡Perfil guardado correctamente! Ya tienes tu información registrada en este navegador.','success');
+  }catch(error){
+    showProfileMessage('No se pudo guardar. Comprueba el almacenamiento del navegador.','error');
+  }
+});
+
+function editProfile(){
+  document.getElementById('profileForm').scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+}
+
+document.getElementById('clearProfile').addEventListener('click',()=>{
+  const confirmDelete=confirm('¿Seguro que deseas borrar el perfil guardado en este navegador?');
+
+  if(!confirmDelete)return;
+
+  localStorage.removeItem('yoshiFitProfile');
+  document.getElementById('profileForm').reset();
+  document.getElementById('profileSummary').style.display='none';
+  document.getElementById('sidebarName').textContent='Mi espacio';
+  document.getElementById('sidebarAvatar').textContent='Y';
+  document.getElementById('sidebarSubtitle').textContent='Bienvenido a Yoshi Fit';
+
+  showProfileMessage('Los datos del perfil fueron borrados de este navegador.','success');
+});
+
+loadProfile();
 </script>
 </body>
 </html>
