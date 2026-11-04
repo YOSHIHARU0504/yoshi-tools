@@ -670,29 +670,46 @@ function renderShoppingQuote(){
   const people=Math.max(1,Math.min(12,Number(document.getElementById('shoppingPeople').value)||1));
   const days=Math.max(1,Math.min(7,Number(document.getElementById('shoppingDays').value)||7));
   const saved=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingPrices')||'{}')}catch(e){return {}}})();
+  const quantities=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingQuantities')||'{}')}catch(e){return {}}})();
   const checked=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingSelected')||'{}')}catch(e){return {}}})();
   const factor=people*days/7;
   const hint=document.getElementById('shoppingScaleHint');
-  if(hint) hint.textContent='Cálculo activo: '+people+' persona(s) × '+days+' días ÷ 7 = '+factor.toFixed(2)+' veces la canasta semanal base. Las cantidades de abajo se actualizan con esta proporción.';
+  if(hint) hint.textContent='Cálculo activo: '+people+' persona(s) × '+days+' días. Las cantidades sugeridas se escalan automáticamente desde la canasta semanal base. Puedes ajustarlas manualmente.';
   const list=shoppingBase.map((item,i)=>{
-    const qty=item.perPerson*factor;
+    const suggested=item.perPerson*factor;
+    const suggestedRounded=item.unit==='unidad'?Math.ceil(suggested):Number(suggested.toFixed(2));
+    const qty=quantities[i]!==undefined&&quantities[i]!==''?Math.max(0,Number(quantities[i])||0):suggestedRounded;
     const price=Number(saved[i]??item.price)||0;
     const included=checked[i]!==false;
-    const qtyText=item.unit==='unidad'?Math.ceil(qty)+' '+(Math.ceil(qty)===1?'unidad':'unidades'):qty.toFixed(2)+' '+item.unit;
-    const subtotal=(item.unit==='unidad'?Math.ceil(qty):qty)*price;
-    return '<article class="quote-item"><label class="quote-check"><input type="checkbox" '+(included?'checked':'')+' onchange="toggleShoppingItem('+i+',this.checked)"><strong>'+item.name+'</strong></label><div class="quote-meta"><span>Cantidad sugerida</span><b>'+qtyText+'</b></div><div class="quote-price"><label for="shoppingPrice'+i+'">Precio por '+item.unit+' (S/)</label><input id="shoppingPrice'+i+'" type="number" min="0" step="0.01" placeholder="Ingresa precio" value="'+(saved[i]??'')+'" onchange="saveShoppingPrice('+i+',this.value)"></div><div class="quote-meta"><span>Subtotal</span><b>S/ '+subtotal.toFixed(2)+'</b></div></article>';
+    const qtyText=item.unit==='unidad'?suggestedRounded+' '+(suggestedRounded===1?'unidad':'unidades'):suggestedRounded.toFixed(2)+' '+item.unit;
+    const subtotal=qty*price;
+    return '<article class="quote-item"><label class="quote-check"><input type="checkbox" '+(included?'checked':'')+' onchange="toggleShoppingItem('+i+',this.checked)"><strong>'+item.name+'</strong></label><div class="quote-meta"><span>Cantidad sugerida</span><b>'+qtyText+'</b></div><div class="quote-price"><label for="shoppingQty'+i+'">Cantidad que comprarás ('+item.unit+')</label><input id="shoppingQty'+i+'" type="number" min="0" step="'+(item.unit==='unidad'?'1':'0.05')+'" value="'+qty+'" oninput="saveShoppingQuantity('+i+',this.value)"></div><div class="quote-price"><label for="shoppingPrice'+i+'">Precio por '+item.unit+' (S/)</label><input id="shoppingPrice'+i+'" type="number" min="0" step="0.01" placeholder="Ingresa precio" value="'+(saved[i]??'')+'" oninput="saveShoppingPrice('+i+',this.value)"></div><div class="quote-meta"><span>Subtotal</span><b>S/ '+subtotal.toFixed(2)+'</b></div></article>';
   }).join('');
   document.getElementById('budgetShoppingList').innerHTML=list;
   const total=shoppingBase.reduce((sum,item,i)=>{
     if(checked[i]===false)return sum;
-    const qty=item.perPerson*factor;
+    const suggested=item.unit==='unidad'?Math.ceil(item.perPerson*factor):Number((item.perPerson*factor).toFixed(2));
+    const qty=quantities[i]!==undefined&&quantities[i]!==''?Math.max(0,Number(quantities[i])||0):suggested;
     const price=Number(saved[i]??item.price)||0;
-    return sum+(item.unit==='unidad'?Math.ceil(qty):qty)*price;
+    return sum+qty*price;
   },0);
   const p=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return null}})()||{};
   const budget=Number(p.profileBudget);
   const difference=Number.isFinite(budget)&&p.profileBudget!==''?budget-total:null;
   document.getElementById('shoppingQuoteTotal').innerHTML='<div><small>COTIZACIÓN APROXIMADA · '+people+' persona(s) · '+days+' días</small><strong>S/ '+total.toFixed(2)+'</strong><p>'+(total===0?'Ingresa precios de tu mercado para calcular el total.': 'Total de los alimentos incluidos en la lista.')+'</p>'+(difference===null?'': '<p class="quote-budget '+(difference>=0?'within':'over')+'">'+(difference>=0?'Dentro de tu presupuesto: sobran ':'Excede tu presupuesto por ')+'S/ '+Math.abs(difference).toFixed(2)+'</p>')+'</div>';
+}
+function saveShoppingQuantity(index,value){
+  const saved=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingQuantities')||'{}')}catch(e){return {}}})();
+  saved[index]=value===''?'':Math.max(0,Number(value)||0);
+  localStorage.setItem('yoshiFitShoppingQuantities',JSON.stringify(saved));
+  const item=shoppingBase[index],price=Number((()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingPrices')||'{}')}catch(e){return {}}})()[index])||0;
+  const included=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingSelected')||'{}')}catch(e){return {}}})();
+  if(included[index]!==false){
+    const totalBox=document.getElementById('shoppingQuoteTotal');
+    renderShoppingQuote();
+    const field=document.getElementById('shoppingQty'+index);
+    if(field){field.focus();field.setSelectionRange(field.value.length,field.value.length);}
+  }else renderShoppingQuote();
 }
 function toggleShoppingItem(index,checked){
   const saved=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingSelected')||'{}')}catch(e){return {}}})();
@@ -701,7 +718,10 @@ function toggleShoppingItem(index,checked){
 function saveShoppingPrice(index,value){
   const saved=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitShoppingPrices')||'{}')}catch(e){return {}}})();
   const price=value===''?'':Math.max(0,Number(value)||0);
-  saved[index]=price;localStorage.setItem('yoshiFitShoppingPrices',JSON.stringify(saved));renderShoppingQuote();
+  saved[index]=price;localStorage.setItem('yoshiFitShoppingPrices',JSON.stringify(saved));
+  renderShoppingQuote();
+  const field=document.getElementById('shoppingPrice'+index);
+  if(field){field.focus();field.setSelectionRange(field.value.length,field.value.length);}
 }
 /* SEGUIMIENTO PERSONAL */
 function renderProgress(){
