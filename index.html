@@ -587,7 +587,7 @@ function renderNutrition(){
   }else if(olderAdult){
     portionGuide.textContent='Prioriza comidas suficientes, fáciles de preparar y adaptadas a masticación, apetito y autonomía.';
     portionDetails.innerHTML=['Incluye una fuente de proteína en cada comida principal: huevo, pescado, pollo, yogur o menestras según tolerancia.','Combina verduras y frutas variadas con arroz, papa, camote, avena o menestras.','Ten agua disponible durante el día, salvo que el equipo médico haya indicado limitar líquidos.','Si hay poco apetito, pérdida de peso, problemas dentales o dificultad para tragar, consulta al centro de salud.'].map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
-  }else 
+  }else if(age<18){
     portionGuide.textContent='Por tu edad, evita contar calorías o reducir porciones para cambiar tu peso. Busca comidas completas y suficientes.';
     portionDetails.innerHTML=['En almuerzo y cena incluye verduras o fruta, una fuente de proteína y un alimento energético.','Come con regularidad y escucha tus señales de hambre y saciedad.','No elimines arroz, papa, pan ni grasas por tu cuenta.','Coordina cambios importantes con tu familia y un profesional de salud.'].map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
   }else{
