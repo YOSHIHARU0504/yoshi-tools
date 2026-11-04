@@ -213,7 +213,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
 .budget-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:520px}.shopping-quote{grid-template-columns:repeat(2,minmax(0,1fr))}.quote-item{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:14px;padding:15px;display:grid;gap:11px}.quote-check{display:flex;align-items:center;gap:9px;font-size:14px}.quote-check input{accent-color:#477b56;width:18px;height:18px}.quote-meta{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:#69766c}.quote-meta b{color:#315a40}.quote-price{display:grid;grid-template-columns:1fr 110px;align-items:center;gap:10px;font-size:12px;color:#69766c}.quote-price input{width:100%;padding:9px;border:1px solid #dce4dc;border-radius:9px}.budget-total{background:#244b37;color:#fff;border-radius:16px;padding:20px;margin:8px 0 25px}.budget-total small{font-size:10px;letter-spacing:1px;opacity:.8}.budget-total strong{display:block;font-size:32px;margin:5px 0}.budget-total p{font-size:12px;margin:4px 0;opacity:.9}.budget-total .quote-budget{font-weight:700}.budget-total .over{color:#ffd1c9}.budget-total .within{color:#c8f1d0}@media(max-width:700px){.budget-controls,.shopping-quote{grid-template-columns:1fr}.quote-price{grid-template-columns:1fr 110px}}
 /* HÁBITOS, PRESUPUESTO Y EVOLUCIÓN */
 .habit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0 24px}.habit-item{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:14px}.habit-item input{width:19px;height:19px;accent-color:#477b56}.habit-item span{font-size:13px;font-weight:600}.budget-summary{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:16px;padding:20px;margin:18px 0}.budget-summary strong{font-size:30px;color:#315a40}.budget-breakdown{display:grid;gap:12px}.budget-line{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:13px}.budget-line div{height:8px;background:#edf1eb;border-radius:10px;grid-column:1/-1;overflow:hidden}.budget-line i{display:block;height:100%;background:#739777;border-radius:10px}.shopping-list{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:15px 0 28px}.shopping-item{background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:12px;padding:12px;font-size:13px;display:flex;align-items:center;gap:9px}.shopping-item input{accent-color:#477b56}.progress-form{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.progress-history{display:grid;gap:10px;margin:15px 0 25px}.progress-entry{display:grid;grid-template-columns:1fr auto;gap:5px;padding:15px;background:#fff;border:1px solid var(--line,#e5e9e5);border-radius:13px}.progress-entry small{color:#718076}.progress-entry p{grid-column:1/-1;font-size:13px;color:#66746a;margin:3px 0 0}@media(max-width:700px){.habit-grid,.shopping-list,.progress-form{grid-template-columns:1fr}}
-</style>
+.timer-display{margin:18px auto;max-width:520px;text-align:center;background:#f2f6ef;border:1px solid var(--border);border-radius:20px;padding:24px 16px}.timer-phase{font-size:.76rem;font-weight:800;letter-spacing:1.5px;color:var(--green)}.timer-clock{font-size:clamp(3.4rem,12vw,5.2rem);font-weight:800;letter-spacing:-3px;color:var(--dark);font-variant-numeric:tabular-nums;line-height:1.2;margin:8px 0}.timer-exercise{font-size:1.15rem;font-weight:700}.timer-progress{height:9px;background:#dce5d9;border-radius:20px;overflow:hidden;margin:18px 0 10px}.timer-progress div{height:100%;width:0;background:var(--green);transition:width .25s linear}.timer-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.timer-secondary{border:1px solid var(--border);background:white;color:var(--dark);border-radius:12px;padding:12px 18px;font-weight:700}.timer-secondary:disabled{opacity:.45;cursor:not-allowed}.timer-hint{text-align:center;color:var(--muted);font-size:.88rem;margin:14px 0 0}@media(max-width:520px){.timer-controls button{flex:1;min-width:110px}}</style>
 </head>
 
 <body>
@@ -334,7 +334,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
       <div class="section-head"><h2 id="performanceGreeting">Tu punto de partida</h2><span id="performanceSport"></span></div>
       <div class="panel"><h3 id="performanceFocusTitle">Tu enfoque de entrenamiento</h3><p id="performanceFocus" class="panel-sub"></p><div id="performanceCautions" class="nutrition-list"></div></div>
       <div class="section-head"><h2>Semana de inicio</h2><span>Propuesta adaptable</span></div>
-      <div class="workout-grid" id="performanceWeek"></div><div class="panel"><h3>Cómo ejecutar cada sesión</h3><p class="panel-sub">Series, repeticiones y pausas según tu punto de partida.</p><div id="performanceDetails" class="nutrition-list"></div></div><div class="panel"><h3>Progresión de 4 semanas</h3><div id="performanceProgression" class="nutrition-list"></div></div>
+      <div class="workout-grid" id="performanceWeek"></div><div class="panel"><h3>Cómo ejecutar cada sesión</h3><p class="panel-sub">Series, repeticiones y pausas según tu punto de partida.</p><div id="performanceDetails" class="nutrition-list"></div></div><div class="panel" id="guidedWorkoutPanel"><div class="section-head"><h2>Entrenamiento guiado ⏱️</h2><span id="timerPlanLabel">Intervalos adaptados a tu perfil</span></div><p class="panel-sub">Inicia la sesión y sigue los intervalos. El descanso y el siguiente ejercicio empiezan automáticamente.</p><div class="timer-display" aria-live="polite"><div class="timer-phase" id="timerPhase">LISTO PARA EMPEZAR</div><div class="timer-clock" id="timerClock">00:30</div><div class="timer-exercise" id="timerExercise">Sentadilla controlada</div><div class="timer-progress"><div id="timerProgressBar"></div></div><p id="timerCounter" class="panel-sub">Ejercicio 1 de 5 · Ronda 1 de 2</p></div><div class="timer-controls"><button class="hero-button" id="timerStartBtn" onclick="startGuidedWorkout()">▶ Empezar</button><button class="timer-secondary" id="timerPauseBtn" onclick="pauseGuidedWorkout()" disabled>Ⅱ Pausar</button><button class="timer-secondary" onclick="resetGuidedWorkout()">↺ Reiniciar</button></div><p class="timer-hint" id="timerHint">Haz cada movimiento con control. Puedes detenerte cuando lo necesites.</p></div><div class="panel"><h3>Progresión de 4 semanas</h3><div id="performanceProgression" class="nutrition-list"></div></div>
       <div class="notice">Antes de entrenar, realiza 5 a 10 minutos de calentamiento. Detente si aparece dolor agudo, mareo, falta de aire inusual o dolor en el pecho. Si tienes una lesión, enfermedad o llevas mucho tiempo sin actividad, consulta con un profesional antes de iniciar.</div>
     </div>
   </section>
@@ -716,6 +716,36 @@ function renderPerformance(){
   const progression=['Semana 1: aprende la técnica y usa el volumen indicado.','Semana 2: añade 1 o 2 repeticiones si terminas cómodo.','Semana 3: aumenta ligeramente repeticiones o resistencia, nunca ambas a la vez.','Semana 4: consolida; reduce el volumen si notas fatiga acumulada.'];
   document.getElementById('performanceProgression').innerHTML=progression.map(x=>'<div class="nutrition-tip">• '+escapeNutritionText(x)+'</div>').join('');
 }
+
+/* YOSHI PERFORMANCE · TEMPORIZADOR GUIADO */
+let guidedWorkout=null;
+function getGuidedPlan(){
+ const p=(()=>{try{return JSON.parse(localStorage.getItem('yoshiFitProfile')||'null')}catch(e){return {}}})();
+ const age=Number(p.profileAge)||0,activity=p.profileActivity||'Ligera';
+ const gentle=age>=60||age<18||activity==='Sedentaria'||activity==='Ligera';
+ const work=gentle?25:(activity==='Alta'?45:35),rest=gentle?45:(activity==='Alta'?25:35),rounds=gentle?2:3;
+ return {work,rest,rounds,items:[['Sentadilla controlada','Mantén el movimiento cómodo y estable.'],['Flexiones contra la pared','Ajusta la distancia para controlar el movimiento.'],['Puente de glúteos','Sube sin arquear la espalda.'],['Remo con mochila ligera','Usa poco peso y espalda estable.'],['Marcha en el sitio','Eleva los pies a un ritmo cómodo.']]};
+}
+function paintGuidedTimer(){
+ if(!guidedWorkout)return;const t=guidedWorkout,el=id=>document.getElementById(id);
+ el('timerPhase').textContent=t.done?'SESIÓN COMPLETADA':t.phase==='work'?'EJERCICIO':'DESCANSO';
+ el('timerClock').textContent=String(Math.floor(t.remaining/60)).padStart(2,'0')+':'+String(t.remaining%60).padStart(2,'0');
+ el('timerExercise').textContent=t.done?'¡Buen trabajo! Terminaste tu sesión':t.plan.items[t.index][0];
+ el('timerCounter').textContent=t.done?'Sesión finalizada':'Ejercicio '+(t.index+1)+' de '+t.plan.items.length+' · Ronda '+(t.round+1)+' de '+t.plan.rounds;
+ const total=t.phase==='work'?t.plan.work:t.plan.rest;
+ el('timerProgressBar').style.width=(t.done?100:Math.max(0,Math.min(100,(1-t.remaining/total)*100)))+'%';
+ el('timerProgressBar').style.background=t.phase==='rest'?'#d69a45':'var(--green)';
+ el('timerStartBtn').textContent=t.running?'En marcha':t.done?'Completado':'▶ Continuar';el('timerStartBtn').disabled=t.running||t.done;el('timerPauseBtn').disabled=!t.running;
+ el('timerHint').textContent=t.done?'Hidrátate y recupera. Tómate más descanso si lo necesitas.':t.phase==='rest'?'Respira y prepárate. El siguiente intervalo comenzará automáticamente.':t.plan.items[t.index][1];
+}
+function guidedTick(){
+ if(!guidedWorkout||!guidedWorkout.running)return;guidedWorkout.remaining--;
+ if(guidedWorkout.remaining<=0){const t=guidedWorkout;if(t.phase==='work'){t.phase='rest';t.remaining=t.plan.rest;}else{t.index++;if(t.index>=t.plan.items.length){t.index=0;t.round++;}if(t.round>=t.plan.rounds){t.done=true;t.running=false;clearInterval(t.interval);t.interval=null;paintGuidedTimer();return;}t.phase='work';t.remaining=t.plan.work;}}
+ paintGuidedTimer();
+}
+function startGuidedWorkout(){if(!guidedWorkout||guidedWorkout.done)resetGuidedWorkout();if(guidedWorkout.running)return;guidedWorkout.running=true;guidedWorkout.interval=setInterval(guidedTick,1000);paintGuidedTimer();}
+function pauseGuidedWorkout(){if(!guidedWorkout)return;guidedWorkout.running=false;if(guidedWorkout.interval)clearInterval(guidedWorkout.interval);guidedWorkout.interval=null;paintGuidedTimer();}
+function resetGuidedWorkout(){if(guidedWorkout&&guidedWorkout.interval)clearInterval(guidedWorkout.interval);const plan=getGuidedPlan();guidedWorkout={plan,index:0,round:0,phase:'work',remaining:plan.work,running:false,done:false,interval:null};document.getElementById('timerPlanLabel').textContent=plan.work+' s ejercicio · '+plan.rest+' s descanso · '+plan.rounds+' rondas';paintGuidedTimer();}
 
 /* YOSHI CARE · ORIENTACIÓN GENERAL Y SEGURA */
 function saveCareFocus(){
