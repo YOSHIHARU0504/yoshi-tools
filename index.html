@@ -359,7 +359,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
   <section class="page" id="progress">
     <div class="inner-hero" style="background:#e9e7f1"><div class="eyebrow">MY EVOLUTION · SEGUIMIENTO</div><h1>Tu avance, paso a paso. 📈</h1><p>Registra tu evolución sin obsesionarte con la balanza. La constancia también se mide en hábitos y energía.</p></div>
     <div class="panel"><h3>Registrar un nuevo seguimiento</h3><form id="progressForm" class="progress-form"><div class="form-field"><label for="progressDate">Fecha</label><input id="progressDate" type="date" required></div><div class="form-field"><label for="progressWeight">Peso (kg), opcional</label><input id="progressWeight" type="number" min="1" max="500" step="0.1" placeholder="Ej. 70"></div><div class="form-field"><label for="progressActivity">Actividad realizada</label><select id="progressActivity"><option value="Descanso">Descanso</option><option value="Caminata">Caminata</option><option value="Fuerza">Fuerza</option><option value="Fútbol/deporte">Fútbol/deporte</option><option value="Movilidad">Movilidad</option><option value="Otra actividad">Otra actividad</option></select></div><div class="form-field"><label for="progressNote">Nota breve, opcional</label><input id="progressNote" type="text" maxlength="140" placeholder="¿Cómo te sentiste?"></div><div class="profile-actions"><button class="save-button" type="submit">Guardar seguimiento ✓</button></div></form><div id="progressMessage" class="profile-message" role="status"></div></div>
-    <div class="section-head"><h2>Tu historial</h2><span>Guardado en este dispositivo</span></div><div id="progressHistory" class="progress-history"></div>
+    <div class="section-head"><h2>Lectura de tu progreso</h2><span>Orientación automática</span></div><div id="progressInsights" class="nutrition-list"></div><div class="section-head"><h2>Tu historial</h2><span>Guardado en este dispositivo</span></div><div id="progressHistory" class="progress-history"></div>
     <div class="notice">El peso puede variar naturalmente de un día a otro. Registra solo si te resulta útil. Estos datos quedan en el almacenamiento local del navegador y no se sincronizan con tu cuenta todavía.</div>
   </section>
 
@@ -788,6 +788,24 @@ function renderProgress(){
   if(!date.value)date.value=new Date().toISOString().slice(0,10);
   let rows=[];try{rows=JSON.parse(localStorage.getItem('yoshiFitProgress')||'[]')}catch(e){}
   const box=document.getElementById('progressHistory');
+  const insight=document.getElementById('progressInsights');
+  const weighIns=rows.filter(x=>x.weight&&Number(x.weight)>0).sort((a,b)=>a.date.localeCompare(b.date));
+  let insightHtml='<div class="nutrition-tip">Registra tus actividades y, si te resulta útil, tu peso en condiciones parecidas. Una sola medición no define tu progreso.</div>';
+  if(weighIns.length>=2){
+    const first=weighIns[0],last=weighIns[weighIns.length-1];
+    const daysBetween=(new Date(last.date+'T12:00:00')-new Date(first.date+'T12:00:00'))/86400000;
+    const delta=Number(last.weight)-Number(first.weight);
+    if(daysBetween>=7){
+      insightHtml+='<div class="nutrition-tip">Entre '+escapeNutritionText(first.date)+' y '+escapeNutritionText(last.date)+': variación registrada de '+(delta>0?'+':'')+delta.toFixed(1)+' kg. El peso fluctúa por agua, comida y otros factores; interpreta la tendencia junto con energía, fuerza y bienestar.</div>';
+    }else{
+      insightHtml+='<div class="nutrition-tip">Ya tienes '+weighIns.length+' registros de peso. Deja pasar al menos una semana entre comparaciones para observar una tendencia más útil.</div>';
+    }
+  }else{
+    insightHtml+='<div class="nutrition-tip">Cuando tengas dos o más registros separados por una semana, mostraremos una comparación sencilla, sin juzgar el resultado.</div>';
+  }
+  const activityCount=rows.length;
+  insightHtml+='<div class="nutrition-tip">Llevas '+activityCount+' registro(s) guardado(s). La constancia y cómo te sientes también cuentan.</div>';
+  insight.innerHTML=insightHtml;
   if(!rows.length){box.innerHTML='<div class="panel"><p class="panel-sub">Todavía no tienes registros. Tu primer paso puede ser anotar una actividad.</p></div>';return;}
   box.innerHTML=rows.slice().reverse().map(x=>'<article class="progress-entry"><strong>'+escapeNutritionText(x.date)+' · '+escapeNutritionText(x.activity)+'</strong><b>'+(x.weight?escapeNutritionText(x.weight)+' kg':'')+'</b><small>Registro personal</small><p>'+escapeNutritionText(x.note||'Sin nota')+'</p></article>').join('');
 }
