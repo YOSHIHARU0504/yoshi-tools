@@ -252,6 +252,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
 .yf-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.yf-kicker{font-size:9px;letter-spacing:2px;color:#8bd4a8;font-weight:900}.yf-top h3{font:900 22px Manrope,sans-serif;margin:4px 0}.yf-top p{font-size:10px;color:#a8c4b4;margin:0 0 13px}.yf-iconbtn{border:0;background:#263b32;color:white;border-radius:50%;width:30px;height:30px;font-size:20px;cursor:pointer}
 .yf-now{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,#1e4936,#20352c);border:1px solid #345c47;border-radius:16px;padding:12px}.yf-disc{width:48px;height:48px;flex:none;border-radius:50%;display:grid;place-items:center;background:repeating-radial-gradient(circle,#15251e 0 4px,#426b50 5px 7px);color:#c7ffd8;font-size:23px;border:3px solid #6aa47b}.yf-disc.spinning{animation:yfspin 3s linear infinite}@keyframes yfspin{to{transform:rotate(360deg)}}.yf-trackinfo{min-width:0;display:flex;flex-direction:column;gap:3px;flex:1}.yf-trackinfo strong{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.yf-trackinfo span,.yf-trackinfo small{font-size:9px;color:#b4d1bf}.yf-live{font-size:8px;letter-spacing:1px;color:#9af0b3;font-weight:900}
 .yf-controls{display:flex;justify-content:center;align-items:center;gap:15px;padding:13px 0 7px}.yf-controls button{border:0;background:transparent;color:#d8f2e0;font-size:19px;cursor:pointer}.yf-controls .yf-play{width:44px;height:44px;border-radius:50%;background:#a5efb7;color:#123b29;font-size:19px;font-weight:900}.yf-controls .yf-smallbtn{font-size:15px}.yf-volume{display:flex;align-items:center;gap:9px;padding:0 9px 12px;color:#b8d8c4;font-size:12px}.yf-volume input{width:100%;accent-color:#8ee5a8}
+.yf-embed-wrap{width:100%;height:120px;background:#172820;border:1px solid #355344;border-radius:12px;overflow:hidden;margin:10px 0 2px}.yf-embed-wrap iframe{display:block;width:100%;height:120px;border:0;background:#172820}
 .yf-library-head{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #2c4639;padding-top:12px}.yf-library-head strong{font-size:11px}.yf-library-head strong span{font-size:8px;color:#8bd4a8;margin-left:5px}.yf-library-head input{width:48%;background:#1b2d25;border:1px solid #355344;border-radius:9px;padding:8px;color:#fff;font-size:10px;outline:none}.yf-filters{display:flex;gap:5px;overflow-x:auto;padding:10px 0;scrollbar-width:thin}.yf-filters button{white-space:nowrap;border:1px solid #355344;background:#1b2d25;color:#b8d8c4;border-radius:99px;padding:6px 9px;font-size:9px;cursor:pointer}.yf-filters button.active{background:#a5efb7;color:#123b29;border-color:#a5efb7;font-weight:900}.yf-list{overflow-y:auto;min-height:100px;max-height:230px;padding-right:3px}.yf-row{display:flex;width:100%;align-items:center;gap:9px;text-align:left;background:transparent;border:0;border-bottom:1px solid #263d32;color:#e8f7ed;padding:9px 5px;cursor:pointer}.yf-row:hover,.yf-row.selected{background:#1d382b}.yf-row-no{font-size:9px;color:#82b995;width:19px}.yf-row-main{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}.yf-row-main b{font-size:10px;font-weight:800}.yf-row-main small{font-size:8px;color:#91ae9d}.yf-row-bpm{font-size:8px;color:#a6cbb3}.yf-row-play{font-size:11px;color:#a5efb7;width:14px;text-align:center}.yf-empty,.yf-foot{font-size:9px;color:#91ae9d;text-align:center;padding:10px}.yf-foot{margin:5px 0 0;padding:8px 0 0;border-top:1px solid #263d32}
 @media(max-width:720px){#musicFloat{right:12px!important;bottom:14px!important}.yf-player{max-height:75vh}.yf-list{max-height:190px}}
 
@@ -1697,80 +1698,73 @@ document.getElementById('clearProfile').addEventListener('click',()=>{
 
 
 
-/* YOSHI FIT MUSIC: biblioteca original de 50 pistas generativas */
+/* YOSHI FIT MUSIC: biblioteca de música real CC0 */
 (function(){
-  const tracks = [
-    ['Pulso Latino','Reggaetón fitness',98,'latin'],['Dale con todo','Reggaetón fitness',102,'latin'],['Fuego en las piernas','Latin dance',110,'latin'],['Ritmo sin pausa','Latin dance',116,'latin'],['Modo bestia','Urbano instrumental',100,'latin'],
-    ['Neón runner','Electro pop',124,'electro'],['Kilómetros','Electro pop',128,'electro'],['Energía pura','EDM',132,'electro'],['Sube el nivel','EDM',136,'electro'],['Última repetición','EDM',140,'electro'],
-    ['Amanecer activo','Pop motivador',112,'pop'],['Brilla fuerte','Pop motivador',118,'pop'],['Sin límites','Pop dance',122,'pop'],['Un paso más','Pop dance',126,'pop'],['Hoy puedo','Pop motivador',108,'pop'],
-    ['Bajo presión','House',124,'house'],['Zona cardio','House',126,'house'],['Frecuencia alta','House',128,'house'],['En movimiento','Deep house',120,'house'],['Resistencia','House',130,'house'],
-    ['Tropical power','Tropical',104,'tropical'],['Sabor y fuerza','Tropical',108,'tropical'],['Calor de verano','Tropical dance',112,'tropical'],['Ritmo solar','Tropical',116,'tropical'],['Actitud caribeña','Tropical dance',120,'tropical'],
-    ['Sprint infinito','Drum & bass',170,'bass'],['A toda máquina','Drum & bass',174,'bass'],['Acelera','Breakbeat',150,'bass'],['Sin frenos','Drum & bass',168,'bass'],['Meta final','Breakbeat',156,'bass'],
-    ['Fuerza interior','Cinematic',90,'cinema'],['Guerrero diario','Cinematic',96,'cinema'],['Mentalidad fuerte','Epic workout',100,'cinema'],['No te rindas','Epic workout',104,'cinema'],['Victoria','Cinematic',92,'cinema'],
-    ['Cumbia activa','Cumbia electrónica',104,'cumbia'],['Pasito firme','Cumbia electrónica',108,'cumbia'],['Siente el ritmo','Cumbia dance',112,'cumbia'],['Dale otra vez','Cumbia dance',116,'cumbia'],['Activa el cuerpo','Cumbia electrónica',110,'cumbia'],
-    ['Modo enfoque','Lo-fi groove',88,'lofi'],['Respira y sigue','Lo-fi groove',92,'lofi'],['Calma poderosa','Chill electronic',96,'lofi'],['Ritmo constante','Lo-fi groove',100,'lofi'],['Concentración','Chill electronic',94,'lofi'],
-    ['Power walk','Dance',118,'dance'],['Cardio feliz','Dance',122,'dance'],['Pies ligeros','Dance',126,'dance'],['Rompe tus marcas','Dance',130,'dance'],['Final explosivo','Dance',134,'dance']
-  ].map((t,i)=>({id:i+1,title:t[0],genre:t[1],bpm:t[2],style:t[3]}));
-  let ctx=null, playing=false, current=0, step=0, timer=null, nextAt=0, master=null, filter=null;
+  const tracks=[
+    {id:'w2w4l1pumv',title:'Mirror of the week - music bed 2',artist:'Ondrosik',style:'Deep House',bpm:125,duration:'3:04'},
+    {id:'6jbyjp3yn2',title:'Subtlety',artist:'sdacfn',style:'Electro House',bpm:128,duration:'5:32'},
+    {id:'ukvwt8gjrq',title:'Mirror of the week - music bed 1',artist:'Ondrosik',style:'Drum & Bass',bpm:85,duration:'3:01'},
+    {id:'9m665jb9u8',title:'Fresh start',artist:'Ondrosik',style:'Electronic',bpm:145,duration:'2:00'},
+    {id:'15rdpsxb79',title:'Xenon Phoenix',artist:'northivanastan',style:'Electro / Rock',bpm:100,duration:'2:05'},
+    {id:'6rnyzn4gur',title:'arbitrary',artist:'sdacfn',style:'House / EDM',bpm:129,duration:'3:00'},
+    {id:'bgoadit8fz',title:'Still',artist:'sdacfn',style:'Deep House',bpm:124,duration:'4:34'},
+    {id:'do0ep39e2u',title:'acc2005_v2',artist:'oglsdl',style:'Trance',bpm:128,duration:'1:37'},
+    {id:'mtdqddqb6a',title:'Bicycle',artist:'limafresh',style:'Chiptune / IDM',bpm:150,duration:'1:18'},
+    {id:'9ods6f2nlv',title:'Swaying',artist:'Ondrosik',style:'Ambient Electronic',bpm:120,duration:'5:28'},
+    {id:'mrsi4oguht',title:'Please hold',artist:'Ondrosik',style:'Ambient',bpm:130,duration:'1:30'},
+    {id:'9765edhq2r',title:'Sunday evening - full orchestral version',artist:'Ondrosik',style:'Orchestral',bpm:95,duration:'1:06'},
+    {id:'70k2rluq3m',title:'1 - Exodus - King of the Crow Tree',artist:'Daniel William Lawrence',style:'Blues',bpm:140,duration:'6:01'},
+    {id:'cvoxka7k92',title:'6 - Aftermath - King of the Crow Tree',artist:'Daniel William Lawrence',style:'Americana',bpm:164,duration:'6:02'}
+  ];
+  let current=0,filter='all';
   const $=id=>document.getElementById(id);
   function init(){
-    const root=$('musicFloat'); if(!root||root.dataset.ready)return; root.dataset.ready='1';
+    const root=$('musicFloat');if(!root||root.dataset.ready)return;root.dataset.ready='1';
     root.innerHTML=`
-      <section class="yf-player" id="yfPlayer" aria-label="Biblioteca musical Yoshi Fit">
-        <div class="yf-top"><div><span class="yf-kicker">YOSHI FIT ORIGINALS</span><h3>🎧 Music Studio</h3><p>50 pistas originales para activar tu entrenamiento</p></div><button id="yfClose" class="yf-iconbtn" aria-label="Cerrar">×</button></div>
-        <div class="yf-now"><div class="yf-disc" id="yfDisc">♫</div><div class="yf-trackinfo"><strong id="yfNowTitle">Elige tu ritmo</strong><span id="yfNowGenre">Biblioteca de entrenamiento</span><small id="yfNowBpm">50 pistas · sin anuncios</small></div><span class="yf-live" id="yfLive">READY</span></div>
-        <div class="yf-controls"><button id="yfPrev" aria-label="Anterior">⏮</button><button id="yfPlay" class="yf-play" aria-label="Reproducir">▶</button><button id="yfNext" aria-label="Siguiente">⏭</button><button id="yfShuffle" aria-label="Aleatorio" class="yf-smallbtn">🔀</button></div>
-        <div class="yf-volume"><span>🔉</span><input id="yfVolume" type="range" min="0" max="100" value="65"><span>🔊</span></div>
-        <div class="yf-library-head"><strong>Tu biblioteca <span>50 TRACKS</span></strong><input id="yfSearch" type="search" placeholder="Buscar canción o estilo..."></div>
-        <div class="yf-filters" id="yfFilters"><button class="active" data-filter="all">Todas</button><button data-filter="latin">Latino</button><button data-filter="electro">Electro</button><button data-filter="pop">Pop</button><button data-filter="house">House</button><button data-filter="tropical">Tropical</button><button data-filter="bass">Intenso</button><button data-filter="cinema">Épico</button><button data-filter="cumbia">Cumbia</button><button data-filter="lofi">Enfoque</button><button data-filter="dance">Dance</button></div>
+      <section class="yf-player" id="yfPlayer" aria-label="Música real para entrenar">
+        <div class="yf-top"><div><span class="yf-kicker">YOSHI FIT MUSIC</span><h3>🎧 Música real</h3><p>Artistas independientes · licencia CC0</p></div><button id="yfClose" class="yf-iconbtn" aria-label="Cerrar">×</button></div>
+        <div class="yf-now"><div class="yf-disc" id="yfDisc">♫</div><div class="yf-trackinfo"><strong id="yfNowTitle">Elige tu canción</strong><span id="yfNowArtist">Música independiente</span><small id="yfNowMeta">Reproducción integrada</small></div><span class="yf-live">CC0</span></div>
+        <div class="yf-embed-wrap"><iframe id="yfEmbed" title="Reproductor de música Yoshi Fit" src="https://nullrights.com/embed/w2w4l1pumv" loading="lazy" allow="autoplay" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+        <div class="yf-controls"><button id="yfPrev" aria-label="Anterior">⏮</button><button id="yfNext" aria-label="Siguiente">⏭</button><button id="yfShuffle" class="yf-smallbtn" aria-label="Aleatorio">🔀 Aleatorio</button></div>
+        <div class="yf-library-head"><strong>Biblioteca <span id="yfCount">14 PISTAS</span></strong><input id="yfSearch" type="search" placeholder="Buscar canción o artista..."></div>
+        <div class="yf-filters" id="yfFilters"><button class="active" data-filter="all">Todas</button><button data-filter="electronic">Electrónica</button><button data-filter="dance">Dance / House</button><button data-filter="ambient">Ambient</button><button data-filter="other">Otros estilos</button></div>
         <div class="yf-list" id="yfList"></div>
-        <p class="yf-foot">Música instrumental original generada por Yoshi Fit. Toca una pista para empezar.</p>
+        <p class="yf-foot">Pistas reales CC0. El reproductor transmite desde Nullrights; toca ▶ dentro del reproductor para escuchar.</p>
       </section>
       <button class="music-toggle yf-launch" id="musicToggle" type="button" aria-expanded="false">♫ <span>Yoshi Music</span></button>`;
-    const player=$('yfPlayer'), launch=$('musicToggle');
+    const player=$('yfPlayer'),launch=$('musicToggle');
     const open=v=>{player.classList.toggle('open',v);launch.setAttribute('aria-expanded',String(v));};
-    $('yfClose').onclick=()=>open(false); launch.onclick=()=>open(!player.classList.contains('open'));
-    $('yfPlay').onclick=()=>playing?pause():play();
-    $('yfPrev').onclick=()=>select((current+49)%50,true); $('yfNext').onclick=()=>select((current+1)%50,true);
-    $('yfShuffle').onclick=()=>select(Math.floor(Math.random()*50),true);
-    $('yfVolume').oninput=e=>{if(master)master.gain.value=Number(e.target.value)/100*.22;};
+    $('yfClose').onclick=()=>open(false);launch.onclick=()=>open(!player.classList.contains('open'));
+    $('yfPrev').onclick=()=>select((current+tracks.length-1)%tracks.length);
+    $('yfNext').onclick=()=>select((current+1)%tracks.length);
+    $('yfShuffle').onclick=()=>select(Math.floor(Math.random()*tracks.length));
     $('yfSearch').oninput=renderList;
-    $('yfFilters').onclick=e=>{const btn=e.target.closest('button[data-filter]');if(!btn)return;document.querySelectorAll('#yfFilters button').forEach(x=>x.classList.toggle('active',x===btn));renderList();};
-    renderList(); paint();
+    $('yfFilters').onclick=e=>{const btn=e.target.closest('button[data-filter]');if(!btn)return;filter=btn.dataset.filter;document.querySelectorAll('#yfFilters button').forEach(x=>x.classList.toggle('active',x===btn));renderList();};
+    renderList();paint();
+  }
+  function group(t){
+    if(/ambient/i.test(t.style))return 'ambient';
+    if(/house|dance|trance|drum/i.test(t.style))return 'dance';
+    if(/electro|electronic|chiptune|idm/i.test(t.style))return 'electronic';
+    return 'other';
   }
   function renderList(){
-    const q=($('yfSearch').value||'').toLowerCase(), active=$('yfFilters').querySelector('.active')?.dataset.filter||'all';
-    $('yfList').innerHTML=tracks.filter(t=>(active==='all'||t.style===active)&&(!q||(t.title+' '+t.genre).toLowerCase().includes(q))).map(t=>`<button class="yf-row ${t.id-1===current?'selected':''}" data-id="${t.id-1}"><span class="yf-row-no">${String(t.id).padStart(2,'0')}</span><span class="yf-row-main"><b>${t.title}</b><small>${t.genre}</small></span><span class="yf-row-bpm">${t.bpm} BPM</span><span class="yf-row-play">${t.id-1===current&&playing?'♫':'▶'}</span></button>`).join('')||'<p class="yf-empty">No encontramos pistas con esa búsqueda.</p>';
-    $('yfList').querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>select(Number(el.dataset.id),true));
+    const q=($('yfSearch').value||'').toLowerCase();
+    const rows=tracks.map((t,i)=>({...t,index:i})).filter(t=>(filter==='all'||group(t)===filter)&&(!q||(t.title+' '+t.artist+' '+t.style).toLowerCase().includes(q)));
+    $('yfList').innerHTML=rows.map(t=>`<button class="yf-row ${t.index===current?'selected':''}" data-id="${t.index}"><span class="yf-row-no">${String(t.index+1).padStart(2,'0')}</span><span class="yf-row-main"><b>${t.title}</b><small>${t.artist} · ${t.style}</small></span><span class="yf-row-bpm">${t.duration}</span><span class="yf-row-play">${t.index===current?'♫':'▶'}</span></button>`).join('')||'<p class="yf-empty">No encontramos canciones con esa búsqueda.</p>';
+    $('yfList').querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>select(Number(el.dataset.id)));
   }
   function paint(){
-    const t=tracks[current]; $('yfNowTitle').textContent=t.title; $('yfNowGenre').textContent=t.genre; $('yfNowBpm').textContent=t.bpm+' BPM · pista '+String(t.id).padStart(2,'0')+'/50';
-    $('yfPlay').textContent=playing?'Ⅱ':'▶'; $('yfLive').textContent=playing?'PLAYING':'READY'; $('yfDisc').classList.toggle('spinning',playing); renderList();
+    const t=tracks[current];
+    $('yfNowTitle').textContent=t.title;$('yfNowArtist').textContent='Por '+t.artist;
+    $('yfNowMeta').textContent=t.style+' · '+t.bpm+' BPM · '+t.duration;
+    $('yfDisc').textContent='♫';renderList();
   }
-  function select(i,start){current=i;step=0;if(playing)startTrack();else paint();if(start&&!playing)play();}
-  function ensureAudio(){
-    if(ctx)return;ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=12500;master.gain.value=Number($('yfVolume').value)/100*.22;filter.connect(master);master.connect(ctx.destination);
+  function select(i){
+    current=i;const t=tracks[current];
+    $('yfEmbed').src='https://nullrights.com/embed/'+t.id;
+    paint();
   }
-  const scales={latin:[0,3,5,7,10],electro:[0,2,4,7,9],pop:[0,2,4,5,7,9,11],house:[0,3,5,7,10],tropical:[0,2,5,7,9],bass:[0,3,5,7,10],cinema:[0,2,3,7,9],cumbia:[0,2,5,7,10],lofi:[0,3,5,7,10],dance:[0,2,4,7,9]};
-  function tone(freq,time,duration,wave,vol,decay=true){
-    const o=ctx.createOscillator(),g=ctx.createGain();o.type=wave||'sawtooth';o.frequency.setValueAtTime(freq,time);g.gain.setValueAtTime(.0001,time);g.gain.exponentialRampToValueAtTime(Math.max(.0002,vol),time+.012);g.gain.exponentialRampToValueAtTime(.0001,time+duration);o.connect(g);g.connect(filter);o.start(time);o.stop(time+duration+.03);
-  }
-  function kick(time){const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.setValueAtTime(125,time);o.frequency.exponentialRampToValueAtTime(42,time+.14);g.gain.setValueAtTime(.8,time);g.gain.exponentialRampToValueAtTime(.001,time+.18);o.connect(g);g.connect(filter);o.start(time);o.stop(time+.2);}
-  function hat(time,vol){const n=ctx.createBufferSource(),b=ctx.createBuffer(1,Math.floor(ctx.sampleRate*.045),ctx.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;n.buffer=b;const f=ctx.createBiquadFilter();f.type='highpass';f.frequency.value=7000;const g=ctx.createGain();g.gain.setValueAtTime(vol,time);g.gain.exponentialRampToValueAtTime(.001,time+.04);n.connect(f);f.connect(g);g.connect(filter);n.start(time);}
-  function schedule(){
-    const t=tracks[current],beat=60/t.bpm,style=t.style,scale=scales[style]||scales.pop,barStep=step%16,bar=Math.floor(step/16),root=style==='cinema'?110:style==='lofi'?130:style==='bass'?55:style==='house'?65:style==='electro'?73:style==='cumbia'?98:82;
-    const at=nextAt;
-    if(barStep%4===0)kick(at);
-    if(barStep%2===0)hat(at,.12);else if(style==='bass'||style==='electro'||style==='dance')hat(at,.07);
-    if(barStep===4||barStep===12)tone(180,at,.09,'triangle',.12);
-    if(barStep%4===0){const bass=root*Math.pow(2,Math.floor(bar/2)%2?1:0);tone(bass,at,beat*.34,'triangle',.22);}
-    if(barStep%2===0||style==='lofi'){const note=scale[(Math.floor(step/2)+bar)%scale.length];const octave=style==='lofi'?2:3;tone(root*Math.pow(2,(note+12*octave)/12),at,beat*.42,style==='cinema'?'sine':'sawtooth',style==='lofi'?.055:.075);}
-    if(barStep===0||barStep===8){const chord=[0,2,4].map((v)=>scale[(bar+v)%scale.length]);chord.forEach((n,i)=>tone(root*2*Math.pow(2,n/12),at,beat*1.7,'sine',.025));}
-    step++;nextAt+=beat/2;
-  }
-  function startTrack(){ensureAudio();ctx.resume();clearInterval(timer);step=0;nextAt=ctx.currentTime+.06;timer=setInterval(()=>{if(!playing)return;while(nextAt<ctx.currentTime+.16)schedule();},40);playing=true;paint();}
-  function play(){if(!ctx){playing=true;startTrack();return;}if(ctx.state==='suspended')ctx.resume();playing=true;startTrack();}
-  function pause(){playing=false;clearInterval(timer);timer=null;paint();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 
