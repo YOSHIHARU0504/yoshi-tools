@@ -753,7 +753,22 @@ function renderWorkoutDay(day){
  document.getElementById('workoutDayTabs').innerHTML=tabs.map((label,i)=>'<button class="'+(i===day?'active':'')+'" onclick="renderWorkoutDay('+i+')">'+label+' · '+['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][i]+'</button>').join('');
  document.getElementById('dailyWorkoutTag').textContent=plan.focus;
  document.getElementById('dailyWorkoutIntro').textContent=plan.recovery?'Día de recuperación: no necesitas completar rondas ni exigirte.':('Duración por intervalo: '+plan.work+' s · Pausa: '+plan.rest+' s · '+plan.rounds+' rondas. Adaptado a tu actividad, edad, objetivo y deporte.');
- const photoForExercise=name=>{const n=name.toLowerCase();if(n.includes('sentadilla')||n.includes('silla'))return 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bodyweight_Squat/0.jpg';if(n.includes('flexion'))return 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pushups/0.jpg';if(n.includes('plancha'))return 'https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg';if(n.includes('movilidad')||n.includes('respiración')||n.includes('círculos')||n.includes('gato'))return 'https://images.surferseo.art/b7f4fbc1-b3cf-4591-a3b2-e7d202cbeb26.png';if(n.includes('marcha')||n.includes('paseo')||n.includes('paso lateral')||n.includes('equilibrio'))return 'https://images.surferseo.art/b7f4fbc1-b3cf-4591-a3b2-e7d202cbeb26.png';return 'https://images.surferseo.art/b7f4fbc1-b3cf-4591-a3b2-e7d202cbeb26.png';};
+ const exercisePhotoBase='https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/';
+ const exercisePhotoMap={
+  'sentarse y levantarse de silla':'Bodyweight_Squat','sentadilla a silla':'Bodyweight_Squat','sentadilla controlada':'Bodyweight_Squat',
+  'puente de glúteos':'Glute_Bridge','elevación de talones':'Standing_Calf_Raises',
+  'círculos de hombros':'Arm_Circles','movilidad de tobillos':'Ankle_Circles','gato-vaca suave':'Cat_Cow',
+  'flexiones contra pared':'Wall_Pushups','flexión inclinada':'Incline_Push_up','remo con mochila ligera':'Bent_Over_Row',
+  'apertura de brazos':'Arm_Circles','marcha en el sitio':'Marching_In_Place','marcha activa':'Marching_In_Place',
+  'paso lateral':'Side_Steps','desplazamiento lateral':'Side_Steps','boxeo al aire suave':'Shadow_Boxing',
+  'bird-dog adaptado':'Bird_Dog','equilibrio con apoyo':'Single_Leg_Stand','marcha talón-punta':'Heel_Toe_Walk',
+  'paseo o caminata':'Walking','respiración tranquila':'Deep_Breathing','movilidad suave':'Dynamic_Stretching'
+ };
+ const photoForExercise=name=>{
+  const key=String(name).toLocaleLowerCase('es').trim();
+  const folder=exercisePhotoMap[key]||'Dynamic_Stretching';
+  return exercisePhotoBase+folder+'/0.jpg';
+ };
  document.getElementById('dailyWorkoutExercises').innerHTML=plan.items.map((item,i)=>'<article class="daily-exercise"><div class="exercise-art"><img loading="lazy" src="'+photoForExercise(item[0])+'" alt="Fotografía de demostración: '+escapeNutritionText(item[0])+'"></div><small>EJERCICIO '+(i+1)+'</small><h4>'+escapeNutritionText(item[0])+'</h4><p>'+escapeNutritionText(item[2])+'</p></article>').join('');
  resetGuidedWorkout();
 }
