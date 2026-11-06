@@ -252,7 +252,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
 .yf-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.yf-kicker{font-size:9px;letter-spacing:2px;color:#8bd4a8;font-weight:900}.yf-top h3{font:900 22px Manrope,sans-serif;margin:4px 0}.yf-top p{font-size:10px;color:#a8c4b4;margin:0 0 13px}.yf-iconbtn{border:0;background:#263b32;color:white;border-radius:50%;width:30px;height:30px;font-size:20px;cursor:pointer}
 .yf-now{display:flex;align-items:center;gap:12px;background:linear-gradient(120deg,#1e4936,#20352c);border:1px solid #345c47;border-radius:16px;padding:12px}.yf-disc{width:48px;height:48px;flex:none;border-radius:50%;display:grid;place-items:center;background:repeating-radial-gradient(circle,#15251e 0 4px,#426b50 5px 7px);color:#c7ffd8;font-size:23px;border:3px solid #6aa47b}.yf-disc.spinning{animation:yfspin 3s linear infinite}@keyframes yfspin{to{transform:rotate(360deg)}}.yf-trackinfo{min-width:0;display:flex;flex-direction:column;gap:3px;flex:1}.yf-trackinfo strong{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.yf-trackinfo span,.yf-trackinfo small{font-size:9px;color:#b4d1bf}.yf-live{font-size:8px;letter-spacing:1px;color:#9af0b3;font-weight:900}
 .yf-controls{display:flex;justify-content:center;align-items:center;gap:15px;padding:13px 0 7px}.yf-controls button{border:0;background:transparent;color:#d8f2e0;font-size:19px;cursor:pointer}.yf-controls .yf-play{width:44px;height:44px;border-radius:50%;background:#a5efb7;color:#123b29;font-size:19px;font-weight:900}.yf-controls .yf-smallbtn{font-size:15px}.yf-volume{display:flex;align-items:center;gap:9px;padding:0 9px 12px;color:#b8d8c4;font-size:12px}.yf-volume input{width:100%;accent-color:#8ee5a8}
-.yf-embed-wrap{width:100%;height:120px;background:#172820;border:1px solid #355344;border-radius:12px;overflow:hidden;margin:10px 0 2px}.yf-embed-wrap iframe{display:block;width:100%;height:120px;border:0;background:#172820}
+.yf-audio-wrap{margin:12px 0 4px;background:#1b2d25;border:1px solid #355344;border-radius:12px;padding:7px}.yf-audio-wrap audio{display:block;width:100%;height:42px}.yf-status{font-size:10px;color:#a8c4b4;text-align:center;min-height:16px;margin:3px 0 9px}.yf-controls .yf-play{width:42px;height:42px;border-radius:50%;background:#a5efb7;color:#123b29;font-size:18px;font-weight:900}.yf-disc.spinning{animation:yfspin 3s linear infinite}
 .yf-library-head{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #2c4639;padding-top:12px}.yf-library-head strong{font-size:11px}.yf-library-head strong span{font-size:8px;color:#8bd4a8;margin-left:5px}.yf-library-head input{width:48%;background:#1b2d25;border:1px solid #355344;border-radius:9px;padding:8px;color:#fff;font-size:10px;outline:none}.yf-filters{display:flex;gap:5px;overflow-x:auto;padding:10px 0;scrollbar-width:thin}.yf-filters button{white-space:nowrap;border:1px solid #355344;background:#1b2d25;color:#b8d8c4;border-radius:99px;padding:6px 9px;font-size:9px;cursor:pointer}.yf-filters button.active{background:#a5efb7;color:#123b29;border-color:#a5efb7;font-weight:900}.yf-list{overflow-y:auto;min-height:100px;max-height:230px;padding-right:3px}.yf-row{display:flex;width:100%;align-items:center;gap:9px;text-align:left;background:transparent;border:0;border-bottom:1px solid #263d32;color:#e8f7ed;padding:9px 5px;cursor:pointer}.yf-row:hover,.yf-row.selected{background:#1d382b}.yf-row-no{font-size:9px;color:#82b995;width:19px}.yf-row-main{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}.yf-row-main b{font-size:10px;font-weight:800}.yf-row-main small{font-size:8px;color:#91ae9d}.yf-row-bpm{font-size:8px;color:#a6cbb3}.yf-row-play{font-size:11px;color:#a5efb7;width:14px;text-align:center}.yf-empty,.yf-foot{font-size:9px;color:#91ae9d;text-align:center;padding:10px}.yf-foot{margin:5px 0 0;padding:8px 0 0;border-top:1px solid #263d32}
 @media(max-width:720px){#musicFloat{right:12px!important;bottom:14px!important}.yf-player{max-height:75vh}.yf-list{max-height:190px}}
 
@@ -1698,7 +1698,7 @@ document.getElementById('clearProfile').addEventListener('click',()=>{
 
 
 
-/* YOSHI FIT MUSIC: biblioteca de música real CC0 */
+/* YOSHI FIT MUSIC: biblioteca real CC0 con controles nativos */
 (function(){
   const tracks=[
     {id:'w2w4l1pumv',title:'Mirror of the week - music bed 2',artist:'Ondrosik',style:'Deep House',bpm:125,duration:'3:04'},
@@ -1723,24 +1723,30 @@ document.getElementById('clearProfile').addEventListener('click',()=>{
     root.innerHTML=`
       <section class="yf-player" id="yfPlayer" aria-label="Música real para entrenar">
         <div class="yf-top"><div><span class="yf-kicker">YOSHI FIT MUSIC</span><h3>🎧 Música real</h3><p>Artistas independientes · licencia CC0</p></div><button id="yfClose" class="yf-iconbtn" aria-label="Cerrar">×</button></div>
-        <div class="yf-now"><div class="yf-disc" id="yfDisc">♫</div><div class="yf-trackinfo"><strong id="yfNowTitle">Elige tu canción</strong><span id="yfNowArtist">Música independiente</span><small id="yfNowMeta">Reproducción integrada</small></div><span class="yf-live">CC0</span></div>
-        <div class="yf-embed-wrap"><iframe id="yfEmbed" title="Reproductor de música Yoshi Fit" src="https://nullrights.com/embed/w2w4l1pumv" loading="lazy" allow="autoplay" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-        <div class="yf-controls"><button id="yfPrev" aria-label="Anterior">⏮</button><button id="yfNext" aria-label="Siguiente">⏭</button><button id="yfShuffle" class="yf-smallbtn" aria-label="Aleatorio">🔀 Aleatorio</button></div>
-        <div class="yf-library-head"><strong>Biblioteca <span id="yfCount">14 PISTAS</span></strong><input id="yfSearch" type="search" placeholder="Buscar canción o artista..."></div>
+        <div class="yf-now"><div class="yf-disc" id="yfDisc">♫</div><div class="yf-trackinfo"><strong id="yfNowTitle">Elige tu canción</strong><span id="yfNowArtist">Música independiente</span><small id="yfNowMeta">Reproducción integrada</small></div><span class="yf-live" id="yfLive">LISTO</span></div>
+        <div class="yf-audio-wrap"><audio id="yfAudio" controls preload="none" playsinline></audio></div>
+        <div class="yf-controls"><button id="yfPrev" aria-label="Anterior">⏮</button><button id="yfPlay" class="yf-play" aria-label="Reproducir o pausar">▶</button><button id="yfNext" aria-label="Siguiente">⏭</button><button id="yfShuffle" class="yf-smallbtn" aria-label="Aleatorio">🔀</button></div>
+        <p id="yfStatus" class="yf-status" role="status">Pulsa ▶ para escuchar. Si una pista falla, puedes saltar a la siguiente.</p>
+        <div class="yf-library-head"><strong>Biblioteca <span>14 PISTAS</span></strong><input id="yfSearch" type="search" placeholder="Buscar canción o artista..."></div>
         <div class="yf-filters" id="yfFilters"><button class="active" data-filter="all">Todas</button><button data-filter="electronic">Electrónica</button><button data-filter="dance">Dance / House</button><button data-filter="ambient">Ambient</button><button data-filter="other">Otros estilos</button></div>
         <div class="yf-list" id="yfList"></div>
-        <p class="yf-foot">Pistas reales CC0. El reproductor transmite desde Nullrights; toca ▶ dentro del reproductor para escuchar.</p>
+        <p class="yf-foot">Audio CC0 transmitido desde Nullrights. Los controles de reproducción son propios de Yoshi Fit.</p>
       </section>
       <button class="music-toggle yf-launch" id="musicToggle" type="button" aria-expanded="false">♫ <span>Yoshi Music</span></button>`;
-    const player=$('yfPlayer'),launch=$('musicToggle');
+    const player=$('yfPlayer'),launch=$('musicToggle'),audio=$('yfAudio');
     const open=v=>{player.classList.toggle('open',v);launch.setAttribute('aria-expanded',String(v));};
     $('yfClose').onclick=()=>open(false);launch.onclick=()=>open(!player.classList.contains('open'));
-    $('yfPrev').onclick=()=>select((current+tracks.length-1)%tracks.length);
-    $('yfNext').onclick=()=>select((current+1)%tracks.length);
-    $('yfShuffle').onclick=()=>select(Math.floor(Math.random()*tracks.length));
+    $('yfPlay').onclick=togglePlay;
+    $('yfPrev').onclick=()=>select((current+tracks.length-1)%tracks.length,true);
+    $('yfNext').onclick=()=>select((current+1)%tracks.length,true);
+    $('yfShuffle').onclick=()=>select(Math.floor(Math.random()*tracks.length),true);
     $('yfSearch').oninput=renderList;
     $('yfFilters').onclick=e=>{const btn=e.target.closest('button[data-filter]');if(!btn)return;filter=btn.dataset.filter;document.querySelectorAll('#yfFilters button').forEach(x=>x.classList.toggle('active',x===btn));renderList();};
-    renderList();paint();
+    audio.addEventListener('play',()=>{ $('yfPlay').textContent='Ⅱ';$('yfLive').textContent='SONANDO';$('yfDisc').classList.add('spinning');$('yfStatus').textContent='Reproduciendo: '+tracks[current].title;renderList();});
+    audio.addEventListener('pause',()=>{ $('yfPlay').textContent='▶';$('yfLive').textContent='PAUSADO';$('yfDisc').classList.remove('spinning');renderList();});
+    audio.addEventListener('ended',()=>select((current+1)%tracks.length,true));
+    audio.addEventListener('error',()=>{$('yfStatus').textContent='No se pudo cargar esta pista. Prueba con la siguiente.';$('yfLive').textContent='ERROR';});
+    renderList();select(0,false);
   }
   function group(t){
     if(/ambient/i.test(t.style))return 'ambient';
@@ -1752,7 +1758,7 @@ document.getElementById('clearProfile').addEventListener('click',()=>{
     const q=($('yfSearch').value||'').toLowerCase();
     const rows=tracks.map((t,i)=>({...t,index:i})).filter(t=>(filter==='all'||group(t)===filter)&&(!q||(t.title+' '+t.artist+' '+t.style).toLowerCase().includes(q)));
     $('yfList').innerHTML=rows.map(t=>`<button class="yf-row ${t.index===current?'selected':''}" data-id="${t.index}"><span class="yf-row-no">${String(t.index+1).padStart(2,'0')}</span><span class="yf-row-main"><b>${t.title}</b><small>${t.artist} · ${t.style}</small></span><span class="yf-row-bpm">${t.duration}</span><span class="yf-row-play">${t.index===current?'♫':'▶'}</span></button>`).join('')||'<p class="yf-empty">No encontramos canciones con esa búsqueda.</p>';
-    $('yfList').querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>select(Number(el.dataset.id)));
+    $('yfList').querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>select(Number(el.dataset.id),true));
   }
   function paint(){
     const t=tracks[current];
@@ -1760,10 +1766,17 @@ document.getElementById('clearProfile').addEventListener('click',()=>{
     $('yfNowMeta').textContent=t.style+' · '+t.bpm+' BPM · '+t.duration;
     $('yfDisc').textContent='♫';renderList();
   }
-  function select(i){
-    current=i;const t=tracks[current];
-    $('yfEmbed').src='https://nullrights.com/embed/'+t.id;
+  function select(i,autoplay){
+    current=i;const audio=$('yfAudio'),t=tracks[current];
+    audio.pause();audio.src='https://nullrights.com/download/'+t.id;audio.load();
+    $('yfStatus').textContent='Lista para reproducir: '+t.title;
     paint();
+    if(autoplay)audio.play().catch(()=>{$('yfStatus').textContent='El navegador bloqueó la reproducción. Pulsa ▶ para intentarlo de nuevo.';});
+  }
+  function togglePlay(){
+    const audio=$('yfAudio');
+    if(audio.paused)audio.play().catch(()=>{$('yfStatus').textContent='No se pudo iniciar el audio. Comprueba tu conexión o elige otra pista.';});
+    else audio.pause();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
