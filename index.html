@@ -419,6 +419,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
         <div class="auth-actions">
           <button class="auth-button" id="registerButton" type="button">Crear cuenta</button>
           <button class="auth-button secondary" id="loginButton" type="button">Iniciar sesión</button>
+          <button class="auth-button secondary" id="resetPasswordButton" type="button">Recuperar contraseña</button>
           <button class="auth-button danger" id="logoutButton" type="button" hidden>Cerrar sesión</button>
         </div>
         <div id="authUser" class="auth-user" hidden></div>
@@ -465,6 +466,19 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
     <div class="inner-hero"><div class="eyebrow">NUESTRA IDENTIDAD</div><h1>Yoshi Fit 🇵🇪</h1><p>Una plataforma que busca acercar la nutrición, el entrenamiento y el bienestar a las personas, considerando los alimentos, costumbres y presupuestos de nuestra realidad.</p></div>
     <div class="info-box"><h3>Nuestra visión</h3><p>Construir una herramienta útil, accesible y confiable para ayudar a las personas a tomar mejores decisiones sobre su alimentación y actividad física.</p></div>
     <div class="info-box"><h3>Una plataforma para todos</h3><p>Queremos desarrollar herramientas para diferentes edades, objetivos, niveles de actividad y presupuestos, siempre respetando la seguridad y las necesidades individuales.</p></div>
+    <div class="info-box" id="privacy"><h3>Privacidad y uso de datos</h3>
+      <p>Yoshi Fit guarda en el almacenamiento local de tu navegador tu perfil, notas opcionales de salud, hábitos, seguimiento y preferencias de presupuesto. Esos datos locales pueden permanecer en el dispositivo hasta que borres los datos del sitio o uses las opciones de borrado disponibles.</p>
+      <p>Si creas una cuenta, el perfil básico (nombre, edad, sexo opcional, peso, estatura, objetivo, actividad, deporte, presupuesto y preferencias alimentarias) puede sincronizarse con Supabase para que accedas desde otros dispositivos. Las notas de salud opcionales, el historial de evolución y los hábitos se mantienen localmente y no se envían a esa tabla de perfil.</p>
+      <p>La autenticación y el correo de la cuenta son gestionados por Supabase. No compartas información que no sea necesaria. Evita usar un dispositivo público o compartido sin cerrar sesión.</p>
+      <p>Para retirar la copia local, usa “Borrar datos de este navegador”. Esa acción no elimina los datos de la nube. La eliminación completa de una cuenta y sus datos requiere una función administrativa segura que todavía debe configurarse antes del lanzamiento público.</p>
+      <p>Contacto para consultas de privacidad: todavía no se ha configurado un canal oficial de contacto. Por eso, esta versión no debe considerarse lista para recibir datos personales de público general.</p>
+    </div>
+    <div class="info-box" id="terms"><h3>Condiciones de uso y límites</h3>
+      <p>Yoshi Fit ofrece información educativa y herramientas orientativas. No brinda diagnóstico, tratamiento médico, rehabilitación ni prescripciones nutricionales individualizadas. No reemplaza la evaluación de un profesional de salud, nutrición o educación física.</p>
+      <p>Las estimaciones, menús, porciones, ejercicios, tiempos y presupuestos son aproximados. Los precios pueden variar según localidad y fecha. Detén una actividad si aparece dolor, mareo, falta de aire inusual u otro síntoma preocupante y busca atención profesional cuando corresponda.</p>
+      <p>Menores de edad deben usar la plataforma con acompañamiento de su madre, padre o tutor. No se ofrecen metas de pérdida de peso ni restricciones calóricas para menores. Las personas con enfermedades, embarazo, lesiones o necesidades clínicas deben consultar con su profesional antes de cambiar alimentación o actividad física.</p>
+      <p>Al usar la plataforma, te comprometes a proporcionar información veraz, proteger tus credenciales y utilizar las recomendaciones con criterio. Yoshi Fit puede cambiar o suspender funciones mientras se realizan mejoras.</p>
+    </div>
   </section>
 
   <footer><span><strong>YOSHI FIT.</strong> Nutrición y rendimiento con identidad peruana.</span><span>© 2026 Yoshi Fit · Proyecto en desarrollo</span></footer>
@@ -1474,7 +1488,22 @@ async function logoutAccount(){
 
 document.getElementById('registerButton').addEventListener('click',registerAccount);
 document.getElementById('loginButton').addEventListener('click',loginAccount);
+document.getElementById('resetPasswordButton').addEventListener('click',resetPassword);
 document.getElementById('logoutButton').addEventListener('click',logoutAccount);
+
+async function resetPassword(){
+  if(!supabaseClient){showAuthStatus('El servicio de cuentas no está disponible.','error');return;}
+  const email=document.getElementById('authEmail').value.trim();
+  if(!email){showAuthStatus('Escribe primero tu correo para enviarte el enlace de recuperación.','error');return;}
+  const button=document.getElementById('resetPasswordButton');button.disabled=true;
+  showAuthStatus('Enviando enlace de recuperación...');
+  try{
+    const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:'https://yoshiharu0504.github.io/yoshi-tools/'});
+    if(error)throw error;
+    showAuthStatus('Si el correo está registrado, recibirás un enlace para restablecer tu contraseña. Revisa también spam.','logged');
+  }catch(error){console.error(error);showAuthStatus('No se pudo enviar el enlace: '+error.message,'error');}
+  finally{button.disabled=false;}
+}
 
 /* GUARDAR PERFIL */
 
