@@ -1655,6 +1655,22 @@ async function initializeYoshiFit(){
     return;
   }
 
+  // Suscribirse antes de consultar la sesión para no perder PASSWORD_RECOVERY
+  // cuando Supabase procesa el enlace de recuperación al cargar la página.
+  const { data: authSubscription } = supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if(event==='PASSWORD_RECOVERY'){
+      showPasswordRecoveryMode(true);
+    }
+    if(event==='SIGNED_IN' && session?.user){
+      setTimeout(()=>handleAuthenticatedUser(session.user),0);
+    }
+
+    if(event==='SIGNED_OUT'){
+      updateAuthInterface(null);
+      showPasswordRecoveryMode(false);
+    }
+  });
+
   const {data,error}=await supabaseClient.auth.getSession();
 
   if(error){
@@ -1669,18 +1685,10 @@ async function initializeYoshiFit(){
     updateAuthInterface(null);
   }
 
-  const { data: authSubscription } = supabaseClient.auth.onAuthStateChange((event,session)=>{
-    if(event==='PASSWORD_RECOVERY'){
-      showPasswordRecoveryMode(true);
-    }
-    if(event==='SIGNED_IN' && session?.user){
-      setTimeout(()=>handleAuthenticatedUser(session.user),0);
-    }
-
-    if(event==='SIGNED_OUT'){
-      updateAuthInterface(null);
-    }
-  });
+  // Respaldo para enlaces de recuperación que ya llegaron con el hash procesado.
+  if(window.location.hash.includes('type=recovery')){
+    showPasswordRecoveryMode(true);
+  }
 
   authReady=true;
 }
