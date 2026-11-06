@@ -238,6 +238,11 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
 .music-empty{padding:16px 12px;text-align:center;color:#849187;font-size:11px}
 @media(max-width:720px){.music-float{right:12px;bottom:82px}.music-toggle{padding:12px 15px}.music-panel{width:min(340px,calc(100vw - 24px))}}
 
+
+/* Visibilidad reforzada del reproductor personal */
+#musicFloat{position:fixed!important;right:20px!important;bottom:20px!important;z-index:999999!important;display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+#musicFloat .music-toggle{display:flex!important;visibility:visible!important;opacity:1!important;cursor:pointer!important}
+@media(max-width:720px){#musicFloat{right:12px!important;bottom:88px!important}}
 </style>
 </head>
 
@@ -531,23 +536,7 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<div class="music-float" id="musicFloat">
-  <section class="music-panel" id="musicPanel" aria-label="Mi música">
-    <div class="music-head">
-      <strong>🎧 Mi música en Yoshi Fit</strong>
-      <button class="music-close" id="musicClose" type="button" aria-label="Cerrar reproductor">×</button>
-    </div>
-    <p class="music-description">Pega un enlace de Spotify o YouTube. Cada persona puede elegir su canción, álbum o playlist. Tu elección se guarda en este navegador.</p>
-    <input class="music-input" id="musicUrl" type="url" placeholder="https://open.spotify.com/... o youtube.com/..." autocomplete="off">
-    <div class="music-actions">
-      <button class="music-save" id="musicSave" type="button">Reproducir mi música</button>
-      <button class="music-clear" id="musicClear" type="button">Quitar</button>
-    </div>
-    <p class="music-status" id="musicStatus" role="status">La música empieza cuando tú pulses reproducir.</p>
-    <div class="music-frame" id="musicFrame"><div class="music-empty">Tu reproductor aparecerá aquí 🎶</div></div>
-  </section>
-  <button class="music-toggle" id="musicToggle" type="button" aria-expanded="false">♫ <span>Mi música</span></button>
-</div>
+
 
 <script>
 /* =====================================================
@@ -1695,96 +1684,70 @@ document.getElementById('clearProfile').addEventListener('click',()=>{
 });
 
 
+
 /* REPRODUCTOR PERSONAL: Spotify y YouTube */
-(function initPersonalMusic(){
-  const panel=document.getElementById('musicPanel');
-  const toggle=document.getElementById('musicToggle');
-  const close=document.getElementById('musicClose');
-  const input=document.getElementById('musicUrl');
-  const save=document.getElementById('musicSave');
-  const clear=document.getElementById('musicClear');
-  const frame=document.getElementById('musicFrame');
-  const status=document.getElementById('musicStatus');
-  const storageKey='yoshiFitPersonalMusic';
-
-  function setOpen(open){
-    panel.classList.toggle('open',open);
-    toggle.setAttribute('aria-expanded',String(open));
-  }
-
-  function getEmbed(raw){
-    let url;
-    try{url=new URL(raw.trim());}catch(error){return null;}
-    const host=url.hostname.toLowerCase().replace(/^www\./,'');
-    if(host==='open.spotify.com'){
-      const parts=url.pathname.split('/').filter(Boolean);
-      if(parts[0]==='embed')parts.shift();
-      const type=parts[0];
-      const id=parts[1];
-      if(!['track','album','playlist','episode','show'].includes(type)||!id)return null;
-      return {provider:'spotify',src:'https://open.spotify.com/embed/'+type+'/'+encodeURIComponent(id)+'?utm_source=generator'};
+(function(){
+  function initPersonalMusic(){
+    const panel=document.getElementById('musicPanel');
+    const toggle=document.getElementById('musicToggle');
+    const close=document.getElementById('musicClose');
+    const input=document.getElementById('musicUrl');
+    const save=document.getElementById('musicSave');
+    const clear=document.getElementById('musicClear');
+    const frame=document.getElementById('musicFrame');
+    const status=document.getElementById('musicStatus');
+    if(!panel||!toggle||!close||!input||!save||!clear||!frame||!status){
+      console.error('Yoshi Fit: no se encontró algún elemento del reproductor.');
+      return;
     }
-    if(['youtube.com','m.youtube.com','music.youtube.com','youtu.be'].includes(host)){
-      let videoId=url.searchParams.get('v');
-      let listId=url.searchParams.get('list');
-      if(host==='youtu.be')videoId=url.pathname.split('/').filter(Boolean)[0]||null;
-      if(!videoId&&url.pathname.startsWith('/shorts/'))videoId=url.pathname.split('/')[2]||null;
-      if(listId&&!videoId){
-        return {provider:'youtube',src:'https://www.youtube-nocookie.com/embed/videoseries?list='+encodeURIComponent(listId)};
+    const storageKey='yoshiFitPersonalMusic';
+    function setOpen(open){
+      panel.classList.toggle('open',open);
+      toggle.setAttribute('aria-expanded',String(open));
+    }
+    function getEmbed(raw){
+      let url;
+      try{url=new URL(raw.trim());}catch(error){return null;}
+      const host=url.hostname.toLowerCase().replace(/^www\\./,'');
+      if(host==='open.spotify.com'){
+        const parts=url.pathname.split('/').filter(Boolean);
+        if(parts[0]==='embed')parts.shift();
+        const type=parts[0],id=parts[1];
+        if(!['track','album','playlist','episode','show'].includes(type)||!id)return null;
+        return {provider:'spotify',src:'https://open.spotify.com/embed/'+type+'/'+encodeURIComponent(id)+'?utm_source=generator'};
       }
-      if(videoId){
-        let src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(videoId);
-        if(listId)src+='?list='+encodeURIComponent(listId);
-        return {provider:'youtube',src};
+      if(['youtube.com','m.youtube.com','music.youtube.com','youtu.be'].includes(host)){
+        let videoId=url.searchParams.get('v'),listId=url.searchParams.get('list');
+        if(host==='youtu.be')videoId=url.pathname.split('/').filter(Boolean)[0]||null;
+        if(!videoId&&url.pathname.startsWith('/shorts/'))videoId=url.pathname.split('/')[2]||null;
+        if(listId&&!videoId)return {provider:'youtube',src:'https://www.youtube-nocookie.com/embed/videoseries?list='+encodeURIComponent(listId)};
+        if(videoId){
+          let src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(videoId);
+          if(listId)src+='?list='+encodeURIComponent(listId);
+          return {provider:'youtube',src};
+        }
       }
+      return null;
     }
-    return null;
+    function renderMusic(raw,saveChoice){
+      const embed=getEmbed(raw);
+      if(!embed){status.textContent='Enlace no válido. Usa Spotify o YouTube.';return;}
+      const iframe=document.createElement('iframe');
+      iframe.src=embed.src;iframe.title='Reproductor de música personal';iframe.loading='lazy';
+      iframe.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share';
+      iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.allowFullscreen=true;
+      frame.className='music-frame '+embed.provider;frame.replaceChildren(iframe);
+      if(saveChoice){try{localStorage.setItem(storageKey,raw.trim());}catch(error){status.textContent='No se pudo guardar en este navegador.';}}
+      status.textContent=embed.provider==='spotify'?'Spotify listo. Inicia sesión si te lo solicita.':'YouTube listo. Pulsa reproducir en el vídeo.';
+    }
+    toggle.addEventListener('click',()=>setOpen(!panel.classList.contains('open')));
+    close.addEventListener('click',()=>setOpen(false));
+    save.addEventListener('click',()=>{const raw=input.value.trim();if(!raw){status.textContent='Pega primero el enlace de tu música.';return;}renderMusic(raw,true);});
+    clear.addEventListener('click',()=>{try{localStorage.removeItem(storageKey);}catch(error){}input.value='';frame.className='music-frame';frame.innerHTML='<div class="music-empty">Tu reproductor aparecerá aquí 🎶</div>';status.textContent='Se quitó tu música guardada.';});
+    try{const saved=localStorage.getItem(storageKey);if(saved){input.value=saved;renderMusic(saved,false);}}catch(error){}
   }
-
-  function renderMusic(raw,saveChoice){
-    const embed=getEmbed(raw);
-    if(!embed){
-      status.textContent='Enlace no válido. Usa un enlace de Spotify o YouTube (canción, álbum o playlist).';
-      return false;
-    }
-    const iframe=document.createElement('iframe');
-    iframe.src=embed.src;
-    iframe.title='Reproductor de música personal';
-    iframe.loading='lazy';
-    iframe.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share';
-    iframe.referrerPolicy='strict-origin-when-cross-origin';
-    iframe.allowFullscreen=true;
-    frame.className='music-frame '+embed.provider;
-    frame.replaceChildren(iframe);
-    if(saveChoice){
-      try{localStorage.setItem(storageKey,raw.trim());}
-      catch(error){status.textContent='No se pudo guardar la elección en este navegador.';return true;}
-    }
-    status.textContent=embed.provider==='spotify'
-      ?'Spotify listo. Inicia sesión en Spotify si te lo solicita.'
-      :'YouTube listo. Pulsa reproducir dentro del vídeo.';
-    return true;
-  }
-
-  toggle.addEventListener('click',()=>setOpen(!panel.classList.contains('open')));
-  close.addEventListener('click',()=>setOpen(false));
-  save.addEventListener('click',()=>{
-    const raw=input.value.trim();
-    if(!raw){status.textContent='Pega primero el enlace de tu música.';return;}
-    renderMusic(raw,true);
-  });
-  clear.addEventListener('click',()=>{
-    try{localStorage.removeItem(storageKey);}catch(error){}
-    input.value='';
-    frame.className='music-frame';
-    frame.innerHTML='<div class="music-empty">Tu reproductor aparecerá aquí 🎶</div>';
-    status.textContent='Se quitó tu música guardada.';
-  });
-
-  try{
-    const saved=localStorage.getItem(storageKey);
-    if(saved){input.value=saved;renderMusic(saved,false);}
-  }catch(error){console.warn('No se pudo recuperar la música guardada.',error);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initPersonalMusic,{once:true});
+  else initPersonalMusic();
 })();
 
 /* INICIALIZACIÓN */
@@ -1837,5 +1800,22 @@ async function initializeYoshiFit(){
 
 initializeYoshiFit();
 </script>
+<div class="music-float" id="musicFloat">
+  <section class="music-panel" id="musicPanel" aria-label="Mi música">
+    <div class="music-head">
+      <strong>🎧 Mi música en Yoshi Fit</strong>
+      <button class="music-close" id="musicClose" type="button" aria-label="Cerrar reproductor">×</button>
+    </div>
+    <p class="music-description">Pega un enlace de Spotify o YouTube. Cada persona puede elegir su canción, álbum o playlist. Tu elección se guarda en este navegador.</p>
+    <input class="music-input" id="musicUrl" type="url" placeholder="https://open.spotify.com/... o youtube.com/..." autocomplete="off">
+    <div class="music-actions">
+      <button class="music-save" id="musicSave" type="button">Reproducir mi música</button>
+      <button class="music-clear" id="musicClear" type="button">Quitar</button>
+    </div>
+    <p class="music-status" id="musicStatus" role="status">La música empieza cuando tú pulses reproducir.</p>
+    <div class="music-frame" id="musicFrame"><div class="music-empty">Tu reproductor aparecerá aquí 🎶</div></div>
+  </section>
+  <button class="music-toggle" id="musicToggle" type="button" aria-expanded="false">♫ <span>Mi música</span></button>
+</div>
 </body>
 </html>
