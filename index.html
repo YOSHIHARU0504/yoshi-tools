@@ -415,12 +415,18 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
             <label for="authPassword">Contraseña</label>
             <input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="Mínimo 8 caracteres">
           </div>
+          <div class="form-field full" id="newPasswordField" hidden>
+            <label for="newPassword">Nueva contraseña</label>
+            <input id="newPassword" type="password" autocomplete="new-password" minlength="8" placeholder="Mínimo 8 caracteres">
+          </div>
         </div>
         <div class="auth-actions">
           <button class="auth-button" id="registerButton" type="button">Crear cuenta</button>
           <button class="auth-button secondary" id="loginButton" type="button">Iniciar sesión</button>
           <button class="auth-button secondary" id="resetPasswordButton" type="button">Recuperar contraseña</button>
           <button class="auth-button danger" id="logoutButton" type="button" hidden>Cerrar sesión</button>
+          <button class="auth-button danger" id="deleteAccountButton" type="button" hidden>Eliminar mi cuenta</button>
+          <button class="auth-button" id="saveNewPasswordButton" type="button" hidden>Guardar nueva contraseña</button>
         </div>
         <div id="authUser" class="auth-user" hidden></div>
         <div id="authStatus" class="auth-status" role="status" aria-live="polite">Puedes explorar Yoshi Fit sin registrarte. Para sincronizar tu perfil, crea una cuenta.</div>
@@ -470,8 +476,8 @@ footer{border-top:1px solid var(--border);margin-top:45px;padding-top:20px;font-
       <p>Yoshi Fit guarda en el almacenamiento local de tu navegador tu perfil, notas opcionales de salud, hábitos, seguimiento y preferencias de presupuesto. Esos datos locales pueden permanecer en el dispositivo hasta que borres los datos del sitio o uses las opciones de borrado disponibles.</p>
       <p>Si creas una cuenta, el perfil básico (nombre, edad, sexo opcional, peso, estatura, objetivo, actividad, deporte, presupuesto y preferencias alimentarias) puede sincronizarse con Supabase para que accedas desde otros dispositivos. Las notas de salud opcionales, el historial de evolución y los hábitos se mantienen localmente y no se envían a esa tabla de perfil.</p>
       <p>La autenticación y el correo de la cuenta son gestionados por Supabase. No compartas información que no sea necesaria. Evita usar un dispositivo público o compartido sin cerrar sesión.</p>
-      <p>Para retirar la copia local, usa “Borrar datos de este navegador”. Esa acción no elimina los datos de la nube. La eliminación completa de una cuenta y sus datos requiere una función administrativa segura que todavía debe configurarse antes del lanzamiento público.</p>
-      <p>Contacto para consultas de privacidad: todavía no se ha configurado un canal oficial de contacto. Por eso, esta versión no debe considerarse lista para recibir datos personales de público general.</p>
+      <p>Puedes borrar la copia local desde “Borrar datos de este navegador”. Si tienes una cuenta, también puedes solicitar la eliminación definitiva desde el panel de cuenta. La eliminación de la cuenta borra el usuario de autenticación y su perfil asociado en la nube; los datos locales de este navegador se limpian durante el proceso.</p>
+      <p>Contacto para consultas de privacidad: todavía no se ha configurado un canal oficial de contacto. Antes de abrir el servicio al público, el responsable del proyecto debe publicar un correo o canal válido para solicitudes de privacidad.</p>
     </div>
     <div class="info-box" id="terms"><h3>Condiciones de uso y límites</h3>
       <p>Yoshi Fit ofrece información educativa y herramientas orientativas. No brinda diagnóstico, tratamiento médico, rehabilitación ni prescripciones nutricionales individualizadas. No reemplaza la evaluación de un profesional de salud, nutrición o educación física.</p>
@@ -1340,6 +1346,7 @@ function updateAuthInterface(user){
     registerButton.hidden=true;
     loginButton.hidden=true;
     logoutButton.hidden=false;
+    document.getElementById('deleteAccountButton').hidden=false;
     authUser.hidden=false;
     authUser.textContent='Sesión iniciada: '+user.email;
     authTitle.textContent='Tu cuenta está activa';
@@ -1349,6 +1356,7 @@ function updateAuthInterface(user){
     registerButton.hidden=false;
     loginButton.hidden=false;
     logoutButton.hidden=true;
+    document.getElementById('deleteAccountButton').hidden=true;
     authUser.hidden=true;
     authTitle.textContent='Accede a tu cuenta';
     document.getElementById('sidebarSubtitle').textContent='Perfil personal';
@@ -1493,6 +1501,17 @@ document.getElementById('registerButton').addEventListener('click',registerAccou
 document.getElementById('loginButton').addEventListener('click',loginAccount);
 document.getElementById('resetPasswordButton').addEventListener('click',resetPassword);
 document.getElementById('logoutButton').addEventListener('click',logoutAccount);
+document.getElementById('deleteAccountButton').addEventListener('click',deleteAccount);
+document.getElementById('saveNewPasswordButton').addEventListener('click',saveNewPassword);
+
+function showPasswordRecoveryMode(active){
+  document.getElementById('newPasswordField').hidden=!active;
+  document.getElementById('saveNewPasswordButton').hidden=!active;
+  document.getElementById('registerButton').hidden=active||!!currentUser;
+  document.getElementById('loginButton').hidden=active||!!currentUser;
+  document.getElementById('resetPasswordButton').hidden=active||!!currentUser;
+  if(active)showAuthStatus('Enlace verificado. Escribe tu nueva contraseña y guárdala.','logged');
+}
 
 async function resetPassword(){
   if(!supabaseClient){showAuthStatus('El servicio de cuentas no está disponible.','error');return;}
@@ -1506,6 +1525,50 @@ async function resetPassword(){
     showAuthStatus('Si el correo está registrado, recibirás un enlace para restablecer tu contraseña. Revisa también spam.','logged');
   }catch(error){console.error(error);showAuthStatus('No se pudo enviar el enlace: '+error.message,'error');}
   finally{button.disabled=false;}
+}
+
+async function saveNewPassword(){
+  const password=document.getElementById('newPassword').value;
+  if(password.length<8){showAuthStatus('La nueva contraseña debe tener al menos 8 caracteres.','error');return;}
+  const button=document.getElementById('saveNewPasswordButton');button.disabled=true;
+  try{
+    const {error}=await supabaseClient.auth.updateUser({password});
+    if(error)throw error;
+    document.getElementById('newPassword').value='';
+    showPasswordRecoveryMode(false);
+    showAuthStatus('Tu contraseña se actualizó correctamente. Ya puedes iniciar sesión.','logged');
+  }catch(error){showAuthStatus('No se pudo actualizar la contraseña: '+error.message,'error');}
+  finally{button.disabled=false;}
+}
+
+async function deleteAccount(){
+  if(!supabaseClient||!currentUser){showAuthStatus('Inicia sesión para eliminar tu cuenta.','error');return;}
+  const accepted=confirm('Esta acción es permanente. Se eliminará tu cuenta Yoshi Fit y el perfil asociado en la nube. ¿Deseas continuar?');
+  if(!accepted)return;
+  const typed=prompt('Para confirmar, escribe ELIMINAR');
+  if(typed!=='ELIMINAR'){showAuthStatus('Eliminación cancelada. No se modificó tu cuenta.');return;}
+  const button=document.getElementById('deleteAccountButton');button.disabled=true;
+  showAuthStatus('Eliminando tu cuenta de forma segura...');
+  try{
+    const {data,error}=await supabaseClient.functions.invoke('delete-account',{method:'POST',body:{}});
+    if(error)throw error;
+    if(!data?.success)throw new Error('El servidor no confirmó la eliminación.');
+    try{
+      const keys=Object.keys(localStorage);
+      keys.filter(key=>key.startsWith('yoshiFit')).forEach(key=>localStorage.removeItem(key));
+    }catch(storageError){console.warn('No se pudo limpiar todo el almacenamiento local.',storageError);}
+    currentUser=null;
+    await supabaseClient.auth.signOut({scope:'local'});
+    updateAuthInterface(null);
+    document.getElementById('profileForm').reset();
+    document.getElementById('profileSummary').style.display='none';
+    document.getElementById('sidebarName').textContent='Mi espacio';
+    document.getElementById('sidebarAvatar').textContent='Y';
+    showAuthStatus('Tu cuenta y perfil en la nube fueron eliminados. También se limpiaron los datos locales de Yoshi Fit en este navegador.','logged');
+  }catch(error){
+    console.error(error);
+    showAuthStatus('No se pudo completar la eliminación. Tu cuenta no se considera eliminada: '+error.message,'error');
+  }finally{button.disabled=false;}
 }
 
 /* GUARDAR PERFIL */
@@ -1606,7 +1669,10 @@ async function initializeYoshiFit(){
     updateAuthInterface(null);
   }
 
-  supabaseClient.auth.onAuthStateChange((event,session)=>{
+  const { data: authSubscription } = supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if(event==='PASSWORD_RECOVERY'){
+      showPasswordRecoveryMode(true);
+    }
     if(event==='SIGNED_IN' && session?.user){
       setTimeout(()=>handleAuthenticatedUser(session.user),0);
     }
