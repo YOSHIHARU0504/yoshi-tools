@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#210d17">
+<title>Nuestra Historia | Adela & Yoshi</title>
+<style>
+:root{--bg:#160b11;--panel:#24121c;--wine:#6d263f;--gold:#d7b77a;--cream:#f5eadb;--muted:#c9b6b4}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% 0%,#482035 0,#1c0d16 42%,#10080d 100%);color:var(--cream);font-family:Georgia,'Times New Roman',serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{max-width:900px;margin:auto;padding:0 18px}
+nav{position:sticky;top:0;z-index:5;background:#160b11eF;border-bottom:1px solid #d7b77a33;backdrop-filter:blur(12px);padding:10px 14px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+nav a{color:var(--gold);text-decoration:none;font:12px Arial,sans-serif;letter-spacing:1px;padding:8px}
+.hero{min-height:92vh;display:grid;place-items:center;text-align:center;padding:70px 18px;position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"✦";position:absolute;color:#d7b77a55;font-size:70px;animation:float 6s ease-in-out infinite}.hero:before{top:18%;left:12%}.hero:after{bottom:20%;right:12%;animation-delay:2s}
+@keyframes float{50%{transform:translateY(-16px) rotate(18deg);opacity:.45}}
+.eyebrow{font:11px Arial,sans-serif;letter-spacing:4px;text-transform:uppercase;color:var(--gold)}
+h1{font-size:clamp(46px,10vw,88px);font-weight:normal;line-height:1.02;margin:20px 0;color:#f6e8d5;text-shadow:0 5px 35px #d7b77a33}
+.hero p{color:var(--muted);font-size:18px;max-width:560px;line-height:1.7;margin:0 auto 28px}
+.gold{color:var(--gold)}.btn{border:1px solid var(--gold);background:linear-gradient(135deg,#7c304a,#42182d);color:#fff4e5;padding:13px 20px;border-radius:30px;letter-spacing:1px;font:12px Arial,sans-serif;box-shadow:0 8px 30px #0005}.btn.secondary{background:transparent;color:var(--gold)}.btn.small{padding:9px 13px;font-size:11px}
+section{padding:76px 0;border-top:1px solid #d7b77a22}.section-head{text-align:center;margin-bottom:35px}.section-head h2{font-size:clamp(30px,6vw,46px);font-weight:normal;margin:12px 0}.section-head p{color:var(--muted);font:14px Arial,sans-serif;line-height:1.7}
+.timeline{max-width:650px;margin:auto;position:relative}.timeline:before{content:"";position:absolute;left:18px;top:5px;bottom:5px;width:1px;background:linear-gradient(var(--gold),transparent)}
+.event{position:relative;padding:0 0 30px 52px}.event:before{content:"";position:absolute;left:12px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--gold);box-shadow:0 0 15px #d7b77a99}.event strong{color:var(--gold);font:12px Arial,sans-serif;letter-spacing:2px}.event h3{font-size:23px;font-weight:normal;margin:7px 0}.event p{color:var(--muted);line-height:1.7;margin:0}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.photo{background:#24121c;border:1px solid #d7b77a33;border-radius:12px;overflow:hidden}.photo img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#311b27}.photo .meta{padding:13px}.photo h3{font-size:18px;font-weight:normal;margin:0 0 6px}.photo p{font:12px Arial,sans-serif;color:var(--muted);margin:0;line-height:1.5}.empty{border:1px dashed #d7b77a66;border-radius:14px;padding:28px;text-align:center;color:var(--muted);line-height:1.7}
+.family{max-width:680px;margin:auto;text-align:center;background:linear-gradient(145deg,#321827,#1b0e16);border:1px solid #d7b77a44;padding:34px 24px;border-radius:18px}.family .heart{font-size:35px;color:var(--gold)}.family h3{font-size:31px;font-weight:normal;margin:10px}.family p{color:var(--muted);line-height:1.8}
+.letter{max-width:700px;margin:auto;text-align:center}.envelope{width:min(300px,85vw);height:190px;margin:30px auto;position:relative;background:linear-gradient(145deg,#8c3c56,#4c1c32);border:1px solid var(--gold);border-radius:8px;display:grid;place-items:center;box-shadow:0 15px 50px #0008;overflow:hidden}.envelope:before{content:"";position:absolute;inset:0;background:linear-gradient(35deg,transparent 49%,#d7b77a66 50%,transparent 51%),linear-gradient(-35deg,transparent 49%,#d7b77a66 50%,transparent 51%)}.envelope span{z-index:1;font-size:45px;color:#f4dfbf}.letter-content{display:none;text-align:left;background:#f2e5d2;color:#3b2028;padding:clamp(22px,5vw,42px);border-radius:5px;line-height:1.9;box-shadow:0 15px 50px #0007}.letter-content.open{display:block;animation:rise .8s ease}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}.letter-content h3{text-align:center;font-size:30px;font-weight:normal;color:#71334a}.signature{text-align:right;font-style:italic;margin-top:25px}
+footer{text-align:center;padding:55px 15px 70px;color:var(--muted);font:12px Arial,sans-serif;letter-spacing:1px}
+#editor{display:none;background:#10080d;border:1px solid #d7b77a55;border-radius:14px;padding:18px;margin:24px auto 50px}.field{display:grid;gap:6px;margin:12px 0}.field label{font:11px Arial,sans-serif;letter-spacing:1px;color:var(--gold)}input,textarea,select{width:100%;padding:11px;border-radius:8px;border:1px solid #795064;background:#24121c;color:var(--cream)}textarea{min-height:75px;resize:vertical}.editor-actions{display:flex;gap:8px;flex-wrap:wrap}.hint{font:12px Arial,sans-serif;color:var(--muted);line-height:1.6}
+@media(min-width:650px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.photo:nth-child(5n+1){grid-row:span 1}}
+@media(max-width:390px){nav{gap:0}nav a{font-size:10px;padding:8px 5px}.gallery{gap:9px}.photo .meta{padding:10px}}
+</style>
+</head>
+<body>
+<nav><a href="#historia">HISTORIA</a><a href="#recuerdos">RECUERDOS</a><a href="#familia">FAMILIA</a><a href="#carta">CARTA</a><a href="#editor">EDITAR</a></nav>
+<header class="hero">
+ <div><div class="eyebrow">Para Adela, con todo mi amor</div><h1>Nuestra<br><span class="gold">Historia</span></h1><p>Una historia que sigue eligiéndose cada día.</p><button class="btn" onclick="document.querySelector('#historia').scrollIntoView({behavior:'smooth'})">COMENZAR NUESTRO VIAJE ♡</button></div>
+</header>
+<main class="wrap">
+<section id="historia"><div class="section-head"><div class="eyebrow">Capítulo uno</div><h2>Donde todo comenzó</h2><p>Hay encuentros que se convierten en el comienzo de toda una vida.</p></div>
+<div class="timeline">
+ <div class="event"><strong>2017</strong><h3>Nuestros caminos se cruzaron</h3><p>Sin saber todo lo que vendría, la vida empezó a escribir nuestra historia.</p></div>
+ <div class="event"><strong>05 DE OCTUBRE DE 2019</strong><h3>Comenzó lo nuestro</h3><p>Ese día empezó oficialmente esta aventura de dos.</p></div>
+ <div class="event"><strong>CADA 11 DE OCTUBRE</strong><h3>Una fecha para celebrar</h3><p>Un año más de recuerdos, aprendizajes y razones para seguir eligiéndonos.</p></div>
+ <div class="event"><strong>HOY Y TODOS LOS DÍAS</strong><h3>Todavía te elijo</h3><p>Y quiero seguir construyendo contigo todo lo que nos queda por vivir.</p></div>
+</div></section>
+<section id="recuerdos"><div class="section-head"><div class="eyebrow">Capítulo dos</div><h2>Nuestros recuerdos</h2><p>Cada fotografía guarda un pedacito de nosotros.</p></div><div id="gallery" class="gallery"></div></section>
+<section id="familia"><div class="section-head"><div class="eyebrow">Capítulo tres</div><h2>El regalo más hermoso</h2></div><div class="family"><div class="heart">♡</div><h3>Adela, Yoshi y Briana Salomé</h3><p>En nuestra historia llegó un amor inmenso que cambió nuestras vidas para siempre. Nuestra familia es parte de lo más bonito que hemos construido juntos. Que nunca nos falten motivos para abrazarnos, cuidarnos y seguir adelante.</p></div></section>
+<section id="carta"><div class="section-head"><div class="eyebrow">Capítulo cuatro</div><h2>Hay algo que quiero decirte</h2><p>Esta carta es para ti. Ábrela cuando estés lista.</p></div><div class="letter"><div class="envelope" id="envelope"><span>♡</span></div><button class="btn" id="openLetter" onclick="openLetter()">ABRIR MI CARTA</button><article class="letter-content" id="letterContent"><h3>Mi Amor</h3>
+<p>Quiero que sepas algo que nunca ha cambiado dentro de mí: nunca dejé de enamorarme de ti y nunca dejé de amarte.</p>
+<p>Quizás mis maneras de demostrarlo cambiaron con el tiempo. Tal vez no siempre encontré las palabras correctas o no siempre supe expresar todo lo que llevaba dentro. Pero hay algo que jamás cambió: mi alma siempre estuvo contigo.</p>
+<p>Te amo porque eres mi vida, porque eres esa persona que quiero a mi lado y porque, incluso después de todo lo que hemos vivido, sigues teniendo la capacidad de enamorarme cada día un poquito más.</p>
+<p>Esta pequeña sorpresa es una de las tantas muestras de amor que quiero darte. Quiero que, cuando la veas, recuerdes nuestra historia, cada paso que hemos dado y todo lo hermoso que todavía nos queda por vivir.</p>
+<p>Quiero que nunca dudes de mi amor hacia ti. Que nunca olvides que te sigo eligiendo, que sigo soñando contigo y que mi deseo es continuar construyendo nuestra historia, tomados de la mano.</p>
+<p>Gracias por compartir tu vida conmigo, por los momentos buenos, por los difíciles y por ese regalo tan hermoso que es nuestra familia. Si pudiera volver al principio, volvería a encontrarte, volvería a elegirte y volvería a enamorarme de ti.</p>
+<p><strong>Mi historia favorita siempre será la nuestra.</strong></p>
+<p>No quiero prometerte una vida perfecta. Quiero prometerte que seguiré eligiéndote, cuidando lo nuestro y escribiendo contigo cada capítulo que venga.</p>
+<div class="signature">Con todo mi amor,<br><strong>Yoshi, tu niño que siempre te amará</strong></div></article></div></section>
+<div id="editor"><div class="eyebrow">Tu espacio privado de edición</div><h2 style="font-weight:normal">Personaliza nuestros recuerdos</h2><p class="hint">Agrega fotos desde tu galería, escribe un título y una fecha. Al terminar, pulsa “Guardar y descargar página” para crear un nuevo HTML con todas las fotos dentro. Envía ese archivo por WhatsApp como documento.</p>
+<div class="field"><label>FOTOS</label><input id="photoFiles" type="file" accept="image/*" multiple></div>
+<div class="field"><label>TÍTULO DEL RECUERDO</label><input id="photoTitle" placeholder="Ej. Un día especial juntos"></div>
+<div class="field"><label>FECHA O ETAPA (OPCIONAL)</label><input id="photoDate" placeholder="Ej. 2019 / Nuestro aniversario"></div>
+<div class="field"><label>CAPÍTULO</label><select id="photoChapter"><option>2017 · Cuando nos conocimos</option><option>Inicio de nuestra relación</option><option>Momentos juntos</option><option>Aniversarios</option><option>Nuestra familia</option><option>Actualidad</option><option>Otro recuerdo</option></select></div>
+<div class="field"><label>MENSAJE (OPCIONAL)</label><textarea id="photoDesc" placeholder="Una pequeña frase para recordar ese momento..."></textarea></div>
+<div class="editor-actions"><button class="btn small" onclick="addPhotos()">AGREGAR FOTOS</button><button class="btn small secondary" onclick="savePage()">GUARDAR Y DESCARGAR PÁGINA</button><button class="btn small secondary" onclick="toggleEdit(false)">CERRAR EDICIÓN</button></div>
+<p class="hint" id="editStatus">Todavía no has agregado fotos.</p>
+<div id="manageList"></div>
+</div>
+</main>
+<footer>HECHA CON AMOR · UNA HISTORIA QUE SIGUE ESCRIBIÉNDOSE ♡<br><br><button class="btn small secondary" onclick="toggleEdit(true)">✦ EDITAR ESTA PÁGINA</button></footer>
+<script id="saved-data" type="application/json">{"photos":[]}</script>
+<script>
+let photos=[];
+try{photos=JSON.parse(document.getElementById('saved-data').textContent||'{"photos":[]}').photos||[]}catch(e){photos=[]}
+const gallery=document.getElementById('gallery');
+function render(){
+ gallery.innerHTML='';
+ if(!photos.length){gallery.innerHTML='<div class="empty" style="grid-column:1/-1">Aquí comenzará a crecer vuestro álbum.<br>Activa la edición y agrega las fotos que quieras compartir. ♡</div>'}
+ photos.forEach((p,i)=>{let card=document.createElement('article');card.className='photo';let img=document.createElement('img');img.src=p.src;img.alt=p.title||'Recuerdo';let meta=document.createElement('div');meta.className='meta';let h=document.createElement('h3');h.textContent=p.title||'Un recuerdo nuestro';let d=document.createElement('p');d.textContent=[p.date,p.chapter,p.desc].filter(Boolean).join(' · ');meta.append(h,d);card.append(img,meta);gallery.append(card)});
+ renderManage();
+}
+function renderManage(){let box=document.getElementById('manageList');if(!box)return;box.innerHTML='';photos.forEach((p,i)=>{let row=document.createElement('div');row.style.cssText='display:flex;align-items:center;gap:10px;border-top:1px solid #795064;padding:9px 0;font:12px Arial,sans-serif';let im=document.createElement('img');im.src=p.src;im.style.cssText='width:48px;height:55px;object-fit:cover;border-radius:5px';let label=document.createElement('span');label.style.flex='1';label.textContent=(i+1)+'. '+(p.title||'Recuerdo');let del=document.createElement('button');del.className='btn small secondary';del.textContent='Eliminar';del.onclick=()=>{if(confirm('¿Eliminar este recuerdo?')){photos.splice(i,1);render();status()}};row.append(im,label,del);box.append(row)})}
+function status(){document.getElementById('editStatus').textContent=photos.length+' recuerdo(s) agregado(s). Recuerda descargar la página para conservar los cambios.'}
+function toggleEdit(show){document.getElementById('editor').style.display=show?'block':'none';if(show)document.getElementById('editor').scrollIntoView({behavior:'smooth'});else window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})}
+function openLetter(){document.getElementById('letterContent').classList.add('open');document.getElementById('envelope').style.display='none';document.getElementById('openLetter').style.display='none';document.getElementById('letterContent').scrollIntoView({behavior:'smooth',block:'center'})}
+async function compress(file){return new Promise((resolve,reject)=>{let fr=new FileReader();fr.onload=()=>{let im=new Image();im.onload=()=>{let max=1500,scale=Math.min(1,max/Math.max(im.width,im.height));let c=document.createElement('canvas');c.width=Math.round(im.width*scale);c.height=Math.round(im.height*scale);c.getContext('2d').drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.82))};im.onerror=reject;im.src=fr.result};fr.onerror=reject;fr.readAsDataURL(file)})}
+async function addPhotos(){let files=[...document.getElementById('photoFiles').files];if(!files.length){alert('Primero elige una o varias fotos de tu galería.');return}let title=document.getElementById('photoTitle').value.trim(),date=document.getElementById('photoDate').value.trim(),chapter=document.getElementById('photoChapter').value,desc=document.getElementById('photoDesc').value.trim();let count=0;for(let f of files){if(!f.type.startsWith('image/'))continue;try{let src=await compress(f);photos.push({src,title:title||(files.length>1?'Un recuerdo nuestro':f.name.replace(/\.[^.]+$/,'')),date,chapter,desc});count++}catch(e){}}render();status();document.getElementById('photoFiles').value='';alert(count+' foto(s) agregada(s). Ahora descarga la nueva página para guardar todo.')}
+function savePage(){let data=JSON.stringify({photos}).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/&/g,'\\u0026');let clone=document.documentElement.cloneNode(true);clone.querySelector('#saved-data').textContent=data;clone.querySelector('#editor').style.display='none';let source='<!DOCTYPE html>\n'+clone.outerHTML;let blob=new Blob([source],{type:'text/html;charset=utf-8'});let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download='Nuestra_Historia_Adela_y_Yoshi.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);alert('¡Listo! Se descargó una nueva versión con tus recuerdos. Conserva ese archivo y comparte esa versión por WhatsApp como documento.')}
+render();
+</script>
+</body></html>
