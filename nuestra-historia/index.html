@@ -1,96 +1,103 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#160d16">
-<title>Nuestra Historia | Adela & Yoshi</title>
-<style>
-:root{--bg:#160d16;--panel:#241522;--wine:#71304d;--gold:#e8c995;--cream:#fff5e9;--muted:#d4bdc5}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#65344c 0,#281522 42%,#100a11 100%);background-attachment:fixed;color:var(--cream);font-family:Georgia,'Times New Roman',serif}a{color:inherit}
-nav{position:sticky;top:0;z-index:5;display:flex;justify-content:center;gap:clamp(8px,3vw,30px);padding:15px 10px;background:#160d16df;border-bottom:1px solid #e8c99533;backdrop-filter:blur(14px)}
-nav a{text-decoration:none;color:var(--gold);font:10px Arial,sans-serif;letter-spacing:2px;transition:.25s}nav a:hover{color:white;transform:translateY(-2px)}
-.hero{min-height:88vh;display:grid;place-items:center;text-align:center;padding:70px 20px;position:relative;overflow:hidden}
-.hero:before,.hero:after{content:"✦";position:absolute;color:#e8c99555;font-size:64px;animation:float 6s ease-in-out infinite}.hero:before{top:18%;left:12%}.hero:after{bottom:18%;right:12%;animation-delay:2s}
-@keyframes float{50%{transform:translateY(-17px) rotate(18deg);opacity:.4}}
-.kicker{font:10px Arial,sans-serif;letter-spacing:4px;text-transform:uppercase;color:var(--gold)}
-h1{font-size:clamp(58px,12vw,112px);font-weight:normal;line-height:.95;margin:22px 0;text-shadow:0 8px 45px #0008}.gold{color:var(--gold);font-style:italic}
-.hero p{max-width:530px;margin:0 auto 30px;color:var(--muted);font-size:17px;line-height:1.8}
-.btn{display:inline-block;border:1px solid var(--gold);border-radius:30px;padding:14px 22px;background:linear-gradient(135deg,#85405d,#4a2038);color:white;text-decoration:none;font:10px Arial,sans-serif;letter-spacing:2px;cursor:pointer;box-shadow:0 10px 30px #0005;transition:.25s}.btn:hover{transform:translateY(-3px);box-shadow:0 15px 38px #0008}
-main{width:min(100% - 36px,1060px);margin:auto}section{padding:clamp(65px,9vw,105px) 0;border-top:1px solid #e8c99522}
-.head{text-align:center;margin-bottom:38px}.head h2{font-size:clamp(34px,6vw,54px);font-weight:normal;margin:13px 0}.head p{font:14px/1.8 Arial,sans-serif;color:var(--muted);max-width:580px;margin:auto}
-.timeline{max-width:680px;margin:auto;position:relative}.timeline:before{content:"";position:absolute;left:17px;top:6px;bottom:8px;width:1px;background:linear-gradient(var(--gold),transparent)}
-.event{position:relative;padding:0 0 32px 52px}.event:before{content:"";position:absolute;left:11px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px #e8c99599}.event time{font:10px Arial,sans-serif;letter-spacing:2px;color:var(--gold)}.event h3{font-size:24px;font-weight:normal;margin:7px 0}.event p{margin:0;color:var(--muted);line-height:1.7}
-.wall{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:clamp(78px,9vw,125px);gap:12px}
-.shot{border:1px solid #e8c99566;border-radius:15px;padding:0;overflow:hidden;background:#241522;cursor:zoom-in;box-shadow:0 12px 34px #0006;animation:rise .7s both;animation-delay:calc(var(--i)*60ms)}
-.shot:nth-child(1),.shot:nth-child(8){grid-column:span 7;grid-row:span 3}.shot:nth-child(2),.shot:nth-child(7){grid-column:span 5;grid-row:span 3}.shot:nth-child(n+3){grid-column:span 4;grid-row:span 2}
-.shot img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .7s,filter .5s}.shot:hover img{transform:scale(1.06);filter:saturate(1.12)}
-@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-.caption{max-width:780px;margin:30px auto 0;padding:28px;text-align:center;background:linear-gradient(140deg,#382034,#1e121e);border:1px solid #e8c99555;border-radius:18px;box-shadow:0 18px 45px #0005}.caption .heart{font-size:28px;color:var(--gold);margin-bottom:8px}.caption p{margin:0;color:#f1e0e5;font-size:16px;line-height:1.9}
-.family{max-width:740px;margin:auto;padding:40px 26px;text-align:center;background:linear-gradient(145deg,#382034,#1b111c);border:1px solid #e8c99555;border-radius:20px;box-shadow:0 18px 45px #0005}.family .heart{font-size:42px;color:var(--gold)}.family h3{font-size:clamp(26px,5vw,38px);font-weight:normal;margin:12px}.family p{max-width:570px;margin:auto;color:var(--muted);line-height:1.9}
-.letter-wrap{max-width:760px;margin:auto;text-align:center}.envelope{width:min(310px,85vw);height:190px;margin:30px auto;display:grid;place-items:center;position:relative;background:linear-gradient(145deg,#934763,#4d2039);border:1px solid var(--gold);border-radius:10px;box-shadow:0 15px 50px #0008;font-size:54px;color:#ffe9cb;cursor:pointer;transition:.5s}.envelope:hover{transform:translateY(-5px) rotate(-1deg)}.letter{display:none;text-align:left;padding:clamp(24px,6vw,54px);background:#f7eddf;color:#4b2937;border-radius:8px;box-shadow:0 18px 55px #0008;line-height:1.95}.letter.open{display:block;animation:rise .7s}.letter h3{text-align:center;font-size:34px;font-weight:normal;color:#7a344f}.letter p{margin:0 0 17px}.signature{text-align:right;margin-top:30px;color:#71304d}
-footer{text-align:center;padding:45px 20px 65px;color:var(--muted);font-size:13px}footer strong{color:var(--gold);font-weight:normal}
-#lightbox{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:20px;background:#080509f2;backdrop-filter:blur(12px)}#lightbox.show{display:flex}#lightbox img{max-width:95vw;max-height:88vh;object-fit:contain;border-radius:12px;box-shadow:0 20px 70px #000}#lightbox button{position:absolute;top:16px;right:16px;width:46px;height:46px;border:1px solid #e8c99588;border-radius:50%;background:#281623;color:white;font-size:25px}
-#loading{color:var(--gold);text-align:center;padding:30px;font:12px Arial,sans-serif;letter-spacing:2px}
-@media(max-width:640px){nav{gap:12px;padding:13px 4px}nav a{font-size:9px;letter-spacing:1px}.hero{min-height:80vh}.wall{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:clamp(76px,19vw,118px);gap:8px}.shot:nth-child(n){grid-column:span 3;grid-row:span 2}.shot:nth-child(1),.shot:nth-child(8){grid-column:span 6;grid-row:span 3}.caption{padding:22px 18px}.caption p{font-size:14px}.family{padding:30px 20px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4ef">
+  <meta name="description" content="Una historia, dos caminos y una familia. Un espacio privado para nuestros recuerdos.">
+  <title>Nuestra Historia | Adela & Yoshi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav><a href="#historia">HISTORIA</a><a href="#recuerdos">RECUERDOS</a><a href="#familia">FAMILIA</a><a href="#carta">CARTA</a></nav>
-<header class="hero"><div><div class="kicker">Para Adela, con todo mi amor</div><h1>Nuestra<br><span class="gold">Historia</span></h1><p>Una historia que comenzó con dos caminos que se cruzaron y que hoy sigue creciendo en familia.</p><a class="btn" href="#historia">COMENZAR NUESTRO VIAJE ♡</a></div></header>
-<main>
-<section id="historia"><div class="head"><div class="kicker">Capítulo uno</div><h2>Donde todo comenzó</h2><p>Hay encuentros que se convierten en el comienzo de toda una vida.</p></div>
-<div class="timeline">
-<div class="event"><time>2017</time><h3>Nuestros caminos se cruzaron</h3><p>Sin saber todo lo que vendría, la vida empezó a escribir nuestra historia.</p></div>
-<div class="event"><time>05 DE OCTUBRE DE 2019</time><h3>Comenzó lo nuestro</h3><p>Ese día empezó oficialmente esta aventura de dos.</p></div>
-<div class="event"><time>2020</time><h3>Pequeños momentos, grandes recuerdos</h3><p>Hasta faltar al instituto por quedarme contigo. Hay recuerdos que todavía me sacan una sonrisa.</p></div>
-<div class="event"><time>2024</time><h3>Decidimos unir nuestras vidas</h3><p>Un capítulo enorme, y una promesa de seguir caminando juntos.</p></div>
-<div class="event"><time>2025</time><h3>Llegó nuestra princesa</h3><p>Briana Salomé hizo crecer nuestra familia y nos regaló una nueva forma de amar.</p></div>
-<div class="event"><time>HOY Y TODOS LOS DÍAS</time><h3>Todavía te elijo</h3><p>Y quiero seguir construyendo contigo todo lo que nos queda por vivir.</p></div>
-</div></section>
-<section id="recuerdos"><div class="head"><div class="kicker">Capítulo dos</div><h2>Nuestros recuerdos</h2><p>Once fotografías. Un solo camino. Toda una vida de momentos que nos trajeron hasta aquí.</p></div><div id="loading">PREPARANDO NUESTROS RECUERDOS ♡</div><div class="wall" id="wall"></div><div class="caption"><div class="heart">♡</div><p>Desde aquellas primeras conversaciones en la moto, las escapadas a la playa y cada salida que se volvió especial, hasta el día en que unimos nuestras vidas y llegó nuestra princesa Briana Salomé. Estas fotografías guardan pedacitos de un mismo camino: el nuestro. No todo ha sido perfecto, pero cada etapa nos trajo hasta aquí. Y todavía nos quedan muchísimos recuerdos por crear, juntos. ❤️</p></div></section>
-<section id="familia"><div class="head"><div class="kicker">Capítulo tres</div><h2>El regalo más hermoso</h2></div><div class="family"><div class="heart">♡</div><h3>Adela, Yoshi y Briana Salomé</h3><p>En nuestra historia llegó un amor inmenso que cambió nuestras vidas para siempre. Nuestra familia es parte de lo más bonito que hemos construido juntos. Que nunca nos falten motivos para abrazarnos, cuidarnos y seguir adelante.</p></div></section>
-<section id="carta"><div class="head"><div class="kicker">Capítulo cuatro</div><h2>Hay algo que quiero decirte</h2><p>Esta carta es para ti. Ábrela cuando estés lista.</p></div><div class="letter-wrap"><button class="envelope" id="openLetter" aria-label="Abrir mi carta">♡</button><article class="letter" id="letter"><h3>Mi Amor</h3>
-<p>Quiero que sepas algo que nunca ha cambiado dentro de mí: nunca dejé de enamorarme de ti y nunca dejé de amarte.</p>
-<p>Quizás mis maneras de demostrarlo cambiaron con el tiempo. Tal vez no siempre encontré las palabras correctas o no siempre supe expresar todo lo que llevaba dentro. Pero hay algo que jamás cambió: mi alma siempre estuvo contigo.</p>
-<p>Te amo porque eres mi vida, porque eres esa persona que quiero a mi lado y porque, incluso después de todo lo que hemos vivido, sigues teniendo la capacidad de enamorarme cada día un poquito más.</p>
-<p>Esta pequeña sorpresa es una de las tantas muestras de amor que quiero darte. Quiero que, cuando la veas, recuerdes nuestra historia, cada paso que hemos dado y todo lo hermoso que todavía nos queda por vivir.</p>
-<p>Quiero que nunca dudes de mi amor hacia ti. Que nunca olvides que te sigo eligiendo, que sigo soñando contigo y que mi deseo es continuar construyendo nuestra historia, tomados de la mano.</p>
-<p>Gracias por compartir tu vida conmigo, por los momentos buenos, por los difíciles y por ese regalo tan hermoso que es nuestra familia. Si pudiera volver al principio, volvería a encontrarte, volvería a elegirte y volvería a enamorarme de ti.</p>
-<p><strong>Mi historia favorita siempre será la nuestra.</strong></p>
-<p>No quiero prometerte una vida perfecta. Quiero prometerte que seguiré eligiéndote, cuidando lo nuestro y escribiendo contigo cada capítulo que venga.</p>
-<div class="signature">Con todo mi amor,<br><strong>Yoshi, tu niño que siempre te amará</strong></div></article></div></section>
-</main>
-<footer>Con amor, hoy y en todos los días que vienen.<br><strong>Yoshi, tu niño que siempre te amará ♡</strong></footer>
-<div id="lightbox"><button id="closeLightbox" aria-label="Cerrar">×</button><img alt="Fotografía de nuestros recuerdos"></div>
-<script>
-const owner='YOSHIHARU0504',repo='yoshi-tools',branch='main';
-const wall=document.getElementById('wall'),loading=document.getElementById('loading');
-const lightbox=document.getElementById('lightbox'),large=lightbox.querySelector('img');
-function openPhoto(src){large.src=src;lightbox.classList.add('show')}
-function closePhoto(){lightbox.classList.remove('show');large.src=''}
-document.getElementById('closeLightbox').addEventListener('click',closePhoto);
-lightbox.addEventListener('click',e=>{if(e.target===lightbox)closePhoto()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closePhoto()});
-async function loadPhoto(i){
- const n=String(i).padStart(2,'0');
- const url='https://raw.githubusercontent.com/'+owner+'/'+repo+'/'+branch+'/nuestra-historia/photos/photo-'+n+'.b64';
- const response=await fetch(url);if(!response.ok)throw new Error('No se pudo cargar la foto '+n);
- const base64=(await response.text()).trim();
- return 'data:image/jpeg;base64,'+base64;
-}
-(async()=>{
- const tasks=Array.from({length:11},(_,i)=>loadPhoto(i+1).then(src=>{
-  const button=document.createElement('button');button.className='shot';button.type='button';button.style.setProperty('--i',i);button.setAttribute('aria-label','Ampliar recuerdo '+(i+1));
-  const img=document.createElement('img');img.src=src;img.alt='Un recuerdo de nuestra historia';img.loading=i<3?'eager':'lazy';button.append(img);button.addEventListener('click',()=>openPhoto(src));wall.append(button);
- }).catch(err=>console.error(err)));
- await Promise.all(tasks);loading.style.display='none';
-})();
-document.getElementById('openLetter').addEventListener('click',()=>{
- const letter=document.getElementById('letter');letter.classList.toggle('open');
- document.getElementById('openLetter').style.display='none';
- letter.scrollIntoView({behavior:'smooth',block:'center'});
-});
-</script>
-</body></html>
+  <header class="site-header">
+    <a class="wordmark" href="#inicio" aria-label="Nuestra Historia, inicio">A <span>&</span> Y</a>
+    <nav aria-label="Navegación principal">
+      <a href="#historia">Historia</a><a href="#recuerdos">Recuerdos</a><a href="#familia">Familia</a><a href="#carta">Carta</a>
+    </nav>
+    <span class="header-note">UN ARCHIVO DE AMOR</span>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span class="eyebrow-line"></span> AD ELA & YOSHI · DESDE 2017</p>
+        <h1>Hay historias<br>que se convierten<br>en <em>hogar.</em></h1>
+        <p class="hero-intro">La nuestra está hecha de pequeños momentos, decisiones valientes y un amor que sigue encontrando nuevas formas de crecer.</p>
+        <a class="text-link" href="#historia">RECORRER NUESTRA HISTORIA <span>↘</span></a>
+      </div>
+      <div class="hero-art reveal" aria-label="Composición decorativa">
+        <div class="art-frame frame-back"></div><div class="art-frame frame-front"><span class="art-monogram">A<span>&</span>Y</span><span class="art-caption">un mismo camino</span></div>
+        <span class="art-index">01 — PARA SIEMPRE</span>
+      </div>
+      <div class="hero-bottom"><span>UNA HISTORIA REAL</span><span>HECHA DE DOS PERSONAS Y MIL RECUERDOS</span><span>DESLIZA PARA DESCUBRIR ↓</span></div>
+    </section>
+
+    <section class="story section" id="historia">
+      <div class="section-aside"><span class="section-number">01 / 04</span><span class="vertical-label">EL COMIENZO</span></div>
+      <div class="section-content">
+        <p class="eyebrow">CAPÍTULO UNO</p><h2>Todo empezó<br>con un <em>encuentro.</em></h2>
+        <p class="section-lead">A veces, sin darnos cuenta, un día cualquiera termina convirtiéndose en el principio de toda una vida.</p>
+        <div class="timeline">
+          <article class="timeline-item"><span class="timeline-date">2017</span><div><h3>Nuestros caminos se cruzaron</h3><p>Sin saber todo lo que vendría, la vida empezó a escribir nuestra historia.</p></div></article>
+          <article class="timeline-item"><span class="timeline-date">05 OCT 2019</span><div><h3>Comenzó lo nuestro</h3><p>Ese día empezó oficialmente esta aventura de dos.</p></div></article>
+          <article class="timeline-item"><span class="timeline-date">2020</span><div><h3>Pequeños momentos, grandes recuerdos</h3><p>Hasta faltar al instituto por quedarme contigo. Hay recuerdos que todavía me sacan una sonrisa.</p></div></article>
+          <article class="timeline-item"><span class="timeline-date">2024</span><div><h3>Decidimos unir nuestras vidas</h3><p>Un capítulo enorme y una promesa de seguir caminando juntos.</p></div></article>
+          <article class="timeline-item"><span class="timeline-date">2025</span><div><h3>Llegó nuestra princesa</h3><p>Briana Salomé hizo crecer nuestra familia y nos regaló una nueva forma de amar.</p></div></article>
+          <article class="timeline-item"><span class="timeline-date">HOY</span><div><h3>Todavía te elijo</h3><p>Y quiero seguir construyendo contigo todo lo que nos queda por vivir.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="memories section" id="recuerdos">
+      <div class="section-aside"><span class="section-number">02 / 04</span><span class="vertical-label">LOS MOMENTOS</span></div>
+      <div class="section-content">
+        <p class="eyebrow">CAPÍTULO DOS</p><h2>Pedacitos de<br><em>nosotros.</em></h2>
+        <p class="section-lead">Once fotografías. Un solo camino. Cada imagen guarda un instante que merece quedarse.</p>
+        <div class="private-note"><span class="lock-icon" aria-hidden="true">⌑</span><div><strong>Un álbum solo nuestro</strong><p>Las fotografías se mostrarán aquí cuando conectemos el acceso privado. Por ahora, sus recuerdos permanecen protegidos.</p></div><span class="private-status">ÁLBUM PROTEGIDO</span></div>
+        <div class="memory-grid" id="memoryGrid" aria-live="polite"></div>
+        <blockquote class="memory-quote">“Estas fotografías guardan pedacitos de un mismo camino: el nuestro. No todo ha sido perfecto, pero cada etapa nos trajo hasta aquí. Y todavía nos quedan muchísimos recuerdos por crear, juntos.”</blockquote>
+      </div>
+    </section>
+
+    <section class="family section" id="familia">
+      <div class="section-aside"><span class="section-number">03 / 04</span><span class="vertical-label">NUESTRO MAYOR REGALO</span></div>
+      <div class="section-content">
+        <p class="eyebrow">CAPÍTULO TRES</p><h2>El amor también<br>se hizo <em>familia.</em></h2>
+        <div class="family-card"><span class="family-symbol">A · Y · B</span><h3>Adela, Yoshi<br>& Briana Salomé</h3><p>En nuestra historia llegó un amor inmenso que cambió nuestras vidas para siempre. Nuestra familia es parte de lo más bonito que hemos construido juntos. Que nunca nos falten motivos para abrazarnos, cuidarnos y seguir adelante.</p><span class="family-foot">NUESTRO PEQUEÑO UNIVERSO</span></div>
+      </div>
+    </section>
+
+    <section class="letter-section section" id="carta">
+      <div class="section-aside"><span class="section-number">04 / 04</span><span class="vertical-label">UNAS PALABRAS PARA TI</span></div>
+      <div class="section-content">
+        <p class="eyebrow">CAPÍTULO CUATRO</p><h2>Algo que quiero<br>decirte, <em>Adela.</em></h2>
+        <p class="section-lead">Hay palabras que merecen un lugar al que siempre podamos volver.</p>
+        <div class="letter-card">
+          <div class="letter-top"><span>UNA CARTA PARA TI</span><span>♡</span></div>
+          <button class="letter-toggle" id="letterToggle" type="button" aria-expanded="false" aria-controls="loveLetter"><span class="envelope-mark">A <i>&</i> Y</span><span class="open-label">ABRIR CARTA <b>↗</b></span></button>
+          <article class="letter-content" id="loveLetter" hidden>
+            <p class="letter-date">PARA MI PERSONA FAVORITA</p>
+            <h3>Mi amor,</h3>
+            <p>Quiero que sepas algo que nunca ha cambiado dentro de mí: nunca dejé de enamorarme de ti y nunca dejé de amarte.</p>
+            <p>Quizás mis maneras de demostrarlo cambiaron con el tiempo. Tal vez no siempre encontré las palabras correctas o no siempre supe expresar todo lo que llevaba dentro. Pero hay algo que jamás cambió: mi alma siempre estuvo contigo.</p>
+            <p>Te amo porque eres mi vida, porque eres esa persona que quiero a mi lado y porque, incluso después de todo lo que hemos vivido, sigues teniendo la capacidad de enamorarme cada día un poquito más.</p>
+            <p>Esta pequeña sorpresa es una de las tantas muestras de amor que quiero darte. Quiero que, cuando la veas, recuerdes nuestra historia, cada paso que hemos dado y todo lo hermoso que todavía nos queda por vivir.</p>
+            <p>Quiero que nunca dudes de mi amor hacia ti. Que nunca olvides que te sigo eligiendo, que sigo soñando contigo y que mi deseo es continuar construyendo nuestra historia, tomados de la mano.</p>
+            <p>Gracias por compartir tu vida conmigo, por los momentos buenos, por los difíciles y por ese regalo tan hermoso que es nuestra familia. Si pudiera volver al principio, volvería a encontrarte, volvería a elegirte y volvería a enamorarme de ti.</p>
+            <p><strong>Mi historia favorita siempre será la nuestra.</strong></p>
+            <p>No quiero prometerte una vida perfecta. Quiero prometerte que seguiré eligiéndote, cuidando lo nuestro y escribiendo contigo cada capítulo que venga.</p>
+            <p class="letter-signature">Con todo mi amor,<br><strong>Yoshi, tu niño que siempre te amará</strong></p>
+          </article>
+          <div class="letter-bottom">GUARDADA AQUÍ, PARA CUANDO QUIERAS VOLVER A LEERLA.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><span class="footer-mark">A <i>&</i> Y</span><p>Con amor, hoy y en todos los días que vienen.</p><small>UNA HISTORIA QUE SIGUE ESCRIBIÉNDOSE.</small></footer>
+  <script src="app.js" defer></script>
+</body>
+</html>
